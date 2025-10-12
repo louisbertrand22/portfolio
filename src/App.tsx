@@ -1,8 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('theme')
+    return savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light')
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light')
+  }, [isDarkMode])
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode)
+  }
 
   const projects = [
     {
@@ -69,13 +82,22 @@ function App() {
         <div className="container">
           <nav className="nav">
             <div className="logo">Portfolio</div>
-            <button 
-              className="menu-toggle"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              ☰
-            </button>
+            <div className="nav-controls">
+              <button 
+                className="theme-toggle"
+                onClick={toggleTheme}
+                aria-label="Toggle theme"
+              >
+                {isDarkMode ? '☀️' : '🌙'}
+              </button>
+              <button 
+                className="menu-toggle"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                ☰
+              </button>
+            </div>
             <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
               <li><a href="#home" onClick={() => setIsMenuOpen(false)}>Home</a></li>
               <li><a href="#about" onClick={() => setIsMenuOpen(false)}>About</a></li>
