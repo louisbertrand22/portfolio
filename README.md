@@ -1,6 +1,7 @@
 # Portfolio Website
 
 [![CI](https://github.com/louisbertrand22/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/louisbertrand22/portfolio/actions/workflows/ci.yml)
+[![Deploy](https://github.com/louisbertrand22/portfolio/actions/workflows/deploy.yml/badge.svg)](https://github.com/louisbertrand22/portfolio/actions/workflows/deploy.yml)
 
 A modern, responsive portfolio website built with React, TypeScript, and Vite.
 
@@ -118,6 +119,69 @@ To stop and remove the container:
 docker stop portfolio-app
 docker rm portfolio-app
 ```
+
+## Deployment
+
+This portfolio can be deployed to various platforms.
+
+📖 **[Quick Deploy Guide](./.github/QUICK_DEPLOY.md)** | **[Platform Comparison](./.github/DEPLOYMENT_OPTIONS.md)** | **[Full Documentation](./DEPLOYMENT.md)**
+
+### Quick Deploy
+
+Choose your preferred platform:
+
+### GitHub Pages (Automated)
+
+The repository includes a GitHub Actions workflow that automatically deploys to GitHub Pages on every push to the `main` branch.
+
+**Setup:**
+1. Go to your repository settings on GitHub
+2. Navigate to "Pages" in the left sidebar
+3. Under "Build and deployment", select "GitHub Actions" as the source
+4. Push to the `main` branch and the site will automatically deploy
+
+The site will be available at `https://<username>.github.io/portfolio/`
+
+### Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/louisbertrand22/portfolio)
+
+**Manual deployment:**
+1. Install Vercel CLI: `npm i -g vercel`
+2. Run `vercel` in the project directory
+3. Follow the prompts to deploy
+
+The `vercel.json` configuration file is already included.
+
+### Netlify
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/louisbertrand22/portfolio)
+
+**Manual deployment:**
+1. Install Netlify CLI: `npm i -g netlify-cli`
+2. Run `netlify deploy --prod` in the project directory
+3. Follow the prompts to deploy
+
+The `netlify.toml` configuration file is already included.
+
+### Docker Deployment
+
+For production deployment using Docker on any cloud provider (AWS, GCP, Azure, DigitalOcean, etc.):
+
+```bash
+# Build the image
+docker build -t portfolio .
+
+# Run the container
+docker run -d -p 80:80 --name portfolio portfolio
+```
+
+Or use Docker Compose:
+```bash
+docker compose up -d
+```
+
+> **📖 For detailed deployment instructions, troubleshooting, and more platforms (Render, Cloudflare Pages, Firebase, etc.), see [DEPLOYMENT.md](./DEPLOYMENT.md)**
 
 ## Customization
 
