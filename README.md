@@ -33,6 +33,7 @@ A modern, responsive portfolio website built with React, TypeScript, and Vite.
 ### Prerequisites
 
 - Node.js 18+ and npm
+- OR Docker and Docker Compose (for containerized deployment)
 
 ### Installation
 
@@ -77,6 +78,43 @@ npm run preview
 Run ESLint to check code quality:
 ```bash
 npm run lint
+```
+
+### Docker
+
+#### Using Docker Compose (Recommended)
+
+The easiest way to run the application with Docker:
+
+```bash
+docker compose up -d
+```
+
+The site will be available at `http://localhost:3000/`
+
+To stop the application:
+```bash
+docker compose down
+```
+
+#### Using Docker Directly
+
+Build the Docker image:
+```bash
+docker build -t portfolio .
+```
+
+Run the container:
+```bash
+docker run -d -p 3000:80 --name portfolio-app portfolio
+```
+
+The site will be available at `http://localhost:3000/`
+
+To stop and remove the container:
+```bash
+docker stop portfolio-app
+docker rm portfolio-app
 ```
 
 ## Customization
