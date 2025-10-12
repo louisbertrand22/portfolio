@@ -145,7 +145,9 @@ The repository includes a GitHub Actions workflow that automatically deploys to 
 
 > **Important:** This repository includes a `.nojekyll` file that prevents GitHub Pages from using Jekyll processing. This is essential for single-page applications to work correctly.
 
-The site will be available at `https://<username>.github.io/portfolio/`
+**The site will be available at:** `https://<username>.github.io/portfolio/`
+
+> ⚠️ **Note:** The site MUST be accessed with the `/portfolio/` path. If you see errors like "ERR_ABORTED 404 /src/main.tsx", ensure you're accessing `https://louisbertrand22.github.io/portfolio/` and not just `https://louisbertrand22.github.io/`.
 
 ### Vercel
 
