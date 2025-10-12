@@ -182,10 +182,10 @@ function App() {
                 to be part of your vision.
               </p>
               <div className="contact-links">
-                <a href="mailto:contact@example.com" className="contact-link">
+                <a href="mailto:louisbert91@gmail.com" className="contact-link">
                   📧 Email
                 </a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="contact-link">
+                <a href="https://github.com/louisbertrand22/" target="_blank" rel="noopener noreferrer" className="contact-link">
                   💻 GitHub
                 </a>
                 <a href="https://www.linkedin.com/in/louis-bertrand222" target="_blank" rel="noopener noreferrer" className="contact-link">
