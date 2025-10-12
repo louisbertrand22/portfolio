@@ -33,7 +33,7 @@ export const en = {
       {
         school: 'Univerzita Hradec Králové',
         degree: 'Informatics',
-        period: 'Feb. 2024 - Jun 2024',
+        period: 'Feb. 2024 - Jun. 2024',
         description: 'Erasmus exchange program',
       },
     ],
