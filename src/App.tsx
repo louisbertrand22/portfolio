@@ -26,6 +26,7 @@ function App() {
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'en' ? 'fr' : 'en')
+  }
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem('theme')
     return savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
