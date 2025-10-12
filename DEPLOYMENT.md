@@ -42,6 +42,8 @@ The repository includes a GitHub Actions workflow that automatically deploys you
    - Your portfolio will be available at: `https://<username>.github.io/portfolio/`
    - Replace `<username>` with your GitHub username
 
+**Important:** This repository includes a `.nojekyll` file in the `public/` folder that is automatically copied to the deployment. This file prevents GitHub Pages from using Jekyll processing, which is essential for single-page applications to work correctly.
+
 ### Manual Deployment
 
 If you prefer to deploy manually:
@@ -295,6 +297,9 @@ If you get a 404 error on GitHub Pages after successful deployment:
 - Check that the workflow completed successfully in the Actions tab
 - Wait a few minutes for DNS to propagate
 - Verify the correct URL format: `https://<username>.github.io/portfolio/`
+- Ensure the `.nojekyll` file exists in the `public/` folder (it's automatically copied to `dist/` during build)
+  - This file prevents GitHub Pages from processing the site with Jekyll, which can cause 404 errors for single-page applications
+  - The file should be empty and is already included in this repository
 
 ### Build Failures
 
