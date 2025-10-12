@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    .loader {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    a {
+      color: white;
+      text-decoration: underline;
+    }
+  </style>
+  <script>
+    // Check if we're at the root and need to redirect to /portfolio/
+    const currentPath = window.location.pathname;
+    const correctPath = '/portfolio/';
+    
+    // If we're trying to access a path that should be under /portfolio/
+    if (!currentPath.startsWith(correctPath)) {
+      // Redirect to the correct path
+      const newPath = correctPath + currentPath.slice(1);
+      window.location.replace(newPath);
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>404</h1>
+    <p>Redirecting to the correct location...</p>
+    <div class="loader"></div>
+    <p style="margin-top: 2rem; font-size: 0.9rem;">
+      If you're not redirected automatically, 
+      <a href="/portfolio/">click here</a>.
+    </p>
+  </div>
+</body>
+</html>
