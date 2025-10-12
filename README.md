@@ -122,7 +122,11 @@ docker rm portfolio-app
 
 ## Deployment
 
-This portfolio can be deployed to various platforms:
+This portfolio can be deployed to various platforms. **Need help choosing?** See the [Deployment Options Comparison](./.github/DEPLOYMENT_OPTIONS.md).
+
+### Quick Deploy
+
+Choose your preferred platform:
 
 ### GitHub Pages (Automated)
 
