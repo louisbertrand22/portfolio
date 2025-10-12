@@ -175,6 +175,8 @@ Or use Docker Compose:
 docker compose up -d
 ```
 
+> **📖 For detailed deployment instructions, troubleshooting, and more platforms (Render, Cloudflare Pages, Firebase, etc.), see [DEPLOYMENT.md](./DEPLOYMENT.md)**
+
 ## Customization
 
 To customize the portfolio for your own use:
