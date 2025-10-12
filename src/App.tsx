@@ -6,22 +6,34 @@ function App() {
 
   const projects = [
     {
-      title: 'Project One',
-      description: 'A modern web application built with React and TypeScript',
-      technologies: ['React', 'TypeScript', 'Vite'],
-      link: '#'
+      title: 'DevDocsHub',
+      description: 'Centralized platform for managing and exploring technical documentation for developers',
+      technologies: ['Next.js', 'TypeScript', 'FastAPI', 'PostgreSQL'],
+      link: 'https://github.com/louisbertrand22/devdocshub'
     },
     {
-      title: 'Project Two',
-      description: 'Full-stack application with real-time features',
-      technologies: ['Node.js', 'Express', 'MongoDB'],
-      link: '#'
+      title: 'F1 Dashboard',
+      description: 'Full-stack application displaying F1 statistics with modern DevOps practices',
+      technologies: ['React', 'FastAPI', 'Docker', 'CI/CD'],
+      link: 'https://github.com/louisbertrand22/stats-f1'
     },
     {
-      title: 'Project Three',
-      description: 'Mobile-first responsive website design',
-      technologies: ['HTML5', 'CSS3', 'JavaScript'],
-      link: '#'
+      title: 'Task Manager',
+      description: 'Modern task management application with Angular frontend and .NET Core backend',
+      technologies: ['Angular', 'C#', '.NET Core', 'Docker'],
+      link: 'https://github.com/louisbertrand22/Task-Managing'
+    },
+    {
+      title: 'FootySim',
+      description: 'Football championship simulator with SQLAlchemy ORM and async database operations',
+      technologies: ['Python', 'SQLAlchemy', 'Alembic', 'CLI'],
+      link: 'https://github.com/louisbertrand22/FootySim'
+    },
+    {
+      title: 'Sudoku OCR',
+      description: 'Sudoku solver in Python using optical character recognition',
+      technologies: ['Python', 'OCR', 'Computer Vision'],
+      link: 'https://github.com/louisbertrand22/sudoku-ocr'
     }
   ]
 
