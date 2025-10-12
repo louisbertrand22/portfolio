@@ -25,7 +25,7 @@ export const en = {
     title: 'Education',
     items: [
       {
-        school: 'EPITA: Ecole d\'Ingénieurs en Informatique',
+        school: 'EPITA: École d\'Ingénieurs en Informatique',
         degree: 'Diplôme d\'ingénieur',
         period: 'Sept. 2022 - Jul. 2027',
         description: 'Engineering degree in Computer Science',
