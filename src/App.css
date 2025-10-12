@@ -44,6 +44,16 @@
 .language-toggle:hover {
   background: var(--secondary-color);
   transform: translateY(-2px);
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.2);
 }
 
 .menu-toggle {
@@ -106,6 +116,10 @@
 
   .nav-links li:last-child {
     border-bottom: none;
+  }
+
+  .theme-toggle {
+    font-size: 1.25rem;
   }
 }
 
@@ -270,7 +284,7 @@
 }
 
 .education-card {
-  background: white;
+  background: var(--bg-color);
   border-radius: 1rem;
   padding: 2rem;
   box-shadow: var(--shadow);
@@ -322,7 +336,7 @@
 }
 
 .project-card {
-  background: white;
+  background: var(--bg-color);
   border-radius: 1rem;
   padding: 2rem;
   box-shadow: var(--shadow);
@@ -388,11 +402,12 @@
 }
 
 .skill-card {
-  background: white;
+  background: var(--bg-color);
   padding: 1.5rem;
   border-radius: 0.5rem;
   text-align: center;
   font-weight: 600;
+  color: var(--text-color);
   box-shadow: var(--shadow);
   transition: all 0.3s;
   border: 2px solid transparent;

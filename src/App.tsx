@@ -26,6 +26,18 @@ function App() {
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'en' ? 'fr' : 'en')
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('theme')
+    return savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light')
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light')
+  }, [isDarkMode])
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode)
   }
 
   const projects = [
@@ -77,6 +89,14 @@ function App() {
                 aria-label="Toggle language"
               >
                 {language === 'en' ? '🇫🇷 FR' : '🇬🇧 EN'}
+            <div className="logo">Portfolio</div>
+            <div className="nav-controls">
+              <button 
+                className="theme-toggle"
+                onClick={toggleTheme}
+                aria-label="Toggle theme"
+              >
+                {isDarkMode ? '☀️' : '🌙'}
               </button>
               <button 
                 className="menu-toggle"
@@ -188,11 +208,11 @@ function App() {
                 {t.contact.description}
               </p>
               <div className="contact-links">
-                <a href="mailto:contact@example.com" className="contact-link">
-                  {t.contact.email}
+                <a href="mailto:louisbert91@gmail.com" className="contact-link">
+                  📧 Email
                 </a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="contact-link">
-                  {t.contact.github}
+                <a href="https://github.com/louisbertrand22/" target="_blank" rel="noopener noreferrer" className="contact-link">
+                  💻 GitHub
                 </a>
                 <a href="https://www.linkedin.com/in/louis-bertrand222" target="_blank" rel="noopener noreferrer" className="contact-link">
                   {t.contact.linkedin}
