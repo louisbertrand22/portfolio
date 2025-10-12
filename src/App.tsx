@@ -156,7 +156,7 @@ function App() {
                 <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="contact-link">
                   💻 GitHub
                 </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="contact-link">
+                <a href="https://www.linkedin.com/in/louis-bertrand222" target="_blank" rel="noopener noreferrer" className="contact-link">
                   💼 LinkedIn
                 </a>
               </div>
