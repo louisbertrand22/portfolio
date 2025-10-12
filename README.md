@@ -143,6 +143,8 @@ The repository includes a GitHub Actions workflow that automatically deploys to 
 
 > **Note:** If you push before configuring GitHub Pages, the deployment will fail with a "Not Found" error. Simply enable "GitHub Actions" as the source in Settings → Pages, then push again or re-run the workflow.
 
+> **Important:** This repository includes a `.nojekyll` file that prevents GitHub Pages from using Jekyll processing. This is essential for single-page applications to work correctly.
+
 The site will be available at `https://<username>.github.io/portfolio/`
 
 ### Vercel
