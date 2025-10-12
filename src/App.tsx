@@ -89,7 +89,6 @@ function App() {
                 aria-label="Toggle language"
               >
                 {language === 'en' ? '🇫🇷 FR' : '🇬🇧 EN'}
-            <div className="logo">Portfolio</div>
             <div className="nav-controls">
               <button 
                 className="theme-toggle"
