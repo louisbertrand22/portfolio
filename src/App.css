@@ -44,6 +44,8 @@
 .language-toggle:hover {
   background: var(--secondary-color);
   transform: translateY(-2px);
+}
+
 .theme-toggle {
   background: none;
   border: none;

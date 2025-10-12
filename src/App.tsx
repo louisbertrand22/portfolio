@@ -8,7 +8,7 @@ function App() {
     let savedLanguage: string | null = null;
     try {
       savedLanguage = localStorage.getItem('language');
-    } catch (e) {
+    } catch {
       // localStorage unavailable, ignore and use default
     }
     return (savedLanguage === 'en' || savedLanguage === 'fr') ? savedLanguage : 'en'
@@ -19,7 +19,7 @@ function App() {
   useEffect(() => {
     try {
       localStorage.setItem('language', language)
-    } catch (e) {
+    } catch {
       // localStorage unavailable, ignore
     }
   }, [language])
@@ -90,7 +90,7 @@ function App() {
                 aria-label="Toggle language"
               >
                 {language === 'en' ? '🇫🇷 FR' : '🇬🇧 EN'}
-            <div className="nav-controls">
+              </button>
               <button 
                 className="theme-toggle"
                 onClick={toggleTheme}
