@@ -37,6 +37,21 @@ function App() {
     }
   ]
 
+  const education = [
+    {
+      school: 'EPITA: Ecole d\'Ingénieurs en Informatique',
+      degree: 'Diplôme d\'ingénieur',
+      period: 'Sept. 2022 - Jul. 2027',
+      description: 'Engineering degree in Computer Science'
+    },
+    {
+      school: 'Univerzita Hradec Králové',
+      degree: 'Informatics',
+      period: 'Feb. 2024 - Jun 2024',
+      description: 'Erasmus exchange program'
+    }
+  ]
+
   const skills = [
     'JavaScript/TypeScript',
     'React',
@@ -64,6 +79,7 @@ function App() {
             <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
               <li><a href="#home" onClick={() => setIsMenuOpen(false)}>Home</a></li>
               <li><a href="#about" onClick={() => setIsMenuOpen(false)}>About</a></li>
+              <li><a href="#education" onClick={() => setIsMenuOpen(false)}>Education</a></li>
               <li><a href="#projects" onClick={() => setIsMenuOpen(false)}>Projects</a></li>
               <li><a href="#skills" onClick={() => setIsMenuOpen(false)}>Skills</a></li>
               <li><a href="#contact" onClick={() => setIsMenuOpen(false)}>Contact</a></li>
@@ -104,6 +120,22 @@ function App() {
                 When I'm not coding, you can find me exploring new technologies, contributing to
                 open-source projects, or sharing knowledge with the developer community.
               </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="education" className="education">
+          <div className="container">
+            <h2 className="section-title">Education</h2>
+            <div className="education-grid">
+              {education.map((edu, index) => (
+                <div key={index} className="education-card">
+                  <h3 className="education-school">{edu.school}</h3>
+                  <p className="education-degree">{edu.degree}</p>
+                  <p className="education-period">{edu.period}</p>
+                  <p className="education-description">{edu.description}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
