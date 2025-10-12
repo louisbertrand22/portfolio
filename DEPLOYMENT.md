@@ -16,30 +16,29 @@ GitHub Pages is a free hosting service provided by GitHub, perfect for static we
 
 ### Automatic Deployment (Recommended)
 
-The repository includes a GitHub Actions workflow that automatically deploys your site whenever you push to the `main` branch. The workflow will automatically enable and configure GitHub Pages if it's not already set up.
+The repository includes a GitHub Actions workflow that automatically deploys your site whenever you push to the `main` branch.
 
 **Setup Steps:**
 
-1. **Push to main branch:**
-   ```bash
-   git push origin main
-   ```
-
-2. **Monitor deployment:**
-   - Go to the "Actions" tab in your repository
-   - You'll see the "Deploy to GitHub Pages" workflow running
-   - The workflow will automatically enable GitHub Pages on first run
-   - Once complete (usually 1-2 minutes), your site will be live
-
-3. **Access your site:**
-   - Your portfolio will be available at: `https://<username>.github.io/portfolio/`
-   - Replace `<username>` with your GitHub username
-
-**Note:** If you prefer to manually enable GitHub Pages before the first deployment:
+1. **Enable GitHub Pages (one-time setup):**
    - Go to your repository on GitHub
    - Click on "Settings" → "Pages"
    - Under "Build and deployment", select **"GitHub Actions"** as the source
    - Save your changes
+
+2. **Push to main branch:**
+   ```bash
+   git push origin main
+   ```
+
+3. **Monitor deployment:**
+   - Go to the "Actions" tab in your repository
+   - You'll see the "Deploy to GitHub Pages" workflow running
+   - Once complete (usually 1-2 minutes), your site will be live
+
+4. **Access your site:**
+   - Your portfolio will be available at: `https://<username>.github.io/portfolio/`
+   - Replace `<username>` with your GitHub username
 
 ### Manual Deployment
 
@@ -279,12 +278,13 @@ This portfolio doesn't require environment variables for basic deployment. If yo
 
 ### GitHub Pages Configuration Error
 
-If you get an error like "Get Pages site failed" or "Not Found" during the workflow:
-- The workflow will automatically enable GitHub Pages on first run (configured with `enablement: true`)
-- If the error persists, manually enable GitHub Pages in repository settings:
+If you get an error like "Get Pages site failed", "Not Found", or "Resource not accessible by integration" during the workflow:
+- Make sure you have manually enabled GitHub Pages in repository settings:
   - Go to Settings → Pages
   - Under "Build and deployment", select "GitHub Actions" as the source
+  - Save your changes
 - Ensure the workflow has the required permissions (already configured in the workflow file)
+- Wait a few minutes after enabling Pages before pushing, as it may take time for the settings to propagate
 
 ### GitHub Pages 404 Error
 
