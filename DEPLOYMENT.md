@@ -296,7 +296,11 @@ If you get a "Not Found" or "404" error during the deployment:
 If you get a 404 error on GitHub Pages after successful deployment:
 - Check that the workflow completed successfully in the Actions tab
 - Wait a few minutes for DNS to propagate
-- Verify the correct URL format: `https://<username>.github.io/portfolio/`
+- **Verify the correct URL format**: `https://<username>.github.io/portfolio/`
+  - ⚠️ **Important**: This site MUST be accessed at `/portfolio/` base path, not at the root URL
+  - If you see an error like "GET https://louisbertrand22.github.io/src/main.tsx", it means you're accessing the wrong URL
+  - The correct URL is: `https://louisbertrand22.github.io/portfolio/`
+  - A custom 404 page will automatically redirect users to the correct path if they access the wrong URL
 - Ensure the `.nojekyll` file exists in the `public/` folder (it's automatically copied to `dist/` during build)
   - This file prevents GitHub Pages from processing the site with Jekyll, which can cause 404 errors for single-page applications
   - The file should be empty and is already included in this repository
