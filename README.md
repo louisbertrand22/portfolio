@@ -132,15 +132,16 @@ Choose your preferred platform:
 
 ### GitHub Pages (Automated)
 
-The repository includes a GitHub Actions workflow that automatically deploys to GitHub Pages on every push to the `main` branch.
+The repository includes a GitHub Actions workflow that automatically deploys to GitHub Pages on every push to the `main` branch. The workflow will automatically enable and configure GitHub Pages on first deployment.
 
 **Setup:**
-1. Go to your repository settings on GitHub
-2. Navigate to "Pages" in the left sidebar
-3. Under "Build and deployment", select "GitHub Actions" as the source
-4. Push to the `main` branch and the site will automatically deploy
+1. Push to the `main` branch
+2. The workflow will automatically enable GitHub Pages and deploy your site
+3. Check the "Actions" tab to monitor the deployment
 
 The site will be available at `https://<username>.github.io/portfolio/`
+
+**Optional:** You can manually enable GitHub Pages in repository settings before first deployment if preferred.
 
 ### Vercel
 
