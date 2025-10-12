@@ -141,6 +141,8 @@ The repository includes a GitHub Actions workflow that automatically deploys to 
 2. Push to the `main` branch
 3. Check the "Actions" tab to monitor the deployment
 
+> **Note:** If you push before configuring GitHub Pages, the deployment will fail with a "Not Found" error. Simply enable "GitHub Actions" as the source in Settings → Pages, then push again or re-run the workflow.
+
 The site will be available at `https://<username>.github.io/portfolio/`
 
 ### Vercel

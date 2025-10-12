@@ -20,11 +20,13 @@ The repository includes a GitHub Actions workflow that automatically deploys you
 
 **Setup Steps:**
 
-1. **Enable GitHub Pages (one-time setup):**
+1. **First-time setup:**
    - Go to your repository on GitHub
    - Click on "Settings" → "Pages"
    - Under "Build and deployment", select **"GitHub Actions"** as the source
    - Save your changes
+   
+   > **Note:** If you push to the `main` branch before configuring this setting, the deployment may fail with a "Not Found" error. Simply enable GitHub Actions as the source in Settings → Pages, then push again or manually re-run the failed workflow.
 
 2. **Push to main branch:**
    ```bash
@@ -278,14 +280,14 @@ This portfolio doesn't require environment variables for basic deployment. If yo
 
 ### GitHub Pages Configuration Error
 
-If you get an error during the deployment:
-- **First deployment**: Make sure you have manually enabled GitHub Pages in repository settings:
-  - Go to Settings → Pages
-  - Under "Build and deployment", select "GitHub Actions" as the source
-  - Save your changes
-  - Push to main branch again to trigger a new deployment
-- Ensure the workflow has the required permissions (already configured in the workflow file)
-- Wait a few minutes after enabling Pages before pushing, as it may take time for the settings to propagate
+If you get a "Not Found" or "404" error during the deployment:
+- **Cause**: GitHub Pages is not yet configured in your repository settings
+- **Solution**: 
+  1. Go to Settings → Pages in your repository
+  2. Under "Build and deployment", select "GitHub Actions" as the source
+  3. Save your changes
+  4. Either push to main branch again, or go to Actions tab and manually re-run the failed workflow
+- **Note**: The workflow has the required permissions already configured, so no additional permission changes are needed
 
 ### GitHub Pages 404 Error
 
