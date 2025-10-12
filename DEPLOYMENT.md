@@ -280,6 +280,24 @@ This portfolio doesn't require environment variables for basic deployment. If yo
 
 ## Troubleshooting
 
+### ERR_ABORTED 404 /src/main.tsx Error
+
+**Symptom**: You see an error like `GET https://louisbertrand22.github.io/src/main.tsx net::ERR_ABORTED 404 (Not Found)` in your browser console.
+
+**Cause**: This happens when accessing the site at the wrong URL. The browser tries to load the source file `/src/main.tsx`, but in production, the code is bundled into `/portfolio/assets/*.js`.
+
+**Solution**: 
+- ✅ **Use the correct URL**: `https://louisbertrand22.github.io/portfolio/` (with `/portfolio/` path)
+- ❌ **Don't use**: `https://louisbertrand22.github.io/` (without the path)
+- The custom 404.html page should automatically redirect you to the correct location
+- If redirection doesn't work, manually navigate to the correct URL above
+
+**Why this happens**: 
+- The site is configured with a base path of `/portfolio/` for GitHub Pages
+- The source `index.html` file references `/src/main.tsx` for development with Vite
+- During build, Vite bundles everything into `/portfolio/assets/*.js`
+- If you access the wrong URL, the browser sees the unbundled HTML and tries to load the non-existent source files
+
 ### GitHub Pages Configuration Error
 
 If you get a "Not Found" or "404" error during the deployment:

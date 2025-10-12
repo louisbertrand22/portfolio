@@ -5,6 +5,10 @@
 
 A modern, responsive portfolio website built with React, TypeScript, and Vite.
 
+> **🌐 Live Site:** https://louisbertrand22.github.io/portfolio/
+> 
+> ⚠️ **Important:** The site MUST be accessed at the `/portfolio/` path. If you see errors like `ERR_ABORTED 404 /src/main.tsx`, you're accessing the wrong URL. Use the link above.
+
 ## Features
 
 - 🎨 Modern and clean design with gradient hero section

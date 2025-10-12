@@ -53,9 +53,15 @@
     
     // If we're trying to access a path that should be under /portfolio/
     if (!currentPath.startsWith(correctPath)) {
-      // Redirect to the correct path
-      const newPath = correctPath + currentPath.slice(1);
-      window.location.replace(newPath);
+      // Special handling for source file paths (e.g., /src/main.tsx)
+      // These should redirect to the root of the portfolio, not try to preserve the path
+      if (currentPath.startsWith('/src/')) {
+        window.location.replace(correctPath);
+      } else {
+        // For other paths, try to preserve them under /portfolio/
+        const newPath = correctPath + currentPath.slice(1);
+        window.location.replace(newPath);
+      }
     }
   </script>
 </head>
@@ -65,8 +71,12 @@
     <p>Redirecting to the correct location...</p>
     <div class="loader"></div>
     <p style="margin-top: 2rem; font-size: 0.9rem;">
+      This site is located at <strong>/portfolio/</strong><br>
       If you're not redirected automatically, 
       <a href="/portfolio/">click here</a>.
+    </p>
+    <p style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.7;">
+      Correct URL: https://louisbertrand22.github.io/portfolio/
     </p>
   </div>
 </body>
