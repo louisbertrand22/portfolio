@@ -1,5 +1,7 @@
 # Portfolio Website
 
+[![CI](https://github.com/louisbertrand22/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/louisbertrand22/portfolio/actions/workflows/ci.yml)
+
 A modern, responsive portfolio website built with React, TypeScript, and Vite.
 
 ## Features
