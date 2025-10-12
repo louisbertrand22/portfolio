@@ -5,14 +5,23 @@ import { translations, Language } from './translations'
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [language, setLanguage] = useState<Language>(() => {
-    const savedLanguage = localStorage.getItem('language')
+    let savedLanguage: string | null = null;
+    try {
+      savedLanguage = localStorage.getItem('language');
+    } catch (e) {
+      // localStorage unavailable, ignore and use default
+    }
     return (savedLanguage === 'en' || savedLanguage === 'fr') ? savedLanguage : 'en'
   })
 
   const t = translations[language]
 
   useEffect(() => {
-    localStorage.setItem('language', language)
+    try {
+      localStorage.setItem('language', language)
+    } catch (e) {
+      // localStorage unavailable, ignore
+    }
   }, [language])
 
   const toggleLanguage = () => {
