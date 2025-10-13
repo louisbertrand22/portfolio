@@ -91,6 +91,10 @@ export const en = {
         title: 'Sudoku OCR',
         description: 'Sudoku solver in Python using optical character recognition',
       },
+      {
+        title: 'Habit Tracker',
+        description: 'Full-stack web application for tracking daily habits with user authentication, built with Angular and Go',
+      },
     ],
   },
   skills: {

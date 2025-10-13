@@ -112,6 +112,10 @@ function App() {
     {
       technologies: ['Python', 'OCR', 'Computer Vision'],
       link: 'https://github.com/louisbertrand22/sudoku-ocr'
+    },
+    {
+      technologies: ['Angular', 'Go', 'PostgreSQL', 'JWT'],
+      link: 'https://github.com/louisbertrand22/habit-tracker'
     }
   ]
 
