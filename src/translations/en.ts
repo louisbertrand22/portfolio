@@ -84,6 +84,10 @@ export const en = {
         description: 'Football championship simulator with SQLAlchemy ORM and async database operations',
       },
       {
+        title: 'FootySim Backend',
+        description: 'REST API backend built with FastAPI and async SQLAlchemy for football championship simulation',
+      },
+      {
         title: 'Sudoku OCR',
         description: 'Sudoku solver in Python using optical character recognition',
       },
