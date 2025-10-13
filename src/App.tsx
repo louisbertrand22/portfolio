@@ -179,6 +179,11 @@ function App() {
             <div className="experience-grid">
               {t.experience.items.map((exp, index) => (
                 <div key={index} className="experience-card">
+                  {exp.logo && (
+                    <div className="experience-logo">
+                      <img src={exp.logo} alt={`${exp.company} logo`} />
+                    </div>
+                  )}
                   <h3 className="experience-position">{exp.position}</h3>
                   <p className="experience-company">{exp.company}</p>
                   <p className="experience-type">{exp.type}</p>

@@ -372,6 +372,24 @@
   box-shadow: var(--shadow-lg);
 }
 
+.experience-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: 0.5rem;
+}
+
+.experience-logo img {
+  max-width: 120px;
+  max-height: 60px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
 .experience-position {
   font-size: 1.3rem;
   margin-bottom: 0.75rem;

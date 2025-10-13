@@ -51,6 +51,7 @@ export const fr = {
         period: 'Sept. 2025 - Aujourd\'hui',
         location: 'Neuilly-sur-Seine, Île-de-France, France',
         description: 'Stage sur site',
+        logo: '/quanteam-logo.svg',
       },
       {
         position: 'Ventes',

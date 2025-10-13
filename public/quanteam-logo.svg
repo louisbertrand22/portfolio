@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" width="900" height="400">
+  <!-- Quanteam Logo -->
+  <style>
+    .text { font-family: 'Times New Roman', serif; font-weight: 400; fill: #000000; }
+    .triangle { fill: #5B9BD5; }
+  </style>
+  
+  <!-- Q -->
+  <g transform="translate(100, 200)">
+    <circle cx="25" cy="0" r="40" fill="none" stroke="#000000" stroke-width="6"/>
+    <line x1="15" y1="25" x2="45" y2="45" stroke="#000000" stroke-width="6" stroke-linecap="round"/>
+    <!-- Crosshairs -->
+    <line x1="-25" y1="0" x2="75" y2="0" stroke="#000000" stroke-width="2"/>
+    <line x1="25" y1="-50" x2="25" y2="50" stroke="#000000" stroke-width="2"/>
+    <line x1="25" y1="-55" x2="25" y2="-45" stroke="#000000" stroke-width="3"/>
+    <line x1="25" y1="45" x2="25" y2="55" stroke="#000000" stroke-width="3"/>
+    <line x1="-30" y1="0" x2="-20" y2="0" stroke="#000000" stroke-width="3"/>
+    <line x1="70" y1="0" x2="80" y2="0" stroke="#000000" stroke-width="3"/>
+  </g>
+  
+  <!-- u -->
+  <text x="220" y="230" class="text" font-size="85">u</text>
+  
+  <!-- Triangle A -->
+  <polygon points="380,230 410,160 440,230" class="triangle"/>
+  
+  <!-- NTEAM -->
+  <text x="460" y="230" class="text" font-size="85">NTEAM</text>
+</svg>

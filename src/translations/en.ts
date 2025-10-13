@@ -51,6 +51,7 @@ export const en = {
         period: 'Sept. 2025 - Present',
         location: 'Neuilly-sur-Seine, Île-de-France, France',
         description: 'On-site internship position',
+        logo: '/quanteam-logo.svg',
       },
       {
         position: 'Sales',
