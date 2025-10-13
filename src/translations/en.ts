@@ -11,8 +11,8 @@ export const en = {
   hero: {
     greeting: "Hi, I'm",
     name: 'Louis Bertrand',
-    subtitle: 'Full Stack Developer',
-    description: 'I build modern web applications with clean code and great user experiences',
+    subtitle: 'Engineering Student | Full Stack Developer',
+    description: 'I build modern web applications with clean code and great user experiences. I love creating apps, participating in projects, and leading projects',
     viewWork: 'View My Work',
     getInTouch: 'Get In Touch',
   },
