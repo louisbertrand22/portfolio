@@ -110,6 +110,7 @@ function App() {
               <li><a href="#home" onClick={() => setIsMenuOpen(false)}>{t.nav.home}</a></li>
               <li><a href="#about" onClick={() => setIsMenuOpen(false)}>{t.nav.about}</a></li>
               <li><a href="#education" onClick={() => setIsMenuOpen(false)}>{t.nav.education}</a></li>
+              <li><a href="#experience" onClick={() => setIsMenuOpen(false)}>{t.nav.experience}</a></li>
               <li><a href="#projects" onClick={() => setIsMenuOpen(false)}>{t.nav.projects}</a></li>
               <li><a href="#skills" onClick={() => setIsMenuOpen(false)}>{t.nav.skills}</a></li>
               <li><a href="#contact" onClick={() => setIsMenuOpen(false)}>{t.nav.contact}</a></li>
@@ -166,6 +167,24 @@ function App() {
                   <p className="education-degree">{edu.degree}</p>
                   <p className="education-period">{edu.period}</p>
                   <p className="education-description">{edu.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="experience" className="experience">
+          <div className="container">
+            <h2 className="section-title">{t.experience.title}</h2>
+            <div className="experience-grid">
+              {t.experience.items.map((exp, index) => (
+                <div key={index} className="experience-card">
+                  <h3 className="experience-position">{exp.position}</h3>
+                  <p className="experience-company">{exp.company}</p>
+                  <p className="experience-type">{exp.type}</p>
+                  <p className="experience-period">{exp.period}</p>
+                  <p className="experience-location">{exp.location}</p>
+                  <p className="experience-description">{exp.description}</p>
                 </div>
               ))}
             </div>
