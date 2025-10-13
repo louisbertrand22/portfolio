@@ -1,4 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" fill="none">
-  <rect width="200" height="80" fill="#003366"/>
-  <text x="100" y="50" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#FFFFFF" text-anchor="middle">EPITA</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" fill="none">
+  <!-- Background triangular shapes -->
+  <polygon points="0,400 300,0 600,400" fill="#0A5F7F"/>
+  <polygon points="300,0 600,400 800,100" fill="#00A9E0"/>
+  <polygon points="600,400 800,100 800,400" fill="#0074A2"/>
+  
+  <!-- EPITA text -->
+  <text x="400" y="240" font-family="Arial, sans-serif" font-size="120" font-weight="bold" fill="#FFFFFF" text-anchor="middle">EPITA</text>
+  
+  <!-- Subtitle -->
+  <text x="400" y="300" font-family="Arial, sans-serif" font-size="24" font-weight="normal" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">ÉCOLE D'INGÉNIEURS EN INFORMATIQUE</text>
 </svg>
