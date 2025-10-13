@@ -106,6 +106,10 @@ function App() {
       link: 'https://github.com/louisbertrand22/FootySim'
     },
     {
+      technologies: ['FastAPI', 'SQLAlchemy', 'Python', 'REST API'],
+      link: 'https://github.com/louisbertrand22/FootySim-backend'
+    },
+    {
       technologies: ['Python', 'OCR', 'Computer Vision'],
       link: 'https://github.com/louisbertrand22/sudoku-ocr'
     }
