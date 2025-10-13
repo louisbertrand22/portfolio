@@ -91,6 +91,10 @@ export const fr = {
         title: 'Sudoku OCR',
         description: 'Résolveur de Sudoku en Python utilisant la reconnaissance optique de caractères',
       },
+      {
+        title: 'Suivi des Habitudes',
+        description: 'Application web full-stack pour suivre les habitudes quotidiennes avec authentification utilisateur, construite avec Angular et Go',
+      },
     ],
   },
   skills: {
