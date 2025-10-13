@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import { translations, Language } from './translations'
+import Markdown from 'react-markdown'
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -13,6 +14,9 @@ function App() {
     }
     return (savedLanguage === 'en' || savedLanguage === 'fr') ? savedLanguage : 'en'
   })
+  const [selectedProject, setSelectedProject] = useState<number | null>(null)
+  const [readmeContent, setReadmeContent] = useState<string>('')
+  const [isLoadingReadme, setIsLoadingReadme] = useState(false)
 
   const t = translations[language]
 
@@ -39,6 +43,49 @@ function App() {
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode)
+  }
+
+  const fetchReadme = async (repoUrl: string) => {
+    setIsLoadingReadme(true)
+    try {
+      // Extract owner and repo from GitHub URL
+      const match = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)/)
+      if (!match) {
+        throw new Error('Invalid GitHub URL')
+      }
+      const [, owner, repo] = match
+      
+      // Fetch README from GitHub API
+      const response = await fetch(
+        `https://api.github.com/repos/${owner}/${repo}/readme`,
+        {
+          headers: {
+            'Accept': 'application/vnd.github.v3.raw'
+          }
+        }
+      )
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch README')
+      }
+      
+      const content = await response.text()
+      setReadmeContent(content)
+    } catch {
+      setReadmeContent('# README not available\n\nSorry, the README for this project could not be loaded.')
+    } finally {
+      setIsLoadingReadme(false)
+    }
+  }
+
+  const openProjectModal = (index: number) => {
+    setSelectedProject(index)
+    fetchReadme(projects[index].link)
+  }
+
+  const closeProjectModal = () => {
+    setSelectedProject(null)
+    setReadmeContent('')
   }
 
   const projects = [
@@ -201,7 +248,12 @@ function App() {
             <h2 className="section-title">{t.projects.title}</h2>
             <div className="projects-grid">
               {projects.map((project, index) => (
-                <div key={index} className="project-card">
+                <div 
+                  key={index} 
+                  className="project-card"
+                  onClick={() => openProjectModal(index)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <h3 className="project-title">{t.projects.items[index].title}</h3>
                   <p className="project-description">{t.projects.items[index].description}</p>
                   <div className="project-technologies">
@@ -209,7 +261,15 @@ function App() {
                       <span key={idx} className="tech-tag">{tech}</span>
                     ))}
                   </div>
-                  <a href={project.link} className="project-link">{t.projects.viewProject}</a>
+                  <a 
+                    href={project.link} 
+                    className="project-link"
+                    onClick={(e) => e.stopPropagation()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {t.projects.viewProject}
+                  </a>
                 </div>
               ))}
             </div>
@@ -257,6 +317,24 @@ function App() {
           <p>{t.footer.copyright}</p>
         </div>
       </footer>
+
+      {selectedProject !== null && (
+        <div className="modal-overlay" onClick={closeProjectModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={closeProjectModal} aria-label="Close modal">
+              ✕
+            </button>
+            <h2 className="modal-title">{t.projects.items[selectedProject].title}</h2>
+            {isLoadingReadme ? (
+              <div className="modal-loading">Loading README...</div>
+            ) : (
+              <div className="modal-readme">
+                <Markdown>{readmeContent}</Markdown>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
