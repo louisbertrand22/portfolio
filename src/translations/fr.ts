@@ -11,8 +11,8 @@ export const fr = {
   hero: {
     greeting: 'Bonjour, je suis',
     name: 'Louis Bertrand',
-    subtitle: 'Développeur Full Stack',
-    description: 'Je crée des applications web modernes avec du code propre et de grandes expériences utilisateur',
+    subtitle: 'Étudiant en École d\'Ingénieurs | Développeur Full Stack',
+    description: 'Je crée des applications web modernes avec du code propre et de grandes expériences utilisateur. J\'aime créer des applications, participer à des projets et diriger des projets',
     viewWork: 'Voir Mon Travail',
     getInTouch: 'Me Contacter',
   },
