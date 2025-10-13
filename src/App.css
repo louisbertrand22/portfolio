@@ -316,6 +316,7 @@
   width: auto;
   height: auto;
   object-fit: contain;
+  color: var(--text-color);
 }
 
 .education-school {
