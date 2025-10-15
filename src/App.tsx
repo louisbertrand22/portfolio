@@ -129,7 +129,12 @@ function App() {
     'Git & GitHub',
     'Responsive Design',
     'REST APIs',
-    'Agile/Scrum'
+    'Agile/Scrum',
+    'PostgreSQL',
+    'JWT',
+    'FastAPI',
+    'Docker',
+    'CI/CD'
   ]
 
   return (
