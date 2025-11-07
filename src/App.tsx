@@ -116,6 +116,10 @@ function App() {
     {
       technologies: ['Angular', 'Go', 'PostgreSQL', 'JWT'],
       link: 'https://github.com/louisbertrand22/habit-tracker'
+    },
+    {
+      technologies: ['Flask', 'Docker', 'Kubernetes', 'CI/CD'],
+      link: 'https://github.com/louisbertrand22/DevOpsTest'
     }
   ]
 

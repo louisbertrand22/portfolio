@@ -95,6 +95,10 @@ export const en = {
         title: 'Habit Tracker',
         description: 'Full-stack web application for tracking daily habits with user authentication, built with Angular and Go',
       },
+      {
+        title: 'DevOpsTest',
+        description: 'Flask web application demonstrating DevOps practices with Docker containerization, Kubernetes orchestration, and automated CI/CD pipeline using GitHub Actions',
+      },
     ],
   },
   skills: {
