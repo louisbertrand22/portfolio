@@ -95,6 +95,10 @@ export const fr = {
         title: 'Suivi des Habitudes',
         description: 'Application web full-stack pour suivre les habitudes quotidiennes avec authentification utilisateur, construite avec Angular et Go',
       },
+      {
+        title: 'DevOpsTest',
+        description: 'Application web Flask démontrant les pratiques DevOps avec la conteneurisation Docker, l\'orchestration Kubernetes et un pipeline CI/CD automatisé utilisant GitHub Actions',
+      },
     ],
   },
   skills: {
