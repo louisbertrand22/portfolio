@@ -215,16 +215,35 @@ To customize the portfolio for your own use:
 ```
 portfolio/
 ├── src/
-│   ├── App.tsx          # Main application component
-│   ├── App.css          # Application styles
-│   ├── main.tsx         # Application entry point
-│   ├── index.css        # Global styles
-│   └── vite-env.d.ts    # Vite type definitions
-├── index.html           # HTML template
-├── package.json         # Dependencies and scripts
-├── tsconfig.json        # TypeScript configuration
-├── vite.config.ts       # Vite configuration
-└── eslint.config.js     # ESLint configuration
+│   ├── components/          # Reusable components
+│   │   ├── Header.tsx       # Navigation header with theme/language toggles
+│   │   ├── Footer.tsx       # Site footer
+│   │   ├── ProjectModal.tsx # Modal for displaying project READMEs
+│   │   └── index.ts         # Components barrel export
+│   ├── sections/            # Page sections
+│   │   ├── Hero.tsx         # Hero/landing section
+│   │   ├── About.tsx        # About me section
+│   │   ├── Education.tsx    # Education history section
+│   │   ├── Experience.tsx   # Work experience section
+│   │   ├── Projects.tsx     # Projects showcase section
+│   │   ├── Skills.tsx       # Skills grid section
+│   │   ├── Contact.tsx      # Contact links section
+│   │   └── index.ts         # Sections barrel export
+│   ├── translations/        # Internationalization
+│   │   ├── en.ts            # English translations
+│   │   ├── fr.ts            # French translations
+│   │   └── index.ts         # Translation exports and types
+│   ├── App.tsx              # Main application component
+│   ├── App.css              # Application styles
+│   ├── main.tsx             # Application entry point
+│   ├── index.css            # Global styles
+│   └── vite-env.d.ts        # Vite type definitions
+├── public/                  # Static assets
+├── index.html               # HTML template
+├── package.json             # Dependencies and scripts
+├── tsconfig.json            # TypeScript configuration
+├── vite.config.ts           # Vite configuration
+└── eslint.config.js         # ESLint configuration
 ```
 
 ## License
