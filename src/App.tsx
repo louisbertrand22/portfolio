@@ -120,6 +120,10 @@ function App() {
     {
       technologies: ['Flask', 'Docker', 'Kubernetes', 'CI/CD'],
       link: 'https://github.com/louisbertrand22/DevOpsTest'
+    },
+    {
+      technologies: ['Flask', 'Python', 'JWT', 'Docker'],
+      link: 'https://github.com/louisbertrand22/FlashCards'
     }
   ]
 

@@ -99,6 +99,10 @@ export const en = {
         title: 'DevOpsTest',
         description: 'Flask web application demonstrating DevOps practices with Docker containerization, Kubernetes orchestration, and automated CI/CD pipeline using GitHub Actions',
       },
+      {
+        title: 'FlashCards',
+        description: 'Interactive flashcard study application with JWT authentication, spaced repetition algorithm, and both web and CLI interfaces',
+      },
     ],
   },
   skills: {

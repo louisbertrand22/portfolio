@@ -99,6 +99,10 @@ export const fr = {
         title: 'DevOpsTest',
         description: 'Application web Flask démontrant les pratiques DevOps avec la conteneurisation Docker, l\'orchestration Kubernetes et un pipeline CI/CD automatisé utilisant GitHub Actions',
       },
+      {
+        title: 'FlashCards',
+        description: 'Application d\'étude de cartes mémoire interactive avec authentification JWT, algorithme de répétition espacée et interfaces web et CLI',
+      },
     ],
   },
   skills: {
