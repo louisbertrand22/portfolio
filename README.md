@@ -5,9 +5,7 @@
 
 A modern, responsive portfolio website built with React, TypeScript, and Vite.
 
-> **🌐 Live Site:** https://louisbertrand22.github.io/portfolio/
-> 
-> ⚠️ **Important:** The site MUST be accessed at the `/portfolio/` path. If you see errors like `ERR_ABORTED 404 /src/main.tsx`, you're accessing the wrong URL. Use the link above.
+> **🌐 Live Site:** https://lucho-dev.xyz/
 
 ## Features
 
@@ -136,22 +134,28 @@ Choose your preferred platform:
 
 ### GitHub Pages (Automated)
 
-The repository includes a GitHub Actions workflow that automatically deploys to GitHub Pages on every push to the `main` branch.
+The repository includes a GitHub Actions workflow that automatically deploys to GitHub Pages on every push to the `main` branch. The site is configured to use the custom domain **lucho-dev.xyz**.
 
 **Setup:**
 1. Enable GitHub Pages in repository settings (one-time setup):
    - Go to Settings → Pages
    - Under "Build and deployment", select "GitHub Actions" as the source
-2. Push to the `main` branch
-3. Check the "Actions" tab to monitor the deployment
+2. Configure custom domain in repository settings:
+   - In Settings → Pages, under "Custom domain", the domain `lucho-dev.xyz` is configured
+   - The CNAME file is included in the repository and will be automatically deployed
+3. Configure DNS for your domain (one-time setup):
+   - Add an A record pointing to GitHub Pages IP addresses:
+     - 185.199.108.153
+     - 185.199.109.153
+     - 185.199.110.153
+     - 185.199.111.153
+   - Or add a CNAME record pointing to `louisbertrand22.github.io`
+4. Push to the `main` branch
+5. Check the "Actions" tab to monitor the deployment
 
 > **Note:** If you push before configuring GitHub Pages, the deployment will fail with a "Not Found" error. Simply enable "GitHub Actions" as the source in Settings → Pages, then push again or re-run the workflow.
 
-> **Important:** This repository includes a `.nojekyll` file that prevents GitHub Pages from using Jekyll processing. This is essential for single-page applications to work correctly.
-
-**The site will be available at:** `https://<username>.github.io/portfolio/`
-
-> ⚠️ **Note:** The site MUST be accessed with the `/portfolio/` path. If you see errors like "ERR_ABORTED 404 /src/main.tsx", ensure you're accessing `https://louisbertrand22.github.io/portfolio/` and not just `https://louisbertrand22.github.io/`.
+**The site will be available at:** `https://lucho-dev.xyz/`
 
 ### Vercel
 
