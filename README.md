@@ -5,7 +5,7 @@
 
 A modern, responsive portfolio website built with React, TypeScript, and Vite.
 
-> **🌐 Live Site:** https://lucho-dev.xyz/
+> **🌐 Live Site:** https://portfolio.lucho-dev.xyz/
 
 ## Features
 
@@ -134,14 +134,14 @@ Choose your preferred platform:
 
 ### GitHub Pages (Automated)
 
-The repository includes a GitHub Actions workflow that automatically deploys to GitHub Pages on every push to the `main` branch. The site is configured to use the custom domain **lucho-dev.xyz**.
+The repository includes a GitHub Actions workflow that automatically deploys to GitHub Pages on every push to the `main` branch. The site is configured to use the custom domain **portfolio.lucho-dev.xyz**.
 
 **Setup:**
 1. Enable GitHub Pages in repository settings (one-time setup):
    - Go to Settings → Pages
    - Under "Build and deployment", select "GitHub Actions" as the source
 2. Configure custom domain in repository settings:
-   - In Settings → Pages, under "Custom domain", the domain `lucho-dev.xyz` is configured
+   - In Settings → Pages, under "Custom domain", the domain `portfolio.lucho-dev.xyz` is configured
    - The CNAME file is included in the repository and will be automatically deployed
 3. Configure DNS for your domain (one-time setup):
    - Add an A record pointing to GitHub Pages IP addresses:
@@ -155,7 +155,7 @@ The repository includes a GitHub Actions workflow that automatically deploys to 
 
 > **Note:** If you push before configuring GitHub Pages, the deployment will fail with a "Not Found" error. Simply enable "GitHub Actions" as the source in Settings → Pages, then push again or re-run the workflow.
 
-**The site will be available at:** `https://lucho-dev.xyz/`
+**The site will be available at:** `https://portfolio.lucho-dev.xyz/`
 
 ### Vercel
 
