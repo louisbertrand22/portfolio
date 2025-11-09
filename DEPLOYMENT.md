@@ -16,7 +16,7 @@ GitHub Pages is a free hosting service provided by GitHub, perfect for static we
 
 ### Automatic Deployment (Recommended)
 
-The repository includes a GitHub Actions workflow that automatically deploys your site whenever you push to the `main` branch. The site is configured to use the custom domain **lucho-dev.xyz**.
+The repository includes a GitHub Actions workflow that automatically deploys your site whenever you push to the `main` branch. The site is configured to use the custom domain **portfolio.lucho-dev.xyz**.
 
 **Setup Steps:**
 
@@ -29,7 +29,7 @@ The repository includes a GitHub Actions workflow that automatically deploys you
    > **Note:** If you push to the `main` branch before configuring this setting, the deployment may fail with a "Not Found" error. Simply enable GitHub Actions as the source in Settings → Pages, then push again or manually re-run the failed workflow.
 
 2. **Configure custom domain (if using a custom domain):**
-   - In Settings → Pages, under "Custom domain", enter your domain (e.g., `lucho-dev.xyz`)
+   - In Settings → Pages, under "Custom domain", enter your domain (e.g., `portfolio.lucho-dev.xyz`)
    - A CNAME file is already included in the repository at `public/CNAME`
    - Configure DNS settings with your domain provider:
      - **Option 1 (A records):** Add A records pointing to GitHub Pages IP addresses:
@@ -51,7 +51,7 @@ The repository includes a GitHub Actions workflow that automatically deploys you
    - Once complete (usually 1-2 minutes), your site will be live
 
 5. **Access your site:**
-   - With custom domain: `https://lucho-dev.xyz/`
+   - With custom domain: `https://portfolio.lucho-dev.xyz/`
    - Without custom domain: `https://<username>.github.io/portfolio/`
    - Replace `<username>` with your GitHub username
 
@@ -287,7 +287,7 @@ This portfolio can be deployed to many other platforms:
 
 The application is configured to work correctly on different platforms:
 
-- **GitHub Pages with custom domain**: Uses `/` as the base path (current setup for lucho-dev.xyz)
+- **GitHub Pages with custom domain**: Uses `/` as the base path (current setup for portfolio.lucho-dev.xyz)
 - **GitHub Pages without custom domain**: Uses `/portfolio/` as the base path (configured via `--mode github-pages`)
 - **Vercel/Netlify/Docker**: Uses `/` as the base path (default)
 
@@ -312,9 +312,9 @@ This portfolio doesn't require environment variables for basic deployment. If yo
 **Solution**:
 1. Verify DNS settings with your domain provider:
    - Check that A records or CNAME record are correctly configured
-   - Use `dig` or `nslookup` to verify DNS propagation: `dig lucho-dev.xyz`
+   - Use `dig` or `nslookup` to verify DNS propagation: `dig portfolio.lucho-dev.xyz`
 2. In GitHub repository Settings → Pages:
-   - Ensure "Custom domain" is set to your domain (e.g., `lucho-dev.xyz`)
+   - Ensure "Custom domain" is set to your domain (e.g., `portfolio.lucho-dev.xyz`)
    - Wait for the DNS check to complete (green checkmark)
    - Enable "Enforce HTTPS" once DNS is verified
 3. Verify the CNAME file exists:
@@ -324,7 +324,7 @@ This portfolio doesn't require environment variables for basic deployment. If yo
 
 ### ERR_ABORTED 404 /src/main.tsx Error
 
-**Symptom**: You see an error like `GET https://lucho-dev.xyz/src/main.tsx net::ERR_ABORTED 404 (Not Found)` in your browser console.
+**Symptom**: You see an error like `GET https://portfolio.lucho-dev.xyz/src/main.tsx net::ERR_ABORTED 404 (Not Found)` in your browser console.
 
 **Cause**: This happens when the site is built with the wrong base path or accessed during deployment.
 
@@ -351,7 +351,7 @@ If you get a 404 error on GitHub Pages after successful deployment:
 - Check that the workflow completed successfully in the Actions tab
 - Wait a few minutes for DNS to propagate (especially for custom domains)
 - **For custom domain setup**:
-  - Verify the correct URL: `https://lucho-dev.xyz/`
+  - Verify the correct URL: `https://portfolio.lucho-dev.xyz/`
   - Check DNS configuration in your domain provider
   - Ensure custom domain is configured in Settings → Pages
 - **For standard GitHub Pages**:
