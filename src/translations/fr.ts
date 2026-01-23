@@ -103,6 +103,10 @@ export const fr = {
         title: 'FlashCards',
         description: 'Application d\'étude de cartes mémoire interactive avec authentification JWT, algorithme de répétition espacée et interfaces web et CLI',
       },
+      {
+        title: 'MySSO',
+        description: 'Implémentation SSO personnalisée avec support OpenID Connect et OAuth2, PKCE, gestion du consentement utilisateur et signature JWT RSA',
+      },
     ],
   },
   skills: {
