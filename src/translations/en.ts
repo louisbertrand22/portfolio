@@ -103,6 +103,10 @@ export const en = {
         title: 'FlashCards',
         description: 'Interactive flashcard study application with JWT authentication, spaced repetition algorithm, and both web and CLI interfaces',
       },
+      {
+        title: 'MySSO',
+        description: 'Custom Single Sign-On implementation with OpenID Connect and OAuth2 support, PKCE, user consent management, and RSA JWT signing',
+      },
     ],
   },
   skills: {

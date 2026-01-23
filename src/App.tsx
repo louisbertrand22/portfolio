@@ -124,6 +124,10 @@ function App() {
     {
       technologies: ['Flask', 'Python', 'JWT', 'Docker'],
       link: 'https://github.com/louisbertrand22/FlashCards'
+    },
+    {
+      technologies: ['TypeScript', 'Node.js', 'PostgreSQL', 'OAuth2', 'Prisma'],
+      link: 'https://github.com/louisbertrand22/MySSO'
     }
   ]
 
