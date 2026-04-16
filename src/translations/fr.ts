@@ -12,15 +12,15 @@ export const fr = {
   hero: {
     greeting: 'Bonjour, je suis',
     name: 'Louis Bertrand',
-    subtitle: 'Étudiant en École d\'Ingénieurs | Développeur Full Stack',
-    description: 'Je crée des applications web modernes avec du code propre et de grandes expériences utilisateur. J\'aime créer des applications, participer à des projets et diriger des projets',
-    viewWork: 'Voir Mon Travail',
+    subtitle: 'Étudiant Ingénieur à l\'EPITA · Développeur Full Stack',
+    description: 'Majeure SIGL à l\'EPITA - architecture logicielle, cloud, mobilité et transformation digitale. Je conçois des produits full-stack robustes, du backend au frontend, pensés pour durer.',
+    viewWork: 'Voir Mes Projets',
     getInTouch: 'Me Contacter',
   },
   about: {
     title: 'À Propos de Moi',
-    paragraph1: "Je suis un développeur full-stack passionné qui aime créer des solutions élégantes à des problèmes complexes. Avec une expertise dans les technologies web modernes, je me spécialise dans la création d'applications réactives et conviviales qui font la différence.",
-    paragraph2: "Quand je ne code pas, vous pouvez me trouver en train d'explorer de nouvelles technologies, de contribuer à des projets open-source ou de partager mes connaissances avec la communauté des développeurs.",
+    paragraph1: "Étudiant ingénieur à l'EPITA en majeure SIGL (Systèmes d'Information et Génie Logiciel), je suis passionné par la conception d'applications robustes et scalables - alliant une architecture backend solide à des interfaces frontend soignées.",
+    paragraph2: "Mes projets couvrent le développement web full-stack, l'automatisation DevOps et la conception de systèmes. En dehors des cours, j'aime contribuer à l'open-source, explorer de nouvelles technologies et mener des projets personnels qui me poussent à progresser.",
   },
   education: {
     title: 'Formation',

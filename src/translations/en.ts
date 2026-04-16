@@ -12,15 +12,15 @@ export const en = {
   hero: {
     greeting: "Hi, I'm",
     name: 'Louis Bertrand',
-    subtitle: 'Engineering Student | Full Stack Developer',
-    description: 'I build modern web applications with clean code and great user experiences. I love creating apps, participating in projects, and leading projects',
+    subtitle: 'Software Engineering Student at EPITA · Full Stack Developer',
+    description: 'Majoring in Information Systems & Software Engineering (SIGL) at EPITA - covering software architecture, cloud, mobility and digital transformation. I build full-stack products that are engineered to last.',
     viewWork: 'View My Work',
     getInTouch: 'Get In Touch',
   },
   about: {
     title: 'About Me',
-    paragraph1: "I'm a passionate full-stack developer with a love for creating elegant solutions to complex problems. With expertise in modern web technologies, I specialize in building responsive, user-friendly applications that make a difference.",
-    paragraph2: "When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community.",
+    paragraph1: "I'm a software engineering student at EPITA, majoring in Information Systems & Software Engineering (SIGL). I'm passionate about building robust, scalable applications - combining clean architecture on the backend with intuitive interfaces on the frontend.",
+    paragraph2: "My projects span full-stack web development, DevOps automation, and systems design. Outside of coursework, I enjoy open-source contributions, exploring new technologies, and taking on side projects that push me to learn faster.",
   },
   education: {
     title: 'Education',

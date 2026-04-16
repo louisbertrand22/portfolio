@@ -193,7 +193,7 @@ function App() {
                 </div>
                 <div className="terminal-body">
                   <p><span className="terminal-prompt">$</span> <span className="terminal-cmd">whoami</span></p>
-                  <p className="terminal-output">Louis Bertrand — Software Engineer</p>
+                  <p className="terminal-output">Louis Bertrand - Software Engineer</p>
                   <p><span className="terminal-prompt">$</span> <span className="terminal-cmd">cat stack.json</span></p>
                   <p className="terminal-output">{'{ React, FastAPI, Docker, K8s }'}</p>
                   <p><span className="terminal-prompt">$</span> <span className="terminal-cmd">git log --oneline -1</span></p>
