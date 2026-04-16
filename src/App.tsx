@@ -5,6 +5,7 @@ import Markdown from 'react-markdown'
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [hasScrolled, setHasScrolled] = useState(false)
   const [language, setLanguage] = useState<Language>(() => {
     let savedLanguage: string | null = null;
     try {
@@ -17,6 +18,10 @@ function App() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null)
   const [readmeContent, setReadmeContent] = useState<string>('')
   const [isLoadingReadme, setIsLoadingReadme] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('theme')
+    return savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  })
 
   const t = translations[language]
 
@@ -28,49 +33,41 @@ function App() {
     }
   }, [language])
 
-  const toggleLanguage = () => {
-    setLanguage(prev => prev === 'en' ? 'fr' : 'en')
-  }
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem('theme')
-    return savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  })
-
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light')
     localStorage.setItem('theme', isDarkMode ? 'dark' : 'light')
   }, [isDarkMode])
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode)
-  }
+  useEffect(() => {
+    const onScroll = () => setHasScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') }),
+      { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+    )
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
+  const toggleLanguage = () => setLanguage(prev => prev === 'en' ? 'fr' : 'en')
+  const toggleTheme = () => setIsDarkMode(prev => !prev)
 
   const fetchReadme = async (repoUrl: string) => {
     setIsLoadingReadme(true)
     try {
-      // Extract owner and repo from GitHub URL
       const match = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)/)
-      if (!match) {
-        throw new Error('Invalid GitHub URL')
-      }
+      if (!match) throw new Error('Invalid GitHub URL')
       const [, owner, repo] = match
-      
-      // Fetch README from GitHub API
       const response = await fetch(
         `https://api.github.com/repos/${owner}/${repo}/readme`,
-        {
-          headers: {
-            'Accept': 'application/vnd.github.v3.raw'
-          }
-        }
+        { headers: { 'Accept': 'application/vnd.github.v3.raw' } }
       )
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch README')
-      }
-      
-      const content = await response.text()
-      setReadmeContent(content)
+      if (!response.ok) throw new Error('Failed to fetch README')
+      setReadmeContent(await response.text())
     } catch {
       setReadmeContent('# README not available\n\nSorry, the README for this project could not be loaded.')
     } finally {
@@ -89,93 +86,63 @@ function App() {
   }
 
   const projects = [
-    {
-      technologies: ['Next.js', 'TypeScript', 'FastAPI', 'PostgreSQL'],
-      link: 'https://github.com/louisbertrand22/devdocshub'
-    },
-    {
-      technologies: ['React', 'FastAPI', 'Docker', 'CI/CD'],
-      link: 'https://github.com/louisbertrand22/stats-f1'
-    },
-    {
-      technologies: ['Angular', 'C#', '.NET Core', 'Docker'],
-      link: 'https://github.com/louisbertrand22/Task-Managing'
-    },
-    {
-      technologies: ['Python', 'SQLAlchemy', 'Alembic', 'CLI'],
-      link: 'https://github.com/louisbertrand22/FootySim'
-    },
-    {
-      technologies: ['FastAPI', 'SQLAlchemy', 'Python', 'REST API'],
-      link: 'https://github.com/louisbertrand22/FootySim-backend'
-    },
-    {
-      technologies: ['Python', 'OCR', 'Computer Vision'],
-      link: 'https://github.com/louisbertrand22/sudoku-ocr'
-    },
-    {
-      technologies: ['Angular', 'Go', 'PostgreSQL', 'JWT'],
-      link: 'https://github.com/louisbertrand22/habit-tracker'
-    },
-    {
-      technologies: ['Flask', 'Docker', 'Kubernetes', 'CI/CD'],
-      link: 'https://github.com/louisbertrand22/DevOpsTest'
-    },
-    {
-      technologies: ['Flask', 'Python', 'JWT', 'Docker'],
-      link: 'https://github.com/louisbertrand22/FlashCards'
-    },
-    {
-      technologies: ['TypeScript', 'Node.js', 'PostgreSQL', 'OAuth2', 'Prisma'],
-      link: 'https://github.com/louisbertrand22/MySSO'
-    }
+    { technologies: ['Next.js', 'TypeScript', 'FastAPI', 'PostgreSQL'], link: 'https://github.com/louisbertrand22/devdocshub' },
+    { technologies: ['React', 'FastAPI', 'Docker', 'CI/CD'], link: 'https://github.com/louisbertrand22/stats-f1' },
+    { technologies: ['Angular', 'C#', '.NET Core', 'Docker'], link: 'https://github.com/louisbertrand22/Task-Managing' },
+    { technologies: ['Python', 'SQLAlchemy', 'Alembic', 'CLI'], link: 'https://github.com/louisbertrand22/FootySim' },
+    { technologies: ['FastAPI', 'SQLAlchemy', 'Python', 'REST API'], link: 'https://github.com/louisbertrand22/FootySim-backend' },
+    { technologies: ['Python', 'OCR', 'Computer Vision'], link: 'https://github.com/louisbertrand22/sudoku-ocr' },
+    { technologies: ['Angular', 'Go', 'PostgreSQL', 'JWT'], link: 'https://github.com/louisbertrand22/habit-tracker' },
+    { technologies: ['Flask', 'Docker', 'Kubernetes', 'CI/CD'], link: 'https://github.com/louisbertrand22/DevOpsTest' },
+    { technologies: ['Flask', 'Python', 'JWT', 'Docker'], link: 'https://github.com/louisbertrand22/FlashCards' },
+    { technologies: ['TypeScript', 'Node.js', 'PostgreSQL', 'OAuth2', 'Prisma'], link: 'https://github.com/louisbertrand22/MySSO' },
   ]
-
-
 
   const skills = [
-    'JavaScript/TypeScript',
-    'React',
-    'Node.js',
-    'HTML5 & CSS3',
-    'Git & GitHub',
-    'Responsive Design',
-    'REST APIs',
-    'Agile/Scrum',
-    'PostgreSQL',
-    'JWT',
-    'FastAPI',
-    'Docker',
-    'CI/CD'
+    { name: 'TypeScript / JS', icon: '⚡' },
+    { name: 'React', icon: '⚛️' },
+    { name: 'Node.js', icon: '🟢' },
+    { name: 'Python', icon: '🐍' },
+    { name: 'FastAPI', icon: '🚀' },
+    { name: 'PostgreSQL', icon: '🐘' },
+    { name: 'Docker', icon: '🐳' },
+    { name: 'Kubernetes', icon: '☸️' },
+    { name: 'CI/CD', icon: '🔄' },
+    { name: 'HTML5 & CSS3', icon: '🎨' },
+    { name: 'Git & GitHub', icon: '📦' },
+    { name: 'REST APIs', icon: '🔗' },
+    { name: 'Agile/Scrum', icon: '📋' },
   ]
+
+  const badgeText = language === 'en' ? 'Open to opportunities' : 'Disponible pour des opportunités'
 
   return (
     <div className="app">
-      <header className="header">
+      <header className={`header${hasScrolled ? ' scrolled' : ''}`}>
         <div className="container">
           <nav className="nav">
             <div className="logo">{t.nav.logo}</div>
             <div className="nav-controls">
-              <button 
+              <button
                 className="language-toggle"
                 onClick={toggleLanguage}
                 aria-label="Toggle language"
               >
                 {language === 'en' ? '🇫🇷 FR' : '🇬🇧 EN'}
               </button>
-              <button 
+              <button
                 className="theme-toggle"
                 onClick={toggleTheme}
                 aria-label="Toggle theme"
               >
                 {isDarkMode ? '☀️' : '🌙'}
               </button>
-              <button 
+              <button
                 className="menu-toggle"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 aria-label="Toggle menu"
               >
-                ☰
+                {isMenuOpen ? '✕' : '☰'}
               </button>
             </div>
             <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
@@ -193,18 +160,46 @@ function App() {
 
       <main>
         <section id="home" className="hero">
+          <div className="hero-bg" aria-hidden="true">
+            <div className="hero-orb hero-orb-1" />
+            <div className="hero-orb hero-orb-2" />
+            <div className="hero-orb hero-orb-3" />
+          </div>
           <div className="container">
-            <div className="hero-content">
-              <h1 className="hero-title">
-                {t.hero.greeting} <span className="highlight">{t.hero.name}</span>
-              </h1>
-              <p className="hero-subtitle">{t.hero.subtitle}</p>
-              <p className="hero-description">
-                {t.hero.description}
-              </p>
-              <div className="hero-buttons">
-                <a href="#projects" className="btn btn-primary">{t.hero.viewWork}</a>
-                <a href="#contact" className="btn btn-secondary">{t.hero.getInTouch}</a>
+            <div className="hero-layout">
+              <div className="hero-content">
+                <div className="hero-badge">
+                  <span className="hero-badge-dot" />
+                  {badgeText}
+                </div>
+                <h1 className="hero-title">
+                  {t.hero.greeting} <span className="highlight">{t.hero.name}</span>
+                </h1>
+                <p className="hero-subtitle">{t.hero.subtitle}</p>
+                <p className="hero-description">{t.hero.description}</p>
+                <div className="hero-buttons">
+                  <a href="#projects" className="btn btn-primary">{t.hero.viewWork}</a>
+                  <a href="#contact" className="btn btn-secondary">{t.hero.getInTouch}</a>
+                </div>
+              </div>
+              <div className="hero-terminal" aria-hidden="true">
+                <div className="terminal-header">
+                  <div className="terminal-dots">
+                    <span className="terminal-dot red" />
+                    <span className="terminal-dot yellow" />
+                    <span className="terminal-dot green" />
+                  </div>
+                  <span className="terminal-title">~/portfolio</span>
+                </div>
+                <div className="terminal-body">
+                  <p><span className="terminal-prompt">$</span> <span className="terminal-cmd">whoami</span></p>
+                  <p className="terminal-output">Louis Bertrand — Software Engineer</p>
+                  <p><span className="terminal-prompt">$</span> <span className="terminal-cmd">cat stack.json</span></p>
+                  <p className="terminal-output">{'{ React, FastAPI, Docker, K8s }'}</p>
+                  <p><span className="terminal-prompt">$</span> <span className="terminal-cmd">git log --oneline -1</span></p>
+                  <p className="terminal-output">feat: building cool things ✨</p>
+                  <p><span className="terminal-prompt">$</span> <span className="terminal-cursor">█</span></p>
+                </div>
               </div>
             </div>
           </div>
@@ -212,33 +207,41 @@ function App() {
 
         <section id="about" className="about">
           <div className="container">
-            <h2 className="section-title">{t.about.title}</h2>
-            <div className="about-content">
-              <p>
-                {t.about.paragraph1}
-              </p>
-              <p>
-                {t.about.paragraph2}
-              </p>
+            <h2 className="section-title animate-on-scroll">{t.about.title}</h2>
+            <div
+              className="about-content animate-on-scroll"
+              style={{ '--delay': '0.1s' } as React.CSSProperties}
+            >
+              <p>{t.about.paragraph1}</p>
+              <p>{t.about.paragraph2}</p>
             </div>
           </div>
         </section>
 
         <section id="education" className="education">
           <div className="container">
-            <h2 className="section-title">{t.education.title}</h2>
-            <div className="education-grid">
+            <h2 className="section-title animate-on-scroll">{t.education.title}</h2>
+            <div className="timeline">
               {t.education.items.map((edu, index) => (
-                <div key={index} className="education-card">
-                  {edu.logo && (
-                    <div className="education-logo">
-                      <img src={edu.logo} alt={`${edu.school} logo`} />
-                    </div>
-                  )}
-                  <h3 className="education-school">{edu.school}</h3>
-                  <p className="education-degree">{edu.degree}</p>
-                  <p className="education-period">{edu.period}</p>
-                  <p className="education-description">{edu.description}</p>
+                <div
+                  key={index}
+                  className="timeline-item animate-on-scroll"
+                  style={{ '--delay': `${index * 0.15}s` } as React.CSSProperties}
+                >
+                  <div className="timeline-connector">
+                    <div className="timeline-dot" />
+                  </div>
+                  <div className="timeline-card">
+                    {edu.logo && (
+                      <div className="timeline-logo">
+                        <img src={edu.logo} alt={`${edu.school} logo`} />
+                      </div>
+                    )}
+                    <h3 className="timeline-title">{edu.school}</h3>
+                    <p className="timeline-subtitle">{edu.degree}</p>
+                    <span className="timeline-period-badge">{edu.period}</span>
+                    <p className="timeline-description">{edu.description}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -247,21 +250,32 @@ function App() {
 
         <section id="experience" className="experience">
           <div className="container">
-            <h2 className="section-title">{t.experience.title}</h2>
-            <div className="experience-grid">
+            <h2 className="section-title animate-on-scroll">{t.experience.title}</h2>
+            <div className="timeline">
               {t.experience.items.map((exp, index) => (
-                <div key={index} className="experience-card">
-                  {exp.logo && (
-                    <div className="experience-logo">
-                      <img src={exp.logo} alt={`${exp.company} logo`} />
+                <div
+                  key={index}
+                  className="timeline-item animate-on-scroll"
+                  style={{ '--delay': `${index * 0.15}s` } as React.CSSProperties}
+                >
+                  <div className="timeline-connector">
+                    <div className="timeline-dot" />
+                  </div>
+                  <div className="timeline-card">
+                    {exp.logo && (
+                      <div className="timeline-logo">
+                        <img src={exp.logo} alt={`${exp.company} logo`} />
+                      </div>
+                    )}
+                    <h3 className="timeline-title">{exp.position}</h3>
+                    <p className="timeline-subtitle">{exp.company}</p>
+                    <div className="timeline-meta">
+                      <span className="timeline-period-badge">{exp.period}</span>
+                      <span className="timeline-tag">{exp.type}</span>
+                      <span className="timeline-tag">{exp.location}</span>
                     </div>
-                  )}
-                  <h3 className="experience-position">{exp.position}</h3>
-                  <p className="experience-company">{exp.company}</p>
-                  <p className="experience-type">{exp.type}</p>
-                  <p className="experience-period">{exp.period}</p>
-                  <p className="experience-location">{exp.location}</p>
-                  <p className="experience-description">{exp.description}</p>
+                    <p className="timeline-description">{exp.description}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -270,15 +284,16 @@ function App() {
 
         <section id="projects" className="projects">
           <div className="container">
-            <h2 className="section-title">{t.projects.title}</h2>
+            <h2 className="section-title animate-on-scroll">{t.projects.title}</h2>
             <div className="projects-grid">
               {projects.map((project, index) => (
-                <div 
-                  key={index} 
-                  className="project-card"
+                <div
+                  key={index}
+                  className="project-card animate-on-scroll"
+                  style={{ '--delay': `${(index % 3) * 0.1}s` } as React.CSSProperties}
                   onClick={() => openProjectModal(index)}
-                  style={{ cursor: 'pointer' }}
                 >
+                  <div className="project-card-accent" />
                   <h3 className="project-title">{t.projects.items[index].title}</h3>
                   <p className="project-description">{t.projects.items[index].description}</p>
                   <div className="project-technologies">
@@ -286,8 +301,8 @@ function App() {
                       <span key={idx} className="tech-tag">{tech}</span>
                     ))}
                   </div>
-                  <a 
-                    href={project.link} 
+                  <a
+                    href={project.link}
                     className="project-link"
                     onClick={(e) => e.stopPropagation()}
                     target="_blank"
@@ -303,11 +318,16 @@ function App() {
 
         <section id="skills" className="skills">
           <div className="container">
-            <h2 className="section-title">{t.skills.title}</h2>
+            <h2 className="section-title animate-on-scroll">{t.skills.title}</h2>
             <div className="skills-grid">
               {skills.map((skill, index) => (
-                <div key={index} className="skill-card">
-                  {skill}
+                <div
+                  key={index}
+                  className="skill-card animate-on-scroll"
+                  style={{ '--delay': `${(index % 5) * 0.07}s` } as React.CSSProperties}
+                >
+                  <span className="skill-icon">{skill.icon}</span>
+                  <span className="skill-name">{skill.name}</span>
                 </div>
               ))}
             </div>
@@ -316,19 +336,23 @@ function App() {
 
         <section id="contact" className="contact">
           <div className="container">
-            <h2 className="section-title">{t.contact.title}</h2>
-            <div className="contact-content">
-              <p>
-                {t.contact.description}
-              </p>
+            <h2 className="section-title animate-on-scroll">{t.contact.title}</h2>
+            <div
+              className="contact-content animate-on-scroll"
+              style={{ '--delay': '0.1s' } as React.CSSProperties}
+            >
+              <p>{t.contact.description}</p>
               <div className="contact-links">
                 <a href="mailto:louisbert91@gmail.com" className="contact-link">
-                  📧 Email
+                  <span className="contact-link-icon">📧</span>
+                  Email
                 </a>
                 <a href="https://github.com/louisbertrand22/" target="_blank" rel="noopener noreferrer" className="contact-link">
-                  💻 GitHub
+                  <span className="contact-link-icon">💻</span>
+                  GitHub
                 </a>
                 <a href="https://www.linkedin.com/in/louis-bertrand222" target="_blank" rel="noopener noreferrer" className="contact-link">
+                  <span className="contact-link-icon">🔗</span>
                   {t.contact.linkedin}
                 </a>
               </div>
@@ -351,7 +375,10 @@ function App() {
             </button>
             <h2 className="modal-title">{t.projects.items[selectedProject].title}</h2>
             {isLoadingReadme ? (
-              <div className="modal-loading">Loading README...</div>
+              <div className="modal-loading">
+                <div className="loading-spinner" />
+                Loading README...
+              </div>
             ) : (
               <div className="modal-readme">
                 <Markdown>{readmeContent}</Markdown>
