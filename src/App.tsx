@@ -4,14 +4,13 @@ import './App.css'
 import { translations, Language } from './translations'
 import Markdown from 'react-markdown'
 
-// ─── Animation config ────────────────────────────────────────────────────────
+// ─── Animation variants ───────────────────────────────────────────────────────
 const ease = [0.22, 1, 0.36, 1] as const
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: (delay: number = 0) => ({
-    opacity: 1,
-    y: 0,
+    opacity: 1, y: 0,
     transition: { duration: 0.55, ease, delay },
   }),
 }
@@ -29,26 +28,56 @@ const cardItem = {
 const slideLeft = {
   hidden: { opacity: 0, x: -16 },
   visible: (delay: number = 0) => ({
-    opacity: 1,
-    x: 0,
+    opacity: 1, x: 0,
     transition: { duration: 0.5, ease, delay },
   }),
 }
 
 const viewport = { once: true, margin: '-60px 0px' } as const
+
+const termBodyVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.3, delayChildren: 0.85 } },
+}
+const termLineVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.06 } },
+}
+
+// ─── Data ─────────────────────────────────────────────────────────────────────
+const projects = [
+  { featured: true,  technologies: ['Next.js', 'TypeScript', 'FastAPI', 'PostgreSQL'],          link: 'https://github.com/louisbertrand22/devdocshub' },
+  { featured: false, technologies: ['React', 'FastAPI', 'Docker', 'CI/CD'],                     link: 'https://github.com/louisbertrand22/stats-f1' },
+  { featured: false, technologies: ['Python', 'SQLAlchemy', 'Alembic', 'CLI'],                  link: 'https://github.com/louisbertrand22/FootySim' },
+  { featured: false, technologies: ['FastAPI', 'SQLAlchemy', 'Python', 'REST API'],              link: 'https://github.com/louisbertrand22/FootySim-backend' },
+  { featured: false, technologies: ['Python', 'OCR', 'Computer Vision'],                        link: 'https://github.com/louisbertrand22/sudoku-ocr' },
+  { featured: false, technologies: ['Angular', 'Go', 'PostgreSQL', 'JWT'],                      link: 'https://github.com/louisbertrand22/habit-tracker' },
+  { featured: false, technologies: ['Flask', 'Docker', 'Kubernetes', 'CI/CD'],                  link: 'https://github.com/louisbertrand22/DevOpsTest' },
+  { featured: true,  technologies: ['TypeScript', 'Node.js', 'PostgreSQL', 'OAuth2', 'Prisma'], link: 'https://github.com/louisbertrand22/MySSO' },
+]
+
+const filterTechs = ['All', 'Python', 'TypeScript', 'Docker', 'FastAPI', 'PostgreSQL']
+
+const skills = [
+  'TypeScript / JS', 'React', 'Node.js', 'Python', 'FastAPI',
+  'PostgreSQL', 'Docker', 'Kubernetes', 'CI/CD', 'HTML5 & CSS3',
+  'Git & GitHub', 'REST APIs', 'Agile / Scrum',
+]
 // ─────────────────────────────────────────────────────────────────────────────
 
 function App() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [hasScrolled, setHasScrolled] = useState(false)
+  const [isMenuOpen,    setIsMenuOpen]    = useState(false)
+  const [hasScrolled,   setHasScrolled]   = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
+  const [selectedTech,  setSelectedTech]  = useState('All')
   const [language, setLanguage] = useState<Language>(() => {
     let saved: string | null = null
     try { saved = localStorage.getItem('language') } catch { /* unavailable */ }
     return (saved === 'en' || saved === 'fr') ? saved : 'en'
   })
-  const [selectedProject, setSelectedProject] = useState<number | null>(null)
-  const [readmeContent, setReadmeContent] = useState<string>('')
-  const [isLoadingReadme, setIsLoadingReadme] = useState(false)
+  const [selectedProject,  setSelectedProject]  = useState<number | null>(null)
+  const [readmeContent,    setReadmeContent]    = useState('')
+  const [isLoadingReadme,  setIsLoadingReadme]  = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const saved = localStorage.getItem('theme')
     return saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)
@@ -56,19 +85,32 @@ function App() {
 
   const t = translations[language]
 
+  // Persist language
   useEffect(() => {
     try { localStorage.setItem('language', language) } catch { /* unavailable */ }
   }, [language])
 
+  // Dark mode
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light')
     localStorage.setItem('theme', isDarkMode ? 'dark' : 'light')
   }, [isDarkMode])
 
+  // Scroll → glassmorphism nav
   useEffect(() => {
     const onScroll = () => setHasScrolled(window.scrollY > 20)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Active section tracking
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id) }),
+      { rootMargin: '0px 0px -80% 0px', threshold: 0 }
+    )
+    document.querySelectorAll('section[id]').forEach(s => observer.observe(s))
+    return () => observer.disconnect()
   }, [])
 
   const fetchReadme = async (repoUrl: string) => {
@@ -100,24 +142,12 @@ function App() {
     setReadmeContent('')
   }
 
-  const projects = [
-    { technologies: ['Next.js', 'TypeScript', 'FastAPI', 'PostgreSQL'], link: 'https://github.com/louisbertrand22/devdocshub' },
-    { technologies: ['React', 'FastAPI', 'Docker', 'CI/CD'], link: 'https://github.com/louisbertrand22/stats-f1' },
-    { technologies: ['Python', 'SQLAlchemy', 'Alembic', 'CLI'], link: 'https://github.com/louisbertrand22/FootySim' },
-    { technologies: ['FastAPI', 'SQLAlchemy', 'Python', 'REST API'], link: 'https://github.com/louisbertrand22/FootySim-backend' },
-    { technologies: ['Python', 'OCR', 'Computer Vision'], link: 'https://github.com/louisbertrand22/sudoku-ocr' },
-    { technologies: ['Angular', 'Go', 'PostgreSQL', 'JWT'], link: 'https://github.com/louisbertrand22/habit-tracker' },
-    { technologies: ['Flask', 'Docker', 'Kubernetes', 'CI/CD'], link: 'https://github.com/louisbertrand22/DevOpsTest' },
-    { technologies: ['TypeScript', 'Node.js', 'PostgreSQL', 'OAuth2', 'Prisma'], link: 'https://github.com/louisbertrand22/MySSO' },
-  ]
-
-  const skills = [
-    'TypeScript / JS', 'React', 'Node.js', 'Python', 'FastAPI',
-    'PostgreSQL', 'Docker', 'Kubernetes', 'CI/CD', 'HTML5 & CSS3',
-    'Git & GitHub', 'REST APIs', 'Agile / Scrum',
-  ]
+  const filteredProjects = projects
+    .map((p, i) => ({ ...p, originalIndex: i }))
+    .filter(p => selectedTech === 'All' || p.technologies.includes(selectedTech))
 
   const badgeText = language === 'en' ? 'Open to opportunities' : 'Disponible pour des opportunités'
+  const featuredLabel = language === 'en' ? 'Featured' : 'À la une'
 
   return (
     <div className="app">
@@ -132,7 +162,16 @@ function App() {
                 {language === 'en' ? 'FR' : 'EN'}
               </button>
               <button className="theme-toggle" onClick={() => setIsDarkMode(p => !p)} aria-label="Toggle theme">
-                {isDarkMode ? '☀️' : '🌙'}
+                {isDarkMode ? (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                  </svg>
+                ) : (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                  </svg>
+                )}
               </button>
               <button className="menu-toggle" onClick={() => setIsMenuOpen(o => !o)} aria-label="Toggle menu">
                 {isMenuOpen ? '✕' : '☰'}
@@ -141,8 +180,15 @@ function App() {
             <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
               {(['home', 'about', 'education', 'experience', 'projects', 'sigl', 'skills', 'contact'] as const).map(key => (
                 <li key={key}>
-                  <a href={`#${key}`} onClick={() => setIsMenuOpen(false)}>
+                  <a
+                    href={`#${key}`}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={activeSection === key ? 'active' : undefined}
+                  >
                     {t.nav[key]}
+                    {activeSection === key && (
+                      <motion.span className="nav-indicator" layoutId="nav-indicator" />
+                    )}
                   </a>
                 </li>
               ))}
@@ -161,62 +207,49 @@ function App() {
             <div className="hero-orb hero-orb-3" />
           </div>
           <motion.div
-            className="hero-scroll"
-            aria-hidden="true"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            className="hero-scroll" aria-hidden="true"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             transition={{ delay: 1.4, duration: 0.8 }}
           >
             <span className="hero-scroll-text">Scroll</span>
-            <div className="hero-scroll-line">
-              <div className="hero-scroll-thumb" />
-            </div>
+            <div className="hero-scroll-line"><div className="hero-scroll-thumb" /></div>
           </motion.div>
           <div className="container">
             <div className="hero-layout">
               <motion.div className="hero-content" initial="hidden" animate="visible" variants={stagger}>
                 <motion.div className="hero-badge" variants={cardItem}>
-                  <span className="hero-badge-dot" />
-                  {badgeText}
+                  <span className="hero-badge-dot" />{badgeText}
                 </motion.div>
                 <motion.h1 className="hero-title" variants={fadeUp} custom={0.05}>
                   {t.hero.greeting} <span className="highlight">{t.hero.name}</span>
                 </motion.h1>
-                <motion.p className="hero-subtitle" variants={fadeUp} custom={0.1}>
-                  {t.hero.subtitle}
-                </motion.p>
-                <motion.p className="hero-description" variants={fadeUp} custom={0.15}>
-                  {t.hero.description}
-                </motion.p>
+                <motion.p className="hero-subtitle" variants={fadeUp} custom={0.1}>{t.hero.subtitle}</motion.p>
+                <motion.p className="hero-description" variants={fadeUp} custom={0.15}>{t.hero.description}</motion.p>
                 <motion.div className="hero-buttons" variants={fadeUp} custom={0.2}>
                   <a href="#projects" className="btn btn-primary">{t.hero.viewWork}</a>
                   <a href="#contact" className="btn btn-secondary">{t.hero.getInTouch}</a>
                 </motion.div>
               </motion.div>
               <motion.div
-                className="hero-terminal"
-                aria-hidden="true"
-                initial={{ opacity: 0, y: 28 }}
-                animate={{ opacity: 1, y: 0 }}
+                className="hero-terminal" aria-hidden="true"
+                initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, ease, delay: 0.3 }}
               >
                 <div className="terminal-header">
                   <div className="terminal-dots">
-                    <span className="terminal-dot red" />
-                    <span className="terminal-dot yellow" />
-                    <span className="terminal-dot green" />
+                    <span className="terminal-dot red" /><span className="terminal-dot yellow" /><span className="terminal-dot green" />
                   </div>
                   <span className="terminal-title">~/portfolio</span>
                 </div>
-                <div className="terminal-body">
-                  <p><span className="terminal-prompt">$</span> <span className="terminal-cmd">whoami</span></p>
-                  <p className="terminal-output">Louis Bertrand - Software Engineer</p>
-                  <p><span className="terminal-prompt">$</span> <span className="terminal-cmd">cat stack.json</span></p>
-                  <p className="terminal-output">{'{ React, FastAPI, Docker, K8s }'}</p>
-                  <p><span className="terminal-prompt">$</span> <span className="terminal-cmd">git log --oneline -1</span></p>
-                  <p className="terminal-output">feat: building cool things ✨</p>
-                  <p><span className="terminal-prompt">$</span> <span className="terminal-cursor">█</span></p>
-                </div>
+                <motion.div className="terminal-body" initial="hidden" animate="visible" variants={termBodyVariants}>
+                  <motion.p variants={termLineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">whoami</span></motion.p>
+                  <motion.p className="terminal-output" variants={termLineVariants}>Louis Bertrand — Software Engineer</motion.p>
+                  <motion.p variants={termLineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">cat stack.json</span></motion.p>
+                  <motion.p className="terminal-output" variants={termLineVariants}>{'{ React, FastAPI, Docker, K8s }'}</motion.p>
+                  <motion.p variants={termLineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">git log --oneline -1</span></motion.p>
+                  <motion.p className="terminal-output" variants={termLineVariants}>feat: building cool things ✨</motion.p>
+                  <motion.p variants={termLineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cursor">█</span></motion.p>
+                </motion.div>
               </motion.div>
             </div>
           </div>
@@ -243,24 +276,10 @@ function App() {
             </motion.h2>
             <div className="timeline">
               {t.education.items.map((edu, index) => (
-                <motion.div
-                  key={index}
-                  className="timeline-item"
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={viewport}
-                  variants={slideLeft}
-                  custom={index * 0.1}
-                >
-                  <div className="timeline-connector">
-                    <div className="timeline-dot" />
-                  </div>
+                <motion.div key={index} className="timeline-item" initial="hidden" whileInView="visible" viewport={viewport} variants={slideLeft} custom={index * 0.1}>
+                  <div className="timeline-connector"><div className="timeline-dot" /></div>
                   <div className="timeline-card">
-                    {edu.logo && (
-                      <div className="timeline-logo">
-                        <img src={edu.logo} alt={`${edu.school} logo`} />
-                      </div>
-                    )}
+                    {edu.logo && <div className="timeline-logo"><img src={edu.logo} alt={`${edu.school} logo`} /></div>}
                     <h3 className="timeline-title">{edu.school}</h3>
                     <p className="timeline-subtitle">{edu.degree}</p>
                     <span className="timeline-period-badge">{edu.period}</span>
@@ -280,24 +299,10 @@ function App() {
             </motion.h2>
             <div className="timeline">
               {t.experience.items.map((exp, index) => (
-                <motion.div
-                  key={index}
-                  className="timeline-item"
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={viewport}
-                  variants={slideLeft}
-                  custom={index * 0.1}
-                >
-                  <div className="timeline-connector">
-                    <div className="timeline-dot" />
-                  </div>
+                <motion.div key={index} className="timeline-item" initial="hidden" whileInView="visible" viewport={viewport} variants={slideLeft} custom={index * 0.1}>
+                  <div className="timeline-connector"><div className="timeline-dot" /></div>
                   <div className="timeline-card">
-                    {exp.logo && (
-                      <div className="timeline-logo">
-                        <img src={exp.logo} alt={`${exp.company} logo`} />
-                      </div>
-                    )}
+                    {exp.logo && <div className="timeline-logo"><img src={exp.logo} alt={`${exp.company} logo`} /></div>}
                     <h3 className="timeline-title">{exp.position}</h3>
                     <p className="timeline-subtitle">{exp.company}</p>
                     <div className="timeline-meta">
@@ -319,40 +324,59 @@ function App() {
             <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
               {t.projects.title}
             </motion.h2>
-            <motion.div
-              className="projects-grid"
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewport}
-              variants={stagger}
-            >
-              {projects.map((project, index) => (
-                <motion.div
-                  key={index}
-                  className="project-card"
-                  variants={cardItem}
-                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                  onClick={() => openProjectModal(index)}
+
+            {/* Filter bar */}
+            <motion.div className="project-filters" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.08}>
+              {filterTechs.map(tech => (
+                <button
+                  key={tech}
+                  className={`filter-btn${selectedTech === tech ? ' active' : ''}`}
+                  onClick={() => setSelectedTech(tech)}
                 >
-                  <div className="project-card-accent" />
-                  <h3 className="project-title">{t.projects.items[index]?.title}</h3>
-                  <p className="project-description">{t.projects.items[index]?.description}</p>
-                  <div className="project-technologies">
-                    {project.technologies.map((tech, idx) => (
-                      <span key={idx} className="tech-tag">{tech}</span>
-                    ))}
-                  </div>
-                  <a
-                    href={project.link}
-                    className="project-link"
-                    onClick={(e) => e.stopPropagation()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {t.projects.viewProject}
-                  </a>
-                </motion.div>
+                  {selectedTech === tech && (
+                    <motion.span className="filter-btn-bg" layoutId="filter-pill" transition={{ type: 'spring', bounce: 0.18, duration: 0.4 }} />
+                  )}
+                  <span className="filter-btn-text">{tech}</span>
+                </button>
               ))}
+            </motion.div>
+
+            {/* Grid */}
+            <motion.div className="projects-grid" layout>
+              <AnimatePresence mode="popLayout">
+                {filteredProjects.map(({ originalIndex, featured, technologies }) => (
+                  <motion.div
+                    key={originalIndex}
+                    layout
+                    className={`project-card${featured ? ' featured' : ''}`}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.22 }}
+                    whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                    onClick={() => openProjectModal(originalIndex)}
+                  >
+                    {featured && (
+                      <div className="project-preview" aria-hidden="true">
+                        <div className="project-preview-dots" />
+                        <span className="project-preview-name">{t.projects.items[originalIndex]?.title}</span>
+                        <span className="project-featured-badge">{featuredLabel}</span>
+                      </div>
+                    )}
+                    <div className="project-card-accent" />
+                    <h3 className="project-title">{t.projects.items[originalIndex]?.title}</h3>
+                    <p className="project-description">{t.projects.items[originalIndex]?.description}</p>
+                    <div className="project-technologies">
+                      {technologies.map((tech, idx) => (
+                        <span key={idx} className="tech-tag">{tech}</span>
+                      ))}
+                    </div>
+                    <a href={projects[originalIndex].link} className="project-link" onClick={e => e.stopPropagation()} target="_blank" rel="noopener noreferrer">
+                      {t.projects.viewProject}
+                    </a>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </motion.div>
           </div>
         </section>
@@ -416,12 +440,7 @@ function App() {
             </motion.h2>
             <motion.div className="skills-grid" initial="hidden" whileInView="visible" viewport={viewport} variants={stagger}>
               {skills.map((skill, index) => (
-                <motion.div
-                  key={index}
-                  className="skill-card"
-                  variants={cardItem}
-                  whileHover={{ y: -2, scale: 1.04, transition: { duration: 0.15 } }}
-                >
+                <motion.div key={index} className="skill-card" variants={cardItem} whileHover={{ y: -2, scale: 1.04, transition: { duration: 0.15 } }}>
                   <span className="skill-name">{skill}</span>
                 </motion.div>
               ))}
@@ -444,24 +463,21 @@ function App() {
                       <rect x="2" y="4" width="20" height="16" rx="2"/>
                       <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
                     </svg>
-                  </span>
-                  Email
+                  </span>Email
                 </a>
                 <a href="https://github.com/louisbertrand22/" target="_blank" rel="noopener noreferrer" className="contact-link">
                   <span className="contact-link-icon">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.5 11.5 0 0 1 12 6.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
                     </svg>
-                  </span>
-                  GitHub
+                  </span>GitHub
                 </a>
                 <a href="https://www.linkedin.com/in/louis-bertrand222" target="_blank" rel="noopener noreferrer" className="contact-link">
                   <span className="contact-link-icon">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                     </svg>
-                  </span>
-                  {t.contact.linkedin}
+                  </span>{t.contact.linkedin}
                 </a>
               </div>
             </motion.div>
@@ -471,41 +487,25 @@ function App() {
       </main>
 
       <footer className="footer">
-        <div className="container">
-          <p>{t.footer.copyright}</p>
-        </div>
+        <div className="container"><p>{t.footer.copyright}</p></div>
       </footer>
 
       {/* ── MODAL ── */}
       <AnimatePresence>
         {selectedProject !== null && (
-          <motion.div
-            className="modal-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={closeProjectModal}
-          >
+          <motion.div className="modal-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} onClick={closeProjectModal}>
             <motion.div
               className="modal-content"
-              initial={{ opacity: 0, y: 20, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.97 }}
+              initial={{ opacity: 0, y: 20, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 20, scale: 0.97 }}
               transition={{ duration: 0.25, ease }}
-              onClick={(e) => e.stopPropagation()}
+              onClick={e => e.stopPropagation()}
             >
               <button className="modal-close" onClick={closeProjectModal} aria-label="Close modal">✕</button>
               <h2 className="modal-title">{t.projects.items[selectedProject]?.title}</h2>
               {isLoadingReadme ? (
-                <div className="modal-loading">
-                  <div className="loading-spinner" />
-                  Loading README...
-                </div>
+                <div className="modal-loading"><div className="loading-spinner" />Loading README...</div>
               ) : (
-                <div className="modal-readme">
-                  <Markdown>{readmeContent}</Markdown>
-                </div>
+                <div className="modal-readme"><Markdown>{readmeContent}</Markdown></div>
               )}
             </motion.div>
           </motion.div>
