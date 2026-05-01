@@ -6,6 +6,7 @@ export const fr = {
     education: 'Formation',
     experience: 'Expérience',
     projects: 'Projets',
+    sigl: 'SIGL',
     skills: 'Compétences',
     contact: 'Contact',
   },
@@ -48,7 +49,7 @@ export const fr = {
         position: 'Développeur Python',
         company: 'QUANTEAM (Groupe RAINBOW PARTNERS)',
         type: 'Stage',
-        period: 'Sept. 2025 - Aujourd\'hui',
+        period: 'Sept. 2025 - Fév. 2026',
         location: 'Neuilly-sur-Seine, Île-de-France, France',
         description: 'Stage sur site',
         logo: 'QuanteamLogo169.jpeg',
@@ -76,10 +77,6 @@ export const fr = {
         description: 'Application full-stack affichant des statistiques F1 avec des pratiques DevOps modernes',
       },
       {
-        title: 'Gestionnaire de Tâches',
-        description: 'Application moderne de gestion de tâches avec frontend Angular et backend .NET Core',
-      },
-      {
         title: 'FootySim',
         description: 'Simulateur de championnat de football avec ORM SQLAlchemy et opérations de base de données asynchrones',
       },
@@ -100,12 +97,22 @@ export const fr = {
         description: 'Application web Flask démontrant les pratiques DevOps avec la conteneurisation Docker, l\'orchestration Kubernetes et un pipeline CI/CD automatisé utilisant GitHub Actions',
       },
       {
-        title: 'FlashCards',
-        description: 'Application d\'étude de cartes mémoire interactive avec authentification JWT, algorithme de répétition espacée et interfaces web et CLI',
-      },
-      {
         title: 'MySSO',
         description: 'Implémentation SSO personnalisée avec support OpenID Connect et OAuth2, PKCE, gestion du consentement utilisateur et signature JWT RSA',
+      },
+    ],
+  },
+  siglProjects: {
+    title: 'EPITA - Projets SIGL',
+    subtitle: 'Projets académiques réalisés en groupe dans le cadre de la majeure SIGL (Systèmes d\'Information et Génie Logiciel)',
+    items: [
+      {
+        title: 'Urbanisation des SI',
+        description: 'Conception et développement d\'un système d\'information rationalisé reproduisant les opérations et le comportement d\'une entreprise de vente au détail. Le système réplique les différentes zones fonctionnelles d\'une entreprise typique, fournissant une plateforme complète pour comprendre et analyser les interactions et dépendances au sein d\'une telle organisation.',
+      },
+      {
+        title: 'Architecture Cloud',
+        description: 'Création d\'une infrastructure cloud hybride s\'appuyant sur les technologies OpenStack, complétée par des services PaaS d\'AWS et Microsoft Azure. Le projet couvre la mise en réseau multi-cloud, le provisionnement de ressources de calcul, la gestion du stockage et les configurations haute disponibilité.',
       },
     ],
   },
@@ -120,6 +127,6 @@ export const fr = {
     linkedin: '💼 LinkedIn',
   },
   footer: {
-    copyright: '© 2024 Louis Bertrand. Créé avec React & TypeScript.',
+    copyright: '© 2026 Louis Bertrand.',
   },
 }

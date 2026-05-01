@@ -6,6 +6,7 @@ export const en = {
     education: 'Education',
     experience: 'Experience',
     projects: 'Projects',
+    sigl: 'SIGL',
     skills: 'Skills',
     contact: 'Contact',
   },
@@ -48,7 +49,7 @@ export const en = {
         position: 'Python Developer',
         company: 'QUANTEAM (Groupe RAINBOW PARTNERS)',
         type: 'Internship',
-        period: 'Sept. 2025 - Present',
+        period: 'Sept. 2025 - Feb. 2026',
         location: 'Neuilly-sur-Seine, Île-de-France, France',
         description: 'On-site internship position',
         logo: 'QuanteamLogo169.jpeg',
@@ -76,10 +77,6 @@ export const en = {
         description: 'Full-stack application displaying F1 statistics with modern DevOps practices',
       },
       {
-        title: 'Task Manager',
-        description: 'Modern task management application with Angular frontend and .NET Core backend',
-      },
-      {
         title: 'FootySim',
         description: 'Football championship simulator with SQLAlchemy ORM and async database operations',
       },
@@ -100,12 +97,22 @@ export const en = {
         description: 'Flask web application demonstrating DevOps practices with Docker containerization, Kubernetes orchestration, and automated CI/CD pipeline using GitHub Actions',
       },
       {
-        title: 'FlashCards',
-        description: 'Interactive flashcard study application with JWT authentication, spaced repetition algorithm, and both web and CLI interfaces',
-      },
-      {
         title: 'MySSO',
         description: 'Custom Single Sign-On implementation with OpenID Connect and OAuth2 support, PKCE, user consent management, and RSA JWT signing',
+      },
+    ],
+  },
+  siglProjects: {
+    title: 'EPITA - SIGL Projects',
+    subtitle: 'Academic group projects carried out as part of the SIGL major (Information Systems & Software Engineering)',
+    items: [
+      {
+        title: 'Information Systems Urbanisation',
+        description: 'Design and development of a rationalized information system that replicates the operations and behavior of a retail business. The system maps the functional zones of a typical retail company, providing a comprehensive platform to understand and analyze interactions and dependencies within such an organization.',
+      },
+      {
+        title: 'Cloud Architecture',
+        description: 'Creation of a hybrid cloud infrastructure leveraging OpenStack technologies alongside PaaS services from AWS and Microsoft Azure. The project covers multi-cloud networking, compute provisioning, storage management, and high-availability configurations.',
       },
     ],
   },
@@ -120,6 +127,6 @@ export const en = {
     linkedin: '💼 LinkedIn',
   },
   footer: {
-    copyright: '© 2024 Louis Bertrand. Built with React & TypeScript.',
+    copyright: '© 2026 Louis Bertrand.',
   },
 }
