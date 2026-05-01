@@ -30,7 +30,7 @@ export const en = {
         school: 'EPITA: École d\'Ingénieurs en Informatique',
         degree: 'Diplôme d\'ingénieur',
         period: 'Sept. 2022 - Jul. 2027',
-        description: 'Engineering degree in Computer Science',
+        description: 'Engineering degree in Computer Science - Majoring in Information Systems & Software Engineering (SIGL) · TOEIC 845',
         logo: 'Epitalogo.png',
       },
       {
@@ -53,14 +53,6 @@ export const en = {
         location: 'Neuilly-sur-Seine, Île-de-France, France',
         description: 'On-site internship position',
         logo: 'QuanteamLogo169.jpeg',
-      },
-      {
-        position: 'Sales',
-        company: 'LES VERGERS DE CHAMPLAIN',
-        type: 'Internship',
-        period: 'Jul. 2023 - Aug. 2023',
-        location: 'La Queue-en-Brie, Île-de-France, France',
-        description: 'On-site sales internship',
       },
     ],
   },

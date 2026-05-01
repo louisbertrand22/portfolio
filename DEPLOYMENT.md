@@ -51,7 +51,7 @@ The repository includes a GitHub Actions workflow that automatically deploys you
    - Once complete (usually 1-2 minutes), your site will be live
 
 5. **Access your site:**
-   - With custom domain: `https://lucho-dev.xyz/`
+   - With custom domain: `https://louis-bertrand.fr`
    - Without custom domain: `https://<username>.github.io/portfolio/`
    - Replace `<username>` with your GitHub username
 

@@ -30,7 +30,7 @@ export const fr = {
         school: 'EPITA: École d\'Ingénieurs en Informatique',
         degree: 'Diplôme d\'ingénieur',
         period: 'Sept. 2022 - Juil. 2027',
-        description: 'Diplôme d\'ingénieur en informatique',
+        description: 'Diplôme d\'ingénieur en informatique - Majeure Systèmes d\'Information et Génie Logiciel (SIGL) · TOEIC 845',
         logo: 'Epitalogo.png',
       },
       {
@@ -53,14 +53,6 @@ export const fr = {
         location: 'Neuilly-sur-Seine, Île-de-France, France',
         description: 'Stage sur site',
         logo: 'QuanteamLogo169.jpeg',
-      },
-      {
-        position: 'Ventes',
-        company: 'LES VERGERS DE CHAMPLAIN',
-        type: 'Stage',
-        period: 'Juil. 2023 - Août 2023',
-        location: 'La Queue-en-Brie, Île-de-France, France',
-        description: 'Stage de vente sur site',
       },
     ],
   },
