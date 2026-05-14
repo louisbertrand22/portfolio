@@ -1,6 +1,8 @@
 {
   "permissions": {
     "allow": [
+      "Bash(git fetch *)",
+      "Bash(git reset *)",
       "Bash(npm run *)",
       "Bash(npm install *)"
     ]
