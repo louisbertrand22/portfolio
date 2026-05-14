@@ -4,7 +4,10 @@
       "Bash(git fetch *)",
       "Bash(git reset *)",
       "Bash(npm run *)",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(rsvg-convert -w 512 -h 512 /home/louis/Documents/GITHUB-PROJECTS/portfolio/public/favicon.svg -o /home/louis/Documents/GITHUB-PROJECTS/portfolio/public/icon-512.png)",
+      "Bash(rsvg-convert -w 192 -h 192 /home/louis/Documents/GITHUB-PROJECTS/portfolio/public/favicon.svg -o /home/louis/Documents/GITHUB-PROJECTS/portfolio/public/icon-192.png)",
+      "Bash(rsvg-convert -w 180 -h 180 /home/louis/Documents/GITHUB-PROJECTS/portfolio/public/favicon.svg -o /home/louis/Documents/GITHUB-PROJECTS/portfolio/public/apple-touch-icon.png)"
     ]
   }
 }
