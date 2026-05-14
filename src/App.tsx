@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { toast } from 'sonner'
 import './App.css'
 import { translations, Language } from './translations'
 import Markdown from 'react-markdown'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 
 // ─── Animation variants ───────────────────────────────────────────────────────
 const ease = [0.22, 1, 0.36, 1] as const
@@ -60,8 +64,8 @@ const filterTechs = ['All', 'Python', 'TypeScript', 'Docker', 'FastAPI', 'Postgr
 
 const skills = [
   'TypeScript / JS', 'React', 'Node.js', 'Python', 'FastAPI',
-  'PostgreSQL', 'Docker', 'Kubernetes', 'CI/CD', 'HTML5 & CSS3',
-  'Git & GitHub', 'REST APIs', 'Agile / Scrum',
+  'PostgreSQL', 'Docker', 'Kubernetes', 'CI/CD', 'ArgoCD', 'Terraform',
+  'Git', 'REST APIs', 'Agile / Scrum', 'Cloud'
 ]
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -82,6 +86,8 @@ function App() {
     const saved = localStorage.getItem('theme')
     return saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)
   })
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [showBackToTop, setShowBackToTop] = useState(false)
 
   const t = translations[language]
 
@@ -96,9 +102,16 @@ function App() {
     localStorage.setItem('theme', isDarkMode ? 'dark' : 'light')
   }, [isDarkMode])
 
-  // Scroll → glassmorphism nav
+  // Scroll → glassmorphism nav + progress + back-to-top
   useEffect(() => {
-    const onScroll = () => setHasScrolled(window.scrollY > 20)
+    const onScroll = () => {
+      const scrollTop = window.scrollY
+      setHasScrolled(scrollTop > 20)
+      setShowBackToTop(scrollTop > 400)
+      const el = document.documentElement
+      const scrollHeight = el.scrollHeight - el.clientHeight
+      setScrollProgress(scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0)
+    }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -142,6 +155,15 @@ function App() {
     setReadmeContent('')
   }
 
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+
+  const copyEmail = (e: React.MouseEvent) => {
+    e.preventDefault()
+    navigator.clipboard.writeText('louisbert91@gmail.com').then(() => {
+      toast(t.contact.emailCopied, { icon: '✓' })
+    })
+  }
+
   const filteredProjects = projects
     .map((p, i) => ({ ...p, originalIndex: i }))
     .filter(p => selectedTech === 'All' || p.technologies.includes(selectedTech))
@@ -151,6 +173,9 @@ function App() {
 
   return (
     <div className="app">
+
+      {/* ── SCROLL PROGRESS ── */}
+      <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} aria-hidden="true" />
 
       {/* ── NAV ── */}
       <header className={`header${hasScrolled ? ' scrolled' : ''}`}>
@@ -226,8 +251,12 @@ function App() {
                 <motion.p className="hero-subtitle" variants={fadeUp} custom={0.1}>{t.hero.subtitle}</motion.p>
                 <motion.p className="hero-description" variants={fadeUp} custom={0.15}>{t.hero.description}</motion.p>
                 <motion.div className="hero-buttons" variants={fadeUp} custom={0.2}>
-                  <a href="#projects" className="btn btn-primary">{t.hero.viewWork}</a>
-                  <a href="#contact" className="btn btn-secondary">{t.hero.getInTouch}</a>
+                  <Button asChild size="default">
+                    <a href="#projects">{t.hero.viewWork}</a>
+                  </Button>
+                  <Button asChild variant="secondary" size="default">
+                    <a href="#contact">{t.hero.getInTouch}</a>
+                  </Button>
                 </motion.div>
               </motion.div>
               <motion.div
@@ -307,8 +336,8 @@ function App() {
                     <p className="timeline-subtitle">{exp.company}</p>
                     <div className="timeline-meta">
                       <span className="timeline-period-badge">{exp.period}</span>
-                      <span className="timeline-tag">{exp.type}</span>
-                      <span className="timeline-tag">{exp.location}</span>
+                      <Badge variant="secondary">{exp.type}</Badge>
+                      <Badge variant="secondary">{exp.location}</Badge>
                     </div>
                     <p className="timeline-description">{exp.description}</p>
                   </div>
@@ -368,12 +397,15 @@ function App() {
                     <p className="project-description">{t.projects.items[originalIndex]?.description}</p>
                     <div className="project-technologies">
                       {technologies.map((tech, idx) => (
-                        <span key={idx} className="tech-tag">{tech}</span>
+                        <Badge key={idx}>{tech}</Badge>
                       ))}
                     </div>
                     <a href={projects[originalIndex].link} className="project-link" onClick={e => e.stopPropagation()} target="_blank" rel="noopener noreferrer">
                       {t.projects.viewProject}
                     </a>
+                    <div className="project-card-readme-hint" aria-hidden="true">
+                      {t.projects.viewReadme}
+                    </div>
                   </motion.div>
                 ))}
               </AnimatePresence>
@@ -406,7 +438,7 @@ function App() {
                   <p className="sigl-card-description">{t.siglProjects.items[0].description}</p>
                   <div className="sigl-card-technologies">
                     {['UML', 'ArchiMate', 'BPMN', 'Merise', 'SQL'].map(tech => (
-                      <span key={tech} className="tech-tag">{tech}</span>
+                      <Badge key={tech}>{tech}</Badge>
                     ))}
                   </div>
                 </div>
@@ -423,7 +455,7 @@ function App() {
                   <p className="sigl-card-description">{t.siglProjects.items[1].description}</p>
                   <div className="sigl-card-technologies">
                     {['OpenStack', 'AWS', 'Azure', 'Terraform', 'Linux'].map(tech => (
-                      <span key={tech} className="tech-tag">{tech}</span>
+                      <Badge key={tech}>{tech}</Badge>
                     ))}
                   </div>
                 </div>
@@ -457,7 +489,7 @@ function App() {
             <motion.div className="contact-content" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
               <p>{t.contact.description}</p>
               <div className="contact-links">
-                <a href="mailto:louisbert91@gmail.com" className="contact-link">
+                <a href="mailto:louisbert91@gmail.com" className="contact-link" onClick={copyEmail}>
                   <span className="contact-link-icon">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="2" y="4" width="20" height="16" rx="2"/>
@@ -490,27 +522,38 @@ function App() {
         <div className="container"><p>{t.footer.copyright}</p></div>
       </footer>
 
-      {/* ── MODAL ── */}
+      {/* ── BACK TO TOP ── */}
       <AnimatePresence>
-        {selectedProject !== null && (
-          <motion.div className="modal-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} onClick={closeProjectModal}>
-            <motion.div
-              className="modal-content"
-              initial={{ opacity: 0, y: 20, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 20, scale: 0.97 }}
-              transition={{ duration: 0.25, ease }}
-              onClick={e => e.stopPropagation()}
-            >
-              <button className="modal-close" onClick={closeProjectModal} aria-label="Close modal">✕</button>
-              <h2 className="modal-title">{t.projects.items[selectedProject]?.title}</h2>
-              {isLoadingReadme ? (
-                <div className="modal-loading"><div className="loading-spinner" />Loading README...</div>
-              ) : (
-                <div className="modal-readme"><Markdown>{readmeContent}</Markdown></div>
-              )}
-            </motion.div>
-          </motion.div>
+        {showBackToTop && (
+          <motion.button
+            className="back-to-top"
+            onClick={scrollToTop}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
+            aria-label="Back to top"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 15l-6-6-6 6"/>
+            </svg>
+          </motion.button>
         )}
       </AnimatePresence>
+
+      {/* ── MODAL ── */}
+      <Dialog open={selectedProject !== null} onOpenChange={open => { if (!open) closeProjectModal() }}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t.projects.items[selectedProject ?? 0]?.title}</DialogTitle>
+          </DialogHeader>
+          {isLoadingReadme ? (
+            <div className="modal-loading"><div className="loading-spinner" />Loading README...</div>
+          ) : (
+            <div className="modal-readme"><Markdown>{readmeContent}</Markdown></div>
+          )}
+        </DialogContent>
+      </Dialog>
 
     </div>
   )

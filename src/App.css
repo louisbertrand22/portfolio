@@ -809,43 +809,51 @@ main {
 /* Featured card preview area */
 .project-preview {
   position: relative;
-  height: 110px;
+  height: 120px;
   overflow: hidden;
-  background: var(--bg-subtle);
-  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.07) 100%);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
+[data-theme="dark"] .project-preview {
+  background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(167, 139, 250, 0.07) 100%);
+  border-bottom-color: rgba(129, 140, 248, 0.18);
+}
+
 .project-preview-dots {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
-  background-size: 20px 20px;
-  opacity: 0.9;
+  background-image: radial-gradient(circle, rgba(99, 102, 241, 0.25) 1px, transparent 1px);
+  background-size: 22px 22px;
 }
 
 [data-theme="dark"] .project-preview-dots {
-  opacity: 0.5;
+  background-image: radial-gradient(circle, rgba(129, 140, 248, 0.2) 1px, transparent 1px);
 }
 
 .project-preview-name {
   position: relative;
   font-family: var(--font-display);
   font-size: 1.875rem;
-  font-weight: 700;
-  color: var(--text);
-  opacity: 0.06;
-  letter-spacing: -0.035em;
+  font-weight: 800;
+  letter-spacing: -0.04em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 90%;
+  max-width: 88%;
   text-align: center;
   pointer-events: none;
   user-select: none;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.55;
+  filter: drop-shadow(0 0 20px var(--primary));
 }
 
 .project-featured-badge {
@@ -1386,6 +1394,95 @@ main {
   .modal-title {
     font-size: 1.25rem;
   }
+}
+
+/* ============================================================
+   SCROLL PROGRESS BAR
+   ============================================================ */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+  z-index: 200;
+  transition: width 0.08s linear;
+  border-radius: 0 2px 2px 0;
+  pointer-events: none;
+}
+
+/* ============================================================
+   BACK TO TOP BUTTON
+   ============================================================ */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 90;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.back-to-top:hover {
+  background: var(--secondary);
+  box-shadow: 0 8px 28px rgba(99, 102, 241, 0.5);
+  transform: translateY(-3px);
+}
+
+/* ============================================================
+   PROJECT CARD README HINT (slide-up strip)
+   ============================================================ */
+.project-card-readme-hint {
+  height: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: height 0.22s ease;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.project-card:hover .project-card-readme-hint {
+  height: 2.5rem;
+}
+
+/* ============================================================
+   TOAST NOTIFICATION
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text);
+  color: var(--bg);
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 300;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 /* ============================================================

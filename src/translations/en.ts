@@ -59,6 +59,7 @@ export const en = {
   projects: {
     title: 'Featured Projects',
     viewProject: 'View Project →',
+    viewReadme: 'View README →',
     items: [
       {
         title: 'DevDocsHub',
@@ -117,6 +118,7 @@ export const en = {
     email: '📧 Email',
     github: '💻 GitHub',
     linkedin: '💼 LinkedIn',
+    emailCopied: 'Email copied!',
   },
   footer: {
     copyright: '© 2026 Louis Bertrand.',
