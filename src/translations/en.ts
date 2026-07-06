@@ -8,6 +8,7 @@ export const en = {
     projects: 'Projects',
     sigl: 'SIGL',
     skills: 'Skills',
+    hobbies: 'Hobbies',
     contact: 'Contact',
   },
   hero: {
@@ -21,7 +22,7 @@ export const en = {
   about: {
     title: 'About Me',
     paragraph1: "I'm a software engineering student at EPITA, majoring in Information Systems & Software Engineering (SIGL). I'm passionate about building robust, scalable applications - combining clean architecture on the backend with intuitive interfaces on the frontend.",
-    paragraph2: "My projects span full-stack web development, DevOps automation, and systems design. Outside of coursework, I enjoy open-source contributions, exploring new technologies, and taking on side projects that push me to learn faster.",
+    paragraph2: "My projects span full-stack web development, DevOps automation, and systems design. Outside of coursework, I enjoy exploring new technologies and taking on side projects that push me to learn faster.",
   },
   education: {
     title: 'Education',
@@ -111,6 +112,23 @@ export const en = {
   },
   skills: {
     title: 'Skills & Technologies',
+  },
+  hobbies: {
+    title: 'Hobbies & Interests',
+    items: [
+      {
+        title: 'Guitar',
+        description: 'Nearly 10 years of conservatory training — music is part of my daily life.',
+      },
+      {
+        title: 'Running',
+        description: 'I run regularly: a great way to stay on pace and clear my mind.',
+      },
+      {
+        title: 'Weight training',
+        description: 'Frequent gym sessions, driven by discipline and consistency.',
+      },
+    ],
   },
   contact: {
     title: 'Get In Touch',

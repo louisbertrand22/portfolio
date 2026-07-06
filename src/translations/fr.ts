@@ -8,6 +8,7 @@ export const fr = {
     projects: 'Projets',
     sigl: 'SIGL',
     skills: 'Compétences',
+    hobbies: 'Hobbies',
     contact: 'Contact',
   },
   hero: {
@@ -21,7 +22,7 @@ export const fr = {
   about: {
     title: 'À Propos de Moi',
     paragraph1: "Étudiant ingénieur à l'EPITA en majeure SIGL (Systèmes d'Information et Génie Logiciel), je suis passionné par la conception d'applications robustes et scalables - alliant une architecture backend solide à des interfaces frontend soignées.",
-    paragraph2: "Mes projets couvrent le développement web full-stack, l'automatisation DevOps et la conception de systèmes. En dehors des cours, j'aime contribuer à l'open-source, explorer de nouvelles technologies et mener des projets personnels qui me poussent à progresser.",
+    paragraph2: "Mes projets couvrent le développement web full-stack, l'automatisation DevOps et la conception de systèmes. En dehors des cours, j'aime explorer de nouvelles technologies et mener des projets personnels qui me poussent à progresser.",
   },
   education: {
     title: 'Formation',
@@ -111,6 +112,23 @@ export const fr = {
   },
   skills: {
     title: 'Compétences & Technologies',
+  },
+  hobbies: {
+    title: 'Hobbies & Passions',
+    items: [
+      {
+        title: 'Guitare',
+        description: 'Près de 10 ans de cours au conservatoire — la musique fait partie de mon quotidien.',
+      },
+      {
+        title: 'Course à pied',
+        description: 'Je cours régulièrement : un bon moyen de garder le rythme et de me vider la tête.',
+      },
+      {
+        title: 'Musculation',
+        description: 'Des entraînements fréquents en salle, portés par la discipline et la régularité.',
+      },
+    ],
   },
   contact: {
     title: 'Me Contacter',

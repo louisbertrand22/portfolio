@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Guitar, Footprints, Dumbbell } from 'lucide-react'
+
+const hobbyIcons = [Guitar, Footprints, Dumbbell]
 import { toast } from 'sonner'
 import './App.css'
 import { translations, Language } from './translations'
@@ -203,7 +206,7 @@ function App() {
               </button>
             </div>
             <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-              {(['home', 'about', 'education', 'experience', 'projects', 'sigl', 'skills', 'contact'] as const).map(key => (
+              {(['home', 'about', 'education', 'experience', 'projects', 'sigl', 'skills', 'hobbies', 'contact'] as const).map(key => (
                 <li key={key}>
                   <a
                     href={`#${key}`}
@@ -476,6 +479,27 @@ function App() {
                   <span className="skill-name">{skill}</span>
                 </motion.div>
               ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ── HOBBIES ── */}
+        <section id="hobbies" className="hobbies">
+          <div className="container">
+            <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
+              {t.hobbies.title}
+            </motion.h2>
+            <motion.div className="hobbies-grid" initial="hidden" whileInView="visible" viewport={viewport} variants={stagger}>
+              {t.hobbies.items.map((hobby, index) => {
+                const HobbyIcon = hobbyIcons[index]
+                return (
+                  <motion.div key={index} className="hobby-card" variants={cardItem} whileHover={{ y: -3, transition: { duration: 0.15 } }}>
+                    <div className="hobby-icon"><HobbyIcon size={26} strokeWidth={1.75} /></div>
+                    <h3 className="hobby-title">{hobby.title}</h3>
+                    <p className="hobby-description">{hobby.description}</p>
+                  </motion.div>
+                )
+              })}
             </motion.div>
           </div>
         </section>
