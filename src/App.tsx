@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Guitar, Footprints, Dumbbell } from 'lucide-react'
 
@@ -10,6 +10,7 @@ import Markdown from 'react-markdown'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import Terminal from '@/components/Terminal'
 
 // ─── Animation variants ───────────────────────────────────────────────────────
 const ease = [0.22, 1, 0.36, 1] as const
@@ -41,15 +42,6 @@ const slideLeft = {
 }
 
 const viewport = { once: true, margin: '-60px 0px' } as const
-
-const termBodyVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.3, delayChildren: 0.85 } },
-}
-const termLineVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.06 } },
-}
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const projects = [
@@ -160,6 +152,10 @@ function App() {
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
+  // Stable references so the memoized Terminal skips App's scroll-driven re-renders
+  const toggleTheme = useCallback(() => setIsDarkMode(p => !p), [])
+  const toggleLanguage = useCallback(() => setLanguage(p => p === 'en' ? 'fr' : 'en'), [])
+
   const copyEmail = (e: React.MouseEvent) => {
     e.preventDefault()
     navigator.clipboard.writeText('louisbert91@gmail.com').then(() => {
@@ -262,27 +258,11 @@ function App() {
                   </Button>
                 </motion.div>
               </motion.div>
-              <motion.div
-                className="hero-terminal" aria-hidden="true"
-                initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease, delay: 0.3 }}
-              >
-                <div className="terminal-header">
-                  <div className="terminal-dots">
-                    <span className="terminal-dot red" /><span className="terminal-dot yellow" /><span className="terminal-dot green" />
-                  </div>
-                  <span className="terminal-title">~/portfolio</span>
-                </div>
-                <motion.div className="terminal-body" initial="hidden" animate="visible" variants={termBodyVariants}>
-                  <motion.p variants={termLineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">whoami</span></motion.p>
-                  <motion.p className="terminal-output" variants={termLineVariants}>Louis Bertrand — Software Engineer</motion.p>
-                  <motion.p variants={termLineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">cat stack.json</span></motion.p>
-                  <motion.p className="terminal-output" variants={termLineVariants}>{'{ React, FastAPI, Docker, K8s }'}</motion.p>
-                  <motion.p variants={termLineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">git log --oneline -1</span></motion.p>
-                  <motion.p className="terminal-output" variants={termLineVariants}>feat: building cool things ✨</motion.p>
-                  <motion.p variants={termLineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cursor">█</span></motion.p>
-                </motion.div>
-              </motion.div>
+              <Terminal
+                language={language}
+                onToggleTheme={toggleTheme}
+                onToggleLanguage={toggleLanguage}
+              />
             </div>
           </div>
         </section>
