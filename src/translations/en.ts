@@ -63,10 +63,6 @@ export const en = {
     viewReadme: 'View README →',
     items: [
       {
-        title: 'DevDocsHub',
-        description: 'Centralized platform for managing and exploring technical documentation for developers',
-      },
-      {
         title: 'F1 Dashboard',
         description: 'Full-stack application displaying F1 statistics with modern DevOps practices',
       },
@@ -81,10 +77,6 @@ export const en = {
       {
         title: 'Sudoku OCR',
         description: 'Sudoku solver in Python using optical character recognition',
-      },
-      {
-        title: 'Habit Tracker',
-        description: 'Full-stack web application for tracking daily habits with user authentication, built with Angular and Go',
       },
       {
         title: 'DevOpsTest',
@@ -107,6 +99,10 @@ export const en = {
       {
         title: 'Cloud Architecture',
         description: 'Creation of a hybrid cloud infrastructure leveraging OpenStack technologies alongside PaaS services from AWS and Microsoft Azure. The project covers multi-cloud networking, compute provisioning, storage management, and high-availability configurations.',
+      },
+      {
+        title: 'HRIS Transformation — Business Analysis Consulting',
+        description: 'Led a team of 6 students as project manager on a business analysis (MOA) consulting engagement for BeBlood, a medical biology group with 12,000 employees across 5 European countries: a 3-year HRIS transformation strategy built around Oracle HCM. This project strengthened my skills in project team leadership, complex business needs analysis, stakeholder management, and communication with a CIO-level decision-maker in a real-world context.',
       },
     ],
   },

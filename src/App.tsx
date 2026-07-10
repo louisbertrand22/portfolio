@@ -45,12 +45,10 @@ const viewport = { once: true, margin: '-60px 0px' } as const
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const projects = [
-  { featured: true,  technologies: ['Next.js', 'TypeScript', 'FastAPI', 'PostgreSQL'],          link: 'https://github.com/louisbertrand22/devdocshub' },
   { featured: false, technologies: ['React', 'FastAPI', 'Docker', 'CI/CD'],                     link: 'https://github.com/louisbertrand22/stats-f1' },
   { featured: false, technologies: ['Python', 'SQLAlchemy', 'Alembic', 'CLI'],                  link: 'https://github.com/louisbertrand22/FootySim' },
   { featured: false, technologies: ['FastAPI', 'SQLAlchemy', 'Python', 'REST API'],              link: 'https://github.com/louisbertrand22/FootySim-backend' },
   { featured: false, technologies: ['Python', 'OCR', 'Computer Vision'],                        link: 'https://github.com/louisbertrand22/sudoku-ocr' },
-  { featured: false, technologies: ['Angular', 'Go', 'PostgreSQL', 'JWT'],                      link: 'https://github.com/louisbertrand22/habit-tracker' },
   { featured: false, technologies: ['Flask', 'Docker', 'Kubernetes', 'CI/CD'],                  link: 'https://github.com/louisbertrand22/DevOpsTest' },
   { featured: true,  technologies: ['TypeScript', 'Node.js', 'PostgreSQL', 'OAuth2', 'Prisma'], link: 'https://github.com/louisbertrand22/MySSO' },
 ]
@@ -438,6 +436,26 @@ function App() {
                   <p className="sigl-card-description">{t.siglProjects.items[1].description}</p>
                   <div className="sigl-card-technologies">
                     {['OpenStack', 'AWS', 'Azure', 'Terraform', 'Linux'].map(tech => (
+                      <Badge key={tech}>{tech}</Badge>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+              <motion.div className="sigl-card" variants={cardItem} whileHover={{ y: -4, transition: { duration: 0.2 } }}>
+                <div className="sigl-card-icon">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                  <span className="sigl-card-code">MOAE</span>
+                </div>
+                <div className="sigl-card-content">
+                  <h3 className="sigl-card-title">{t.siglProjects.items[2].title}</h3>
+                  <p className="sigl-card-description">{t.siglProjects.items[2].description}</p>
+                  <div className="sigl-card-technologies">
+                    {['MOA', 'Oracle HCM', 'Benchmark', 'Business Case', 'Roadmap', 'Conduite du changement'].map(tech => (
                       <Badge key={tech}>{tech}</Badge>
                     ))}
                   </div>

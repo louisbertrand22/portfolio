@@ -63,10 +63,6 @@ export const fr = {
     viewReadme: 'Voir le README →',
     items: [
       {
-        title: 'DevDocsHub',
-        description: 'Plateforme centralisée pour gérer et explorer la documentation technique pour les développeurs',
-      },
-      {
         title: 'Tableau de Bord F1',
         description: 'Application full-stack affichant des statistiques F1 avec des pratiques DevOps modernes',
       },
@@ -81,10 +77,6 @@ export const fr = {
       {
         title: 'Sudoku OCR',
         description: 'Résolveur de Sudoku en Python utilisant la reconnaissance optique de caractères',
-      },
-      {
-        title: 'Suivi des Habitudes',
-        description: 'Application web full-stack pour suivre les habitudes quotidiennes avec authentification utilisateur, construite avec Angular et Go',
       },
       {
         title: 'DevOpsTest',
@@ -107,6 +99,10 @@ export const fr = {
       {
         title: 'Architecture Cloud',
         description: 'Création d\'une infrastructure cloud hybride s\'appuyant sur les technologies OpenStack, complétée par des services PaaS d\'AWS et Microsoft Azure. Le projet couvre la mise en réseau multi-cloud, le provisionnement de ressources de calcul, la gestion du stockage et les configurations haute disponibilité.',
+      },
+      {
+        title: 'Transformation SIRH — Maîtrise d\'Ouvrage',
+        description: 'Chef de projet d\'une équipe de 6 étudiants sur une mission de conseil MOA pour BeBlood, groupe de biologie médicale de 12 000 collaborateurs dans 5 pays européens : élaboration d\'une stratégie de transformation du SIRH sur 3 ans, articulée autour d\'Oracle HCM. Ce projet m\'a permis de développer mes compétences en pilotage d\'équipe projet, en analyse de besoins métier complexes, en gestion des parties prenantes et en communication avec un décideur DSI en contexte réel.',
       },
     ],
   },

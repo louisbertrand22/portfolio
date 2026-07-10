@@ -1019,8 +1019,11 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
   gap: 1.25rem;
-  max-width: 960px;
-  margin: 0 auto;
+}
+
+/* un nombre impair de cartes : la dernière occupe toute la ligne */
+.sigl-grid > .sigl-card:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
 }
 
 @media (max-width: 520px) {
