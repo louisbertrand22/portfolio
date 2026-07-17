@@ -53,7 +53,7 @@ export const fr = {
         type: 'Temps partiel',
         period: 'Fév. 2026 - Jan. 2027',
         location: 'Paris, Île-de-France, France',
-        description: 'DevOps responsable de la sécurité de l\'infrastructure, en temps partiel en parallèle des cours : sécurisation et durcissement des environnements Kubernetes et des chaînes de déploiement.',
+        description: 'Sécurisation de la chaîne d\'approvisionnement logicielle du parc applicatif, en temps partiel en parallèle des cours. Mise en place de Renovate dans la chaîne d\'intégration continue pour détecter en permanence les dépendances obsolètes ou vulnérables sur 4 dépôts, avec ouverture automatique des merge requests de mise à jour : les équipes passent d\'audits manuels ponctuels à un contrôle continu de la dette de sécurité, à chaque évolution des dépendances.',
         logo: 'education-nationale-logo.svg',
       },
       {
@@ -62,7 +62,7 @@ export const fr = {
         type: 'Stage',
         period: 'Sept. 2025 - Fév. 2026',
         location: 'Neuilly-sur-Seine, Île-de-France, France',
-        description: 'Stage sur site',
+        description: 'Conception et développement de bout en bout de Leonard-AI, un chatbot interne au service de plus de 200 collaborateurs, qui automatise les tâches répétitives des fonctions support : paie, ressources humaines et business managers. Réalisation de l\'architecture applicative complète — APIs asynchrones en FastAPI et Django — et industrialisation du déploiement sur un nouvel environnement Kubernetes mis en place à cette occasion. L\'outil décharge les équipes support des sollicitations récurrentes à faible valeur ajoutée et leur rend du temps pour leurs missions de fond.',
         logo: 'QuanteamLogo169.jpeg',
       },
     ],

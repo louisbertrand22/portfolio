@@ -53,7 +53,7 @@ export const en = {
         type: 'Part-time',
         period: 'Feb. 2026 - Jan. 2027',
         location: 'Paris, Île-de-France, France',
-        description: 'DevOps in charge of infrastructure security, part-time alongside my studies: securing and hardening Kubernetes environments and deployment pipelines.',
+        description: 'Securing the software supply chain of the application portfolio, part-time alongside my studies. Set up Renovate in the continuous integration pipeline to continuously detect outdated or vulnerable dependencies across 4 repositories, with automatic merge requests for updates: teams moved from one-off manual audits to continuous monitoring of security debt on every dependency change.',
         logo: 'education-nationale-logo.svg',
       },
       {
@@ -62,7 +62,7 @@ export const en = {
         type: 'Internship',
         period: 'Sept. 2025 - Feb. 2026',
         location: 'Neuilly-sur-Seine, Île-de-France, France',
-        description: 'On-site internship position',
+        description: 'End-to-end design and development of Leonard-AI, an internal chatbot serving 200+ employees, automating repetitive tasks for support functions: payroll, human resources and business managers. Built the full application architecture — asynchronous APIs with FastAPI and Django — and industrialized deployment on a new Kubernetes environment set up for the project. The tool offloads recurring low-value requests from support teams and gives them time back for their core work.',
         logo: 'QuanteamLogo169.jpeg',
       },
     ],

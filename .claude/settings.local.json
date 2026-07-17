@@ -7,7 +7,19 @@
       "Bash(npm install *)",
       "Bash(rsvg-convert -w 512 -h 512 /home/louis/Documents/GITHUB-PROJECTS/portfolio/public/favicon.svg -o /home/louis/Documents/GITHUB-PROJECTS/portfolio/public/icon-512.png)",
       "Bash(rsvg-convert -w 192 -h 192 /home/louis/Documents/GITHUB-PROJECTS/portfolio/public/favicon.svg -o /home/louis/Documents/GITHUB-PROJECTS/portfolio/public/icon-192.png)",
-      "Bash(rsvg-convert -w 180 -h 180 /home/louis/Documents/GITHUB-PROJECTS/portfolio/public/favicon.svg -o /home/louis/Documents/GITHUB-PROJECTS/portfolio/public/apple-touch-icon.png)"
+      "Bash(rsvg-convert -w 180 -h 180 /home/louis/Documents/GITHUB-PROJECTS/portfolio/public/favicon.svg -o /home/louis/Documents/GITHUB-PROJECTS/portfolio/public/apple-touch-icon.png)",
+      "Bash(command -v agent-browser)",
+      "Bash(agent-browser --version)",
+      "Bash(npx -y agent-browser keyboard type \"cd projects\")",
+      "Bash(npx -y agent-browser press Enter)",
+      "Bash(npx -y agent-browser wait 800)",
+      "Bash(npx -y agent-browser eval 'window.scrollY > 100 ? \"scrolled to \" + Math.round\\(window.scrollY\\) : \"did not scroll\"')",
+      "Bash(npx -y agent-browser keyboard type \"theme\")",
+      "Bash(npx tsc *)",
+      "Bash(npx vite *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
