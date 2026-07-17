@@ -200,7 +200,7 @@ function App() {
               </button>
             </div>
             <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-              {(['home', 'about', 'education', 'experience', 'projects', 'sigl', 'skills', 'hobbies', 'contact'] as const).map(key => (
+              {(['home', 'about', 'education', 'experience', 'projects', 'sigl', 'skills', 'hobbies', 'cv', 'contact'] as const).map(key => (
                 <li key={key}>
                   <a
                     href={`#${key}`}
@@ -418,7 +418,7 @@ function App() {
                   <h3 className="sigl-card-title">{t.siglProjects.items[0].title}</h3>
                   <p className="sigl-card-description">{t.siglProjects.items[0].description}</p>
                   <div className="sigl-card-technologies">
-                    {['UML', 'ArchiMate', 'BPMN', 'Merise', 'SQL'].map(tech => (
+                    {['DevOps', 'CI/CD', 'UML', 'Template', 'Deployment'].map(tech => (
                       <Badge key={tech}>{tech}</Badge>
                     ))}
                   </div>
@@ -498,6 +498,28 @@ function App() {
                   </motion.div>
                 )
               })}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ── CV ── */}
+        <section id="cv" className="cv">
+          <div className="container">
+            <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
+              {t.cv.title}
+            </motion.h2>
+            <motion.div className="cv-content" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
+              <p>{t.cv.description}</p>
+              <Button asChild size="default">
+                <a href="/cv-louis-bertrand.pdf" download>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  {t.cv.download}
+                </a>
+              </Button>
             </motion.div>
           </div>
         </section>

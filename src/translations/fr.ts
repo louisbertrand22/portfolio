@@ -9,6 +9,7 @@ export const fr = {
     sigl: 'SIGL',
     skills: 'Compétences',
     hobbies: 'Hobbies',
+    cv: 'CV',
     contact: 'Contact',
   },
   hero: {
@@ -46,6 +47,15 @@ export const fr = {
   experience: {
     title: 'Expérience Professionnelle',
     items: [
+      {
+        position: 'DevOps',
+        company: 'Ministère de l\'Éducation nationale',
+        type: 'Temps partiel',
+        period: 'Fév. 2026 - Jan. 2027',
+        location: 'Paris, Île-de-France, France',
+        description: 'DevOps responsable de la sécurité de l\'infrastructure, en temps partiel en parallèle des cours : sécurisation et durcissement des environnements Kubernetes et des chaînes de déploiement.',
+        logo: 'education-nationale-logo.svg',
+      },
       {
         position: 'Développeur Python',
         company: 'QUANTEAM (Groupe RAINBOW PARTNERS)',
@@ -94,7 +104,7 @@ export const fr = {
     items: [
       {
         title: 'Urbanisation des SI',
-        description: 'Conception et développement d\'un système d\'information rationalisé reproduisant les opérations et le comportement d\'une entreprise de vente au détail. Le système réplique les différentes zones fonctionnelles d\'une entreprise typique, fournissant une plateforme complète pour comprendre et analyser les interactions et dépendances au sein d\'une telle organisation.',
+        description: 'Refonte complète du système d\'information d\'une compagnie aérienne, menée à environ 50 étudiants organisés en équipes applicatives — SAV, Enregistrement, Booking, E-commerce, Fidélité, Suivi de vol et Planification — appuyées par une équipe Socle (infrastructure) et une équipe DevOps, dont je faisais partie. Au sein de l\'équipe DevOps, j\'ai contribué à l\'outillage, aux chaînes CI/CD et aux environnements de déploiement au service de l\'ensemble des équipes applicatives.',
       },
       {
         title: 'Architecture Cloud',
@@ -125,6 +135,11 @@ export const fr = {
         description: 'Des entraînements fréquents en salle, portés par la discipline et la régularité.',
       },
     ],
+  },
+  cv: {
+    title: 'Mon CV',
+    description: 'Envie d\'en savoir plus sur mon parcours ? Téléchargez mon CV au format PDF.',
+    download: 'Télécharger mon CV',
   },
   contact: {
     title: 'Me Contacter',

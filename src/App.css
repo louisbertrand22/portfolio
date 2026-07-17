@@ -1224,6 +1224,26 @@ main {
 }
 
 /* ============================================================
+   CV SECTION
+   ============================================================ */
+.cv {
+  background: var(--bg-subtle);
+}
+
+.cv-content {
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cv-content p {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  line-height: 1.85;
+}
+
+/* ============================================================
    CONTACT SECTION
    ============================================================ */
 .contact {

@@ -9,6 +9,7 @@ export const en = {
     sigl: 'SIGL',
     skills: 'Skills',
     hobbies: 'Hobbies',
+    cv: 'Resume',
     contact: 'Contact',
   },
   hero: {
@@ -46,6 +47,15 @@ export const en = {
   experience: {
     title: 'Professional Experience',
     items: [
+      {
+        position: 'DevOps',
+        company: 'French Ministry of National Education',
+        type: 'Part-time',
+        period: 'Feb. 2026 - Jan. 2027',
+        location: 'Paris, Île-de-France, France',
+        description: 'DevOps in charge of infrastructure security, part-time alongside my studies: securing and hardening Kubernetes environments and deployment pipelines.',
+        logo: 'education-nationale-logo.svg',
+      },
       {
         position: 'Python Developer',
         company: 'QUANTEAM (Groupe RAINBOW PARTNERS)',
@@ -94,7 +104,7 @@ export const en = {
     items: [
       {
         title: 'Information Systems Urbanisation',
-        description: 'Design and development of a rationalized information system that replicates the operations and behavior of a retail business. The system maps the functional zones of a typical retail company, providing a comprehensive platform to understand and analyze interactions and dependencies within such an organization.',
+        description: 'Complete rebuild of an airline\'s information system, carried out by around 50 students organized into application teams — After-Sales, Check-in, Booking, E-commerce, Loyalty, Flight Tracking and Planning — supported by a Core Infrastructure team and a DevOps team, which I was part of. Within the DevOps team, I contributed to the tooling, CI/CD pipelines and deployment environments serving all the application teams.',
       },
       {
         title: 'Cloud Architecture',
@@ -125,6 +135,11 @@ export const en = {
         description: 'Frequent gym sessions, driven by discipline and consistency.',
       },
     ],
+  },
+  cv: {
+    title: 'My Resume',
+    description: 'Want the full picture of my background? Download my resume as a PDF.',
+    download: 'Download my resume',
   },
   contact: {
     title: 'Get In Touch',
