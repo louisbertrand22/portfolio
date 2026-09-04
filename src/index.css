@@ -48,6 +48,25 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Lenis owns smooth scrolling once it boots; native smooth-scroll would double up on it. */
+html.lenis, html.lenis body {
+  height: auto;
+}
+html.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+html.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Custom cursor: only ever active on fine-pointer, hover-capable devices (JS also gates this). */
+@media (hover: hover) and (pointer: fine) {
+  html.custom-cursor-active,
+  html.custom-cursor-active * {
+    cursor: none !important;
+  }
+}
+
 body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -56,6 +75,17 @@ body {
   line-height: 1.6;
   background-color: var(--bg);
   transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+/* Text fields keep normal selection/editing behavior */
+input,
+textarea {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  user-select: text;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -63,9 +93,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .container {
-  max-width: 1160px;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 2.5rem;
+}
+
+@media (max-width: 900px) {
+  .container {
+    padding: 0 1.5rem;
+  }
 }
 
 section {

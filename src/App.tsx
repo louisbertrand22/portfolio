@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Guitar, Footprints, Dumbbell } from 'lucide-react'
 
@@ -11,6 +11,10 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import Terminal from '@/components/Terminal'
+import CustomCursor from '@/components/CustomCursor'
+import IntroScreen from '@/components/IntroScreen'
+import { useLenis } from '@/hooks/useLenis'
+import { useMagnetic } from '@/hooks/useMagnetic'
 
 // ─── Animation variants ───────────────────────────────────────────────────────
 const ease = [0.22, 1, 0.36, 1] as const
@@ -81,8 +85,36 @@ function App() {
   })
   const [scrollProgress, setScrollProgress] = useState(0)
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const [heroRipples, setHeroRipples] = useState<{ id: number; x: number; y: number }[]>([])
+  const heroRippleId = useRef(0)
+  const [showIntro, setShowIntro] = useState(() => {
+    try {
+      return !sessionStorage.getItem('introShown') &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    } catch { return false }
+  })
+
+  const lenisRef = useLenis()
+  const viewWorkRef = useMagnetic<HTMLAnchorElement>()
+  const getInTouchRef = useMagnetic<HTMLAnchorElement>()
+  const cvButtonRef = useMagnetic<HTMLAnchorElement>()
+  const backToTopRef = useMagnetic<HTMLButtonElement>(0.4)
+  const contactEmailRef = useMagnetic<HTMLAnchorElement>()
+  const contactGithubRef = useMagnetic<HTMLAnchorElement>()
+  const contactLinkedinRef = useMagnetic<HTMLAnchorElement>()
 
   const t = translations[language]
+
+  // Lock scroll while the intro curtain is up
+  useEffect(() => {
+    document.body.style.overflow = showIntro ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [showIntro])
+
+  const handleIntroComplete = useCallback(() => {
+    setShowIntro(false)
+    try { sessionStorage.setItem('introShown', '1') } catch { /* unavailable */ }
+  }, [])
 
   // Persist language
   useEffect(() => {
@@ -148,7 +180,25 @@ function App() {
     setReadmeContent('')
   }
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+  const scrollToTop = () => {
+    if (lenisRef.current) lenisRef.current.scrollTo(0, { duration: 1.2 })
+    else window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // Hero section: mouse-reactive spotlight, set directly on the DOM to skip re-renders
+  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    e.currentTarget.style.setProperty('--mx', `${e.clientX - rect.left}px`)
+    e.currentTarget.style.setProperty('--my', `${e.clientY - rect.top}px`)
+  }
+
+  // Hero section: click ripple burst
+  const handleHeroClick = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const id = ++heroRippleId.current
+    setHeroRipples(prev => [...prev, { id, x: e.clientX - rect.left, y: e.clientY - rect.top }])
+    setTimeout(() => setHeroRipples(prev => prev.filter(r => r.id !== id)), 900)
+  }
 
   // Stable references so the memoized Terminal skips App's scroll-driven re-renders
   const toggleTheme = useCallback(() => setIsDarkMode(p => !p), [])
@@ -170,6 +220,12 @@ function App() {
 
   return (
     <div className="app">
+
+      <CustomCursor />
+
+      {showIntro && (
+        <IntroScreen name={t.hero.name} subtitle={t.hero.subtitle} onComplete={handleIntroComplete} />
+      )}
 
       {/* ── SCROLL PROGRESS ── */}
       <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} aria-hidden="true" />
@@ -200,7 +256,7 @@ function App() {
               </button>
             </div>
             <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-              {(['home', 'about', 'education', 'experience', 'projects', 'sigl', 'skills', 'hobbies', 'cv', 'contact'] as const).map(key => (
+              {(['home', 'about', 'experience', 'education', 'sigl', 'projects', 'skills', 'hobbies', 'cv', 'contact'] as const).map(key => (
                 <li key={key}>
                   <a
                     href={`#${key}`}
@@ -222,12 +278,31 @@ function App() {
       <main>
 
         {/* ── HERO ── */}
-        <section id="home" className="hero">
+        <section
+          id="home"
+          className="hero"
+          onMouseMove={handleHeroMouseMove}
+          onClick={handleHeroClick}
+        >
           <div className="hero-bg" aria-hidden="true">
+            <div className="hero-spotlight" />
             <div className="hero-orb hero-orb-1" />
             <div className="hero-orb hero-orb-2" />
             <div className="hero-orb hero-orb-3" />
           </div>
+          <AnimatePresence>
+            {heroRipples.map(ripple => (
+              <motion.span
+                key={ripple.id}
+                className="hero-ripple"
+                style={{ left: ripple.x, top: ripple.y }}
+                initial={{ scale: 0, opacity: 0.55 }}
+                animate={{ scale: 8, opacity: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.9, ease }}
+              />
+            ))}
+          </AnimatePresence>
           <motion.div
             className="hero-scroll" aria-hidden="true"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
@@ -249,10 +324,10 @@ function App() {
                 <motion.p className="hero-description" variants={fadeUp} custom={0.15}>{t.hero.description}</motion.p>
                 <motion.div className="hero-buttons" variants={fadeUp} custom={0.2}>
                   <Button asChild size="default">
-                    <a href="#projects">{t.hero.viewWork}</a>
+                    <a href="#projects" ref={viewWorkRef}>{t.hero.viewWork}</a>
                   </Button>
                   <Button asChild variant="secondary" size="default">
-                    <a href="#contact">{t.hero.getInTouch}</a>
+                    <a href="#contact" ref={getInTouchRef}>{t.hero.getInTouch}</a>
                   </Button>
                 </motion.div>
               </motion.div>
@@ -275,29 +350,6 @@ function App() {
               <p>{t.about.paragraph1}</p>
               <p>{t.about.paragraph2}</p>
             </motion.div>
-          </div>
-        </section>
-
-        {/* ── EDUCATION ── */}
-        <section id="education" className="education">
-          <div className="container">
-            <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
-              {t.education.title}
-            </motion.h2>
-            <div className="timeline">
-              {t.education.items.map((edu, index) => (
-                <motion.div key={index} className="timeline-item" initial="hidden" whileInView="visible" viewport={viewport} variants={slideLeft} custom={index * 0.1}>
-                  <div className="timeline-connector"><div className="timeline-dot" /></div>
-                  <div className="timeline-card">
-                    {edu.logo && <div className="timeline-logo"><img src={edu.logo} alt={`${edu.school} logo`} /></div>}
-                    <h3 className="timeline-title">{edu.school}</h3>
-                    <p className="timeline-subtitle">{edu.degree}</p>
-                    <span className="timeline-period-badge">{edu.period}</span>
-                    <p className="timeline-description">{edu.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
           </div>
         </section>
 
@@ -328,69 +380,26 @@ function App() {
           </div>
         </section>
 
-        {/* ── PROJECTS ── */}
-        <section id="projects" className="projects">
+        {/* ── EDUCATION ── */}
+        <section id="education" className="education">
           <div className="container">
             <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
-              {t.projects.title}
+              {t.education.title}
             </motion.h2>
-
-            {/* Filter bar */}
-            <motion.div className="project-filters" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.08}>
-              {filterTechs.map(tech => (
-                <button
-                  key={tech}
-                  className={`filter-btn${selectedTech === tech ? ' active' : ''}`}
-                  onClick={() => setSelectedTech(tech)}
-                >
-                  {selectedTech === tech && (
-                    <motion.span className="filter-btn-bg" layoutId="filter-pill" transition={{ type: 'spring', bounce: 0.18, duration: 0.4 }} />
-                  )}
-                  <span className="filter-btn-text">{tech}</span>
-                </button>
+            <div className="timeline">
+              {t.education.items.map((edu, index) => (
+                <motion.div key={index} className="timeline-item" initial="hidden" whileInView="visible" viewport={viewport} variants={slideLeft} custom={index * 0.1}>
+                  <div className="timeline-connector"><div className="timeline-dot" /></div>
+                  <div className="timeline-card">
+                    {edu.logo && <div className="timeline-logo"><img src={edu.logo} alt={`${edu.school} logo`} /></div>}
+                    <h3 className="timeline-title">{edu.school}</h3>
+                    <p className="timeline-subtitle">{edu.degree}</p>
+                    <span className="timeline-period-badge">{edu.period}</span>
+                    <p className="timeline-description">{edu.description}</p>
+                  </div>
+                </motion.div>
               ))}
-            </motion.div>
-
-            {/* Grid */}
-            <motion.div className="projects-grid" layout>
-              <AnimatePresence mode="popLayout">
-                {filteredProjects.map(({ originalIndex, featured, technologies }) => (
-                  <motion.div
-                    key={originalIndex}
-                    layout
-                    className={`project-card${featured ? ' featured' : ''}`}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.22 }}
-                    whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                    onClick={() => openProjectModal(originalIndex)}
-                  >
-                    {featured && (
-                      <div className="project-preview" aria-hidden="true">
-                        <div className="project-preview-dots" />
-                        <span className="project-preview-name">{t.projects.items[originalIndex]?.title}</span>
-                        <span className="project-featured-badge">{featuredLabel}</span>
-                      </div>
-                    )}
-                    <div className="project-card-accent" />
-                    <h3 className="project-title">{t.projects.items[originalIndex]?.title}</h3>
-                    <p className="project-description">{t.projects.items[originalIndex]?.description}</p>
-                    <div className="project-technologies">
-                      {technologies.map((tech, idx) => (
-                        <Badge key={idx}>{tech}</Badge>
-                      ))}
-                    </div>
-                    <a href={projects[originalIndex].link} className="project-link" onClick={e => e.stopPropagation()} target="_blank" rel="noopener noreferrer">
-                      {t.projects.viewProject}
-                    </a>
-                    <div className="project-card-readme-hint" aria-hidden="true">
-                      {t.projects.viewReadme}
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </motion.div>
+            </div>
           </div>
         </section>
 
@@ -465,6 +474,72 @@ function App() {
           </div>
         </section>
 
+        {/* ── PROJECTS ── */}
+        <section id="projects" className="projects">
+          <div className="container">
+            <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
+              {t.projects.title}
+            </motion.h2>
+
+            {/* Filter bar */}
+            <motion.div className="project-filters" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.08}>
+              {filterTechs.map(tech => (
+                <button
+                  key={tech}
+                  className={`filter-btn${selectedTech === tech ? ' active' : ''}`}
+                  onClick={() => setSelectedTech(tech)}
+                >
+                  {selectedTech === tech && (
+                    <motion.span className="filter-btn-bg" layoutId="filter-pill" transition={{ type: 'spring', bounce: 0.18, duration: 0.4 }} />
+                  )}
+                  <span className="filter-btn-text">{tech}</span>
+                </button>
+              ))}
+            </motion.div>
+
+            {/* Grid */}
+            <motion.div className="projects-grid" layout>
+              <AnimatePresence mode="popLayout">
+                {filteredProjects.map(({ originalIndex, featured, technologies }) => (
+                  <motion.div
+                    key={originalIndex}
+                    layout
+                    className={`project-card${featured ? ' featured' : ''}`}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.22 }}
+                    whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                    onClick={() => openProjectModal(originalIndex)}
+                  >
+                    {featured && (
+                      <div className="project-preview" aria-hidden="true">
+                        <div className="project-preview-dots" />
+                        <span className="project-preview-name">{t.projects.items[originalIndex]?.title}</span>
+                        <span className="project-featured-badge">{featuredLabel}</span>
+                      </div>
+                    )}
+                    <div className="project-card-accent" />
+                    <h3 className="project-title">{t.projects.items[originalIndex]?.title}</h3>
+                    <p className="project-description">{t.projects.items[originalIndex]?.description}</p>
+                    <div className="project-technologies">
+                      {technologies.map((tech, idx) => (
+                        <Badge key={idx}>{tech}</Badge>
+                      ))}
+                    </div>
+                    <a href={projects[originalIndex].link} className="project-link" onClick={e => e.stopPropagation()} target="_blank" rel="noopener noreferrer">
+                      {t.projects.viewProject}
+                    </a>
+                    <div className="project-card-readme-hint" aria-hidden="true">
+                      {t.projects.viewReadme}
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        </section>
+
         {/* ── SKILLS ── */}
         <section id="skills" className="skills">
           <div className="container">
@@ -511,7 +586,7 @@ function App() {
             <motion.div className="cv-content" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
               <p>{t.cv.description}</p>
               <Button asChild size="default">
-                <a href="/cv-louis-bertrand.pdf" download>
+                <a href="/cv-louis-bertrand.pdf" download ref={cvButtonRef}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                     <polyline points="7 10 12 15 17 10"/>
@@ -533,7 +608,7 @@ function App() {
             <motion.div className="contact-content" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
               <p>{t.contact.description}</p>
               <div className="contact-links">
-                <a href="mailto:louisbert91@gmail.com" className="contact-link" onClick={copyEmail}>
+                <a href="mailto:louisbert91@gmail.com" ref={contactEmailRef} className="contact-link" onClick={copyEmail}>
                   <span className="contact-link-icon">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="2" y="4" width="20" height="16" rx="2"/>
@@ -541,14 +616,14 @@ function App() {
                     </svg>
                   </span>Email
                 </a>
-                <a href="https://github.com/louisbertrand22/" target="_blank" rel="noopener noreferrer" className="contact-link">
+                <a href="https://github.com/louisbertrand22/" ref={contactGithubRef} target="_blank" rel="noopener noreferrer" className="contact-link">
                   <span className="contact-link-icon">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.5 11.5 0 0 1 12 6.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
                     </svg>
                   </span>GitHub
                 </a>
-                <a href="https://www.linkedin.com/in/louis-bertrand222" target="_blank" rel="noopener noreferrer" className="contact-link">
+                <a href="https://www.linkedin.com/in/louis-bertrand222" ref={contactLinkedinRef} target="_blank" rel="noopener noreferrer" className="contact-link">
                   <span className="contact-link-icon">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
@@ -570,6 +645,7 @@ function App() {
       <AnimatePresence>
         {showBackToTop && (
           <motion.button
+            ref={backToTopRef}
             className="back-to-top"
             onClick={scrollToTop}
             initial={{ opacity: 0, scale: 0.8 }}
