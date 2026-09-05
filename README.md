@@ -5,7 +5,7 @@
 
 A modern, responsive portfolio website built with React, TypeScript, and Vite.
 
-> **🌐 Live Site:** https://lucho-dev.xyz/
+> **🌐 Live Site:** https://louis-bertrand.fr/
 
 ## Features
 
