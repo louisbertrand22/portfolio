@@ -6,13 +6,13 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#6366f1',
-          foreground: '#ffffff',
-          dark: '#818cf8',
+          DEFAULT: '#1c3f66',
+          foreground: '#f6f3ec',
+          dark: '#6fa0cc',
         },
         secondary: {
-          DEFAULT: '#8b5cf6',
-          foreground: '#ffffff',
+          DEFAULT: '#3d6c96',
+          foreground: '#f6f3ec',
         },
         border: 'var(--border)',
         background: 'var(--bg)',
