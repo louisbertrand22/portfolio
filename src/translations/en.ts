@@ -1,6 +1,6 @@
 export const en = {
   nav: {
-    logo: 'Portfolio',
+    logo: 'LB - Software engineer',
     home: 'Home',
     about: 'About',
     education: 'Education',
