@@ -13,26 +13,47 @@ const lineVariants = {
   visible: { opacity: 1, transition: { duration: 0.06 } },
 }
 
-const sections = ['home', 'about', 'education', 'experience', 'projects', 'sigl', 'skills', 'hobbies', 'contact']
+const sections = ['home', 'about', 'experience', 'education', 'sigl', 'projects', 'skills', 'hobbies', 'cv', 'contact']
 
-const commandNames = ['help', 'whoami', 'about', 'ls', 'cd', 'cat', 'projects', 'skills', 'contact', 'theme', 'lang', 'echo', 'date', 'coffee', 'clear', 'exit', 'sudo']
+const commandNames = [
+  'help', 'whoami', 'about', 'ls', 'cd', 'cat', 'projects', 'education', 'experience', 'skills', 'hobbies',
+  'cv', 'resume', 'contact', 'github', 'linkedin', 'theme', 'lang', 'echo', 'date', 'history', 'man',
+  'neofetch', 'coffee', 'clear', 'exit', 'sudo',
+]
 
 const helpText = `Available commands:
-  help          show this help
-  whoami        who am I
-  about         short bio
-  ls            list sections
-  cd <section>  jump to a section
-  projects      list my projects
-  skills        my tech stack
-  contact       how to reach me
-  theme         toggle dark/light mode
-  lang          switch EN ↔ FR
-  echo <text>   repeat after you
-  date          current date
-  coffee        brew one
-  clear         clear the terminal
+  help              show this help
+  whoami            who am I
+  about             short bio
+  ls                list sections
+  cd <section>      jump to a section
+  cat <file>        read a file (try stack.json)
+  projects          list my projects
+  education         my degrees
+  experience        my work history
+  skills            my tech stack
+  hobbies           what I do off-screen
+  cv | resume       download my CV
+  contact           how to reach me
+  github | linkedin open my profile in a new tab
+  theme             toggle dark/light mode
+  lang              switch EN ↔ FR
+  echo <text>       repeat after you
+  date              current date
+  history           show past commands
+  man <cmd>         read the manual
+  neofetch          system info, portfolio edition
+  coffee            brew one
+  clear             clear the terminal
 ...and a few hidden ones 👀`
+
+const manPages: Record<string, string> = {
+  cd: 'CD(1)\n\nNAME\n  cd — jump to a section\n\nSYNOPSIS\n  cd <section>\n\nDESCRIPTION\n  Smooth-scrolls the page to <section>. Run \'ls\' for valid targets.',
+  sudo: 'SUDO(1)\n\nNAME\n  sudo — attempt a privileged action\n\nSYNOPSIS\n  sudo hire-louis\n\nDESCRIPTION\n  There is exactly one command on this system worth escalating privileges for.',
+  coffee: 'COFFEE(1)\n\nNAME\n  coffee — brew one\n\nDESCRIPTION\n  Essential build dependency. No flags, no decaf.',
+  neofetch: 'NEOFETCH(1)\n\nNAME\n  neofetch — display system info\n\nDESCRIPTION\n  Prints a summary of this machine (me), portfolio edition.',
+  cv: 'CV(1)\n\nNAME\n  cv — download résumé\n\nSYNOPSIS\n  cv | resume\n\nDESCRIPTION\n  Downloads cv-louis-bertrand.pdf. No sign-up required.',
+}
 
 const stackJson = `{
   "frontend": ["React", "TypeScript"],
@@ -104,10 +125,32 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
         return err(`cat: ${arg || 'stdin'}: No such file or directory`)
       case 'projects':
         return out(translations[language].projects.items.map(p => `• ${p.title}`).join('\n'))
+      case 'education':
+        return out(translations[language].education.items.map(i => `• ${i.school} — ${i.degree} (${i.period})`).join('\n'))
+      case 'experience':
+        return out(translations[language].experience.items.map(i => `• ${i.position} @ ${i.company} (${i.period})`).join('\n'))
       case 'skills':
         return out('TypeScript · React · Node.js · Python · FastAPI\nPostgreSQL · Docker · Kubernetes · CI/CD · Terraform')
+      case 'hobbies':
+        return out(translations[language].hobbies.items.map(i => `• ${i.title}`).join('\n'))
+      case 'cv':
+      case 'resume': {
+        const a = document.createElement('a')
+        a.href = '/cv-louis-bertrand.pdf'
+        a.download = ''
+        document.body.appendChild(a)
+        a.click()
+        a.remove()
+        return out('Downloading cv-louis-bertrand.pdf ⬇')
+      }
       case 'contact':
         return out('email     louisbert91@gmail.com\ngithub    github.com/louisbertrand22\nlinkedin  linkedin.com/in/louis-bertrand222')
+      case 'github':
+        window.open('https://github.com/louisbertrand22', '_blank', 'noopener,noreferrer')
+        return out('→ github.com/louisbertrand22')
+      case 'linkedin':
+        window.open('https://linkedin.com/in/louis-bertrand222', '_blank', 'noopener,noreferrer')
+        return out('→ linkedin.com/in/louis-bertrand222')
       case 'theme':
         onToggleTheme()
         return out('Theme toggled ✓')
@@ -118,6 +161,30 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
         return out(arg)
       case 'date':
         return out(new Date().toLocaleString(language === 'fr' ? 'fr-FR' : 'en-US'))
+      case 'history':
+        return cmdHistory.length
+          ? out(cmdHistory.map((c, i) => `${String(i + 1).padStart(3)}  ${c}`).join('\n'))
+          : out('(empty)')
+      case 'man':
+        if (!arg) return err('What manual page do you want?')
+        if (manPages[arg]) return out(manPages[arg])
+        return err(commandNames.includes(arg) ? `No manual entry for ${arg} yet — try 'help'.` : `No manual entry for ${arg}`)
+      case 'neofetch': {
+        const art = [' __    ____ ', '| |   | __ )', '| |   |  _ \\', '| |___| |_) |', '|_____|____/ ']
+        const info = [
+          'louis@portfolio',
+          '───────────────',
+          'OS: LouisOS (EPITA build)',
+          'Palette: Nuit de Circuit',
+          'Stack: React · FastAPI · Docker · K8s',
+          'Status: open to opportunities ✓',
+        ]
+        const width = Math.max(...art.map(l => l.length)) + 2
+        const rows = Math.max(art.length, info.length)
+        return out(Array.from({ length: rows }, (_, i) => `${(art[i] ?? '').padEnd(width)}${info[i] ?? ''}`).join('\n'))
+      }
+      case 'pitstop':
+        return out('🏁 Box box box — new paint job applied.\nLivery: Nuit de Circuit (bleu nuit + or podium).\nLap time unaffected. Vibes: significantly improved.')
       case 'coffee':
         return out(coffeeArt)
       case 'clear':
