@@ -49,10 +49,8 @@ const viewport = { once: true, margin: '-60px 0px' } as const
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const projects = [
-  { featured: false, technologies: ['React', 'FastAPI', 'Docker', 'CI/CD'],                     link: 'https://github.com/louisbertrand22/stats-f1' },
   { featured: false, technologies: ['Python', 'SQLAlchemy', 'Alembic', 'CLI'],                  link: 'https://github.com/louisbertrand22/FootySim' },
   { featured: false, technologies: ['FastAPI', 'SQLAlchemy', 'Python', 'REST API'],              link: 'https://github.com/louisbertrand22/FootySim-backend' },
-  { featured: false, technologies: ['Python', 'OCR', 'Computer Vision'],                        link: 'https://github.com/louisbertrand22/sudoku-ocr' },
   { featured: false, technologies: ['Flask', 'Docker', 'Kubernetes', 'CI/CD'],                  link: 'https://github.com/louisbertrand22/DevOpsTest' },
   { featured: true,  technologies: ['TypeScript', 'Node.js', 'PostgreSQL', 'OAuth2', 'Prisma'], link: 'https://github.com/louisbertrand22/MySSO' },
 ]

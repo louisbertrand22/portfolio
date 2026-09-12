@@ -73,20 +73,12 @@ export const fr = {
     viewReadme: 'Voir le README →',
     items: [
       {
-        title: 'Tableau de Bord F1',
-        description: 'Application full-stack affichant des statistiques F1 avec des pratiques DevOps modernes',
-      },
-      {
         title: 'FootySim',
         description: 'Simulateur de championnat de football avec ORM SQLAlchemy et opérations de base de données asynchrones',
       },
       {
         title: 'FootySim Backend',
         description: 'API REST backend construite avec FastAPI et SQLAlchemy asynchrone pour la simulation de championnat de football',
-      },
-      {
-        title: 'Sudoku OCR',
-        description: 'Résolveur de Sudoku en Python utilisant la reconnaissance optique de caractères',
       },
       {
         title: 'DevOpsTest',
