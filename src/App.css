@@ -1708,7 +1708,8 @@ main {
 .intro-car {
   position: absolute;
   top: 60%;
-  left: 0;
+  left: 50%;
+  margin-left: -116px;
   width: 232px;
   height: 78px;
   filter: drop-shadow(-30px 6px 18px var(--primary-glow));

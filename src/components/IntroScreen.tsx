@@ -5,11 +5,13 @@ import F1Car from './F1Car'
 const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!<>-_/[]{}—=+*^?#'
 const SCRAMBLE_DURATION = 900
 
-// F1-style start sequence: 5 lights come on one by one, hold, then go out together — a car
-// darts across the screen right after ("lights out and away we go"), then the curtain lifts.
+// F1-style start sequence: the car drops in from above and lands while 5 lights come on one
+// by one, holds through the pause, then darts off to the right once they go out together
+// ("lights out and away we go"), and the curtain lifts.
 const LIGHTS_COUNT = 5
 const LIGHT_INTERVAL = 200
 const LIGHTS_OUT_AT = LIGHTS_COUNT * LIGHT_INTERVAL + 300
+const CAR_DROP_DELAY = 0.15
 const CAR_DURATION = 950
 const TOTAL_DURATION = LIGHTS_OUT_AT + CAR_DURATION + 150
 
@@ -74,8 +76,12 @@ export default function IntroScreen({ name, subtitle, onComplete }: IntroScreenP
       <motion.div
         className="intro-car"
         aria-hidden="true"
-        animate={{ x: lightsOut ? '120vw' : '-20vw' }}
-        transition={{ duration: CAR_DURATION / 1000, ease: 'easeIn' }}
+        initial={{ y: '-75vh', x: '0vw' }}
+        animate={{ y: 0, x: lightsOut ? '120vw' : '0vw' }}
+        transition={{
+          y: { type: 'spring', stiffness: 260, damping: 22, delay: CAR_DROP_DELAY },
+          x: { duration: CAR_DURATION / 1000, ease: 'easeIn' },
+        }}
       >
         <F1Car />
       </motion.div>
