@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
+import F1Car from './F1Car'
 
 const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!<>-_/[]{}—=+*^?#'
 const SCRAMBLE_DURATION = 900
-const TOTAL_DURATION = 1500
 
-// F1-style start sequence: 5 lights come on one by one, hold, then go out together — the curtain
-// lifts right after, timed like a real start ("lights out and away we go").
+// F1-style start sequence: 5 lights come on one by one, hold, then go out together — a car
+// darts across the screen right after ("lights out and away we go"), then the curtain lifts.
 const LIGHTS_COUNT = 5
 const LIGHT_INTERVAL = 200
 const LIGHTS_OUT_AT = LIGHTS_COUNT * LIGHT_INTERVAL + 300
+const CAR_DURATION = 950
+const TOTAL_DURATION = LIGHTS_OUT_AT + CAR_DURATION + 150
 
 function scrambleFrame(text: string, revealCount: number) {
   let out = ''
@@ -68,6 +70,14 @@ export default function IntroScreen({ name, subtitle, onComplete }: IntroScreenP
       >
         <span className="intro-name">{display}</span>
         <span className="intro-subtitle">{subtitle}</span>
+      </motion.div>
+      <motion.div
+        className="intro-car"
+        aria-hidden="true"
+        animate={{ x: lightsOut ? '120vw' : '-20vw' }}
+        transition={{ duration: CAR_DURATION / 1000, ease: 'easeIn' }}
+      >
+        <F1Car />
       </motion.div>
       <div className="intro-footer">
         <div className="intro-lights" aria-hidden="true">

@@ -215,7 +215,7 @@ function App() {
     .map((p, i) => ({ ...p, originalIndex: i }))
     .filter(p => selectedTech === 'All' || p.technologies.includes(selectedTech))
 
-  const badgeText = language === 'en' ? 'Open to opportunities' : 'Disponible pour des opportunités'
+  const badgeText = language === 'en' ? 'Final-year internship - Feb/Mar 2027' : 'Stage de fin d\'études - Fév./Mars 2027'
   const featuredLabel = language === 'en' ? 'Featured' : 'À la une'
 
   return (

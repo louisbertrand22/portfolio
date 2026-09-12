@@ -15,15 +15,15 @@ export const en = {
   hero: {
     greeting: "Hi, I'm",
     name: 'Louis Bertrand',
-    subtitle: 'Software Engineering Student at EPITA · Full Stack Developer',
-    description: 'Majoring in Information Systems & Software Engineering (SIGL) at EPITA - covering software architecture, cloud, mobility and digital transformation. I build full-stack products that are engineered to last.',
+    subtitle: 'IT Strategy & Architecture · Cloud & Software Engineering',
+    description: 'Software engineering student at EPITA (SIGL) and full-stack developer, I build robust products end-to-end with React, TypeScript, Python and Go. Software architecture, cloud and DevOps in service of solutions engineered to last.',
     viewWork: 'View My Work',
     getInTouch: 'Get In Touch',
   },
   about: {
     title: 'About Me',
-    paragraph1: "I'm a software engineering student at EPITA, majoring in Information Systems & Software Engineering (SIGL). I'm passionate about building robust, scalable applications - combining clean architecture on the backend with intuitive interfaces on the frontend.",
-    paragraph2: "My projects span full-stack web development, DevOps automation, and systems design. Outside of coursework, I enjoy exploring new technologies and taking on side projects that push me to learn faster.",
+    paragraph1: "I'm a software engineering student at EPITA, majoring in Information Systems & Software Engineering (SIGL). I'm passionate about building robust, scalable applications - from solid backend architecture to polished frontend interfaces. During my internship at Quanteam, I designed and built Leonard-AI end-to-end, an internal chatbot deployed to over 200 employees; at the French Ministry of National Education, I now help secure the software supply chain of several critical applications.",
+    paragraph2: "Curious and self-driven, I enjoy exploring new technologies through side projects - from DevOps to AI - and turning ideas into real products, from backend to frontend.",
   },
   education: {
     title: 'Education',

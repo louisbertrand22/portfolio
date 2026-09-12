@@ -15,15 +15,15 @@ export const fr = {
   hero: {
     greeting: 'Bonjour, je suis',
     name: 'Louis Bertrand',
-    subtitle: 'Étudiant Ingénieur à l\'EPITA · Développeur Full Stack',
-    description: 'Majeure SIGL à l\'EPITA - architecture logicielle, cloud, mobilité et transformation digitale. Je conçois des produits full-stack robustes, du backend au frontend, pensés pour durer.',
+    subtitle: 'IT Strategy & Architecture · Cloud & Software Engineering',
+    description: 'Étudiant ingénieur à l\'EPITA (majeure SIGL) et développeur full-stack, je conçois des produits robustes du backend au frontend avec React, TypeScript, Python ou Go. Architecture logicielle, cloud et DevOps au service de solutions pensées pour durer.',
     viewWork: 'Voir Mes Projets',
     getInTouch: 'Me Contacter',
   },
   about: {
     title: 'À Propos de Moi',
-    paragraph1: "Étudiant ingénieur à l'EPITA en majeure SIGL (Systèmes d'Information et Génie Logiciel), je suis passionné par la conception d'applications robustes et scalables - alliant une architecture backend solide à des interfaces frontend soignées.",
-    paragraph2: "Mes projets couvrent le développement web full-stack, l'automatisation DevOps et la conception de systèmes. En dehors des cours, j'aime explorer de nouvelles technologies et mener des projets personnels qui me poussent à progresser.",
+    paragraph1: "Étudiant ingénieur à l'EPITA en majeure SIGL (Systèmes d'Information et Génie Logiciel), je conçois des applications robustes et scalables, d'une architecture backend solide à des interfaces frontend soignées. En stage chez Quanteam, j'ai conçu et développé de bout en bout Leonard-AI, un chatbot interne déployé pour plus de 200 collaborateurs ; au Ministère de l'Éducation nationale, je sécurise aujourd'hui la chaîne d'approvisionnement logicielle de plusieurs applications critiques.",
+    paragraph2: "Curieux et autonome, j'aime explorer de nouvelles technologies à travers des projets personnels - du DevOps à l'intelligence artificielle - et transformer des idées en produits concrets, du backend au frontend.",
   },
   education: {
     title: 'Formation',
