@@ -4,8 +4,8 @@
   "description": "Portfolio of Louis Bertrand, software engineering student at EPITA and full-stack developer.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#6366f1",
+  "background_color": "#0b1a2b",
+  "theme_color": "#1c3f66",
   "icons": [
     {
       "src": "/icon-192.png",
