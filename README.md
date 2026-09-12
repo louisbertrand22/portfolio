@@ -237,4 +237,4 @@ MIT
 
 ## Author
 
-Louis Bertrand
+Louis BERTRAND

@@ -14,7 +14,7 @@ export const en = {
   },
   hero: {
     greeting: "Hi, I'm",
-    name: 'Louis Bertrand',
+    name: 'Louis BERTRAND',
     subtitle: 'IT Strategy & Architecture · Cloud & Software Engineering',
     description: 'Software engineering student at EPITA (SIGL) and full-stack developer, I build robust products end-to-end with React, TypeScript, Python and Go. Software architecture, cloud and DevOps in service of solutions engineered to last.',
     viewWork: 'View My Work',
@@ -142,6 +142,6 @@ export const en = {
     emailCopied: 'Email copied!',
   },
   footer: {
-    copyright: '© 2026 Louis Bertrand.',
+    copyright: '© 2026 Louis BERTRAND.',
   },
 }

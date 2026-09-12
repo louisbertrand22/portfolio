@@ -14,7 +14,7 @@ export const fr = {
   },
   hero: {
     greeting: 'Bonjour, je suis',
-    name: 'Louis Bertrand',
+    name: 'Louis BERTRAND',
     subtitle: 'IT Strategy & Architecture · Cloud & Software Engineering',
     description: 'Étudiant ingénieur à l\'EPITA (majeure SIGL) et développeur full-stack, je conçois des produits robustes du backend au frontend avec React, TypeScript, Python ou Go. Architecture logicielle, cloud et DevOps au service de solutions pensées pour durer.',
     viewWork: 'Voir Mes Projets',
@@ -142,6 +142,6 @@ export const fr = {
     emailCopied: 'Email copié !',
   },
   footer: {
-    copyright: '© 2026 Louis Bertrand.',
+    copyright: '© 2026 Louis BERTRAND.',
   },
 }

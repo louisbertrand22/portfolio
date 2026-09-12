@@ -109,7 +109,7 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
       case 'help':
         return out(helpText)
       case 'whoami':
-        return out('Louis Bertrand — Software Engineer')
+        return out('Louis BERTRAND — Software Engineer')
       case 'about':
         return out('Software engineering student at EPITA (SIGL major).\nI build full-stack products that are engineered to last.')
       case 'ls':
@@ -272,7 +272,7 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
         initial="hidden" animate="visible" variants={bodyVariants}
       >
         <motion.p variants={lineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">whoami</span></motion.p>
-        <motion.p className="terminal-output" variants={lineVariants}>Louis Bertrand — Software Engineer</motion.p>
+        <motion.p className="terminal-output" variants={lineVariants}>Louis BERTRAND — Software Engineer</motion.p>
         <motion.p variants={lineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">cat stack.json</span></motion.p>
         <motion.p className="terminal-output" variants={lineVariants}>{'{ React, FastAPI, Docker, K8s }'}</motion.p>
         <motion.p variants={lineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">./interactive.sh</span></motion.p>
