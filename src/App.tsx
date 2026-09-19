@@ -53,7 +53,13 @@ const projects = [
   { featured: false, technologies: ['Python', 'SQLAlchemy', 'Alembic', 'CLI'],                  link: 'https://github.com/louisbertrand22/FootySim' },
   { featured: false, technologies: ['FastAPI', 'SQLAlchemy', 'Python', 'REST API'],              link: 'https://github.com/louisbertrand22/FootySim-backend' },
   { featured: false, technologies: ['Flask', 'Docker', 'Kubernetes', 'CI/CD'],                  link: 'https://github.com/louisbertrand22/DevOpsTest' },
-  { featured: true,  technologies: ['TypeScript', 'Node.js', 'PostgreSQL', 'OAuth2', 'Prisma'], link: 'https://github.com/louisbertrand22/MySSO', preview: '/mysso_landingpage.png' },
+  {
+    featured: true,
+    technologies: ['TypeScript', 'Node.js', 'PostgreSQL', 'OAuth2', 'Prisma'],
+    link: 'https://github.com/louisbertrand22/MySSO',
+    preview: '/mysso_landingpage.png',
+    gallery: ['/mysso_landingpage.png', '/consent.png', '/sso_1.png', '/sso_2.png'],
+  },
 ]
 
 const filterTechs = ['All', 'Python', 'TypeScript', 'Docker', 'FastAPI', 'PostgreSQL']
@@ -690,6 +696,13 @@ function App() {
           <DialogHeader>
             <DialogTitle>{t.projects.items[selectedProject ?? 0]?.title}</DialogTitle>
           </DialogHeader>
+          {projects[selectedProject ?? -1]?.gallery && (
+            <div className="modal-gallery">
+              {projects[selectedProject ?? -1].gallery!.map(src => (
+                <img key={src} src={src} alt="" loading="lazy" />
+              ))}
+            </div>
+          )}
           {isLoadingReadme ? (
             <div className="modal-loading"><div className="loading-spinner" />Loading README...</div>
           ) : (
