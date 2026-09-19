@@ -8,6 +8,7 @@ export const fr = {
     projects: 'Projets',
     sigl: 'SIGL',
     skills: 'Compétences',
+    github: 'GitHub',
     hobbies: 'Hobbies',
     cv: 'CV',
     contact: 'Contact',
@@ -110,6 +111,15 @@ export const fr = {
   },
   skills: {
     title: 'Compétences & Technologies',
+  },
+  github: {
+    title: 'Activité GitHub',
+    subtitle: 'Un aperçu en direct de mon historique de contributions et des langages les plus utilisés.',
+    loading: 'Chargement de l\'activité GitHub…',
+    contributionsLabel: 'contributions sur la dernière année',
+    less: 'Moins',
+    more: 'Plus',
+    viewProfile: 'Voir le profil GitHub',
   },
   hobbies: {
     title: 'Hobbies & Passions',

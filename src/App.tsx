@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import Terminal from '@/components/Terminal'
+import GithubStats from '@/components/GithubStats'
 import CustomCursor from '@/components/CustomCursor'
 import IntroScreen from '@/components/IntroScreen'
 import { useLenis } from '@/hooks/useLenis'
@@ -254,7 +255,7 @@ function App() {
               </button>
             </div>
             <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-              {(['home', 'about', 'experience', 'education', 'sigl', 'projects', 'skills', 'hobbies', 'cv', 'contact'] as const).map(key => (
+              {(['home', 'about', 'experience', 'education', 'sigl', 'projects', 'skills', 'github', 'hobbies', 'cv', 'contact'] as const).map(key => (
                 <li key={key}>
                   <a
                     href={`#${key}`}
@@ -553,6 +554,21 @@ function App() {
                   <span className="skill-name">{skill}</span>
                 </motion.div>
               ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ── GITHUB ── */}
+        <section id="github" className="github">
+          <div className="container">
+            <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
+              {t.github.title}
+            </motion.h2>
+            <motion.p className="github-subtitle" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.05}>
+              {t.github.subtitle}
+            </motion.p>
+            <motion.div initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
+              <GithubStats language={language} labels={t.github} />
             </motion.div>
           </div>
         </section>
