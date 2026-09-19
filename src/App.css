@@ -624,6 +624,23 @@ main {
   background: var(--bg-subtle);
 }
 
+.about-photo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.about-photo img {
+  box-sizing: border-box;
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  object-fit: cover;
+  padding: 4px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 8px 30px -10px var(--primary-glow);
+}
+
 .about-content {
   max-width: 700px;
   margin: 0 auto;

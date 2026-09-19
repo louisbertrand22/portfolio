@@ -344,6 +344,9 @@ function App() {
             <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
               {t.about.title}
             </motion.h2>
+            <motion.div className="about-photo" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
+              <img src="/photo_profile.jpg" alt={t.hero.name} loading="lazy" />
+            </motion.div>
             <motion.div className="about-content" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
               <p>{t.about.paragraph1}</p>
               <p>{t.about.paragraph2}</p>
