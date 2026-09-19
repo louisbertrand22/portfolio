@@ -61,9 +61,10 @@ const projects = [
     gallery: ['/mysso_landingpage.png', '/consent.png', '/sso_1.png', '/sso_2.png'],
   },
   { featured: false, technologies: ['C', 'Autotools', 'POSIX'], private: true },
+  { featured: false, technologies: ['Rust', 'POSIX'], link: 'https://github.com/louisbertrand22/MiniShell_Rust' },
 ]
 
-const filterTechs = ['All', 'C', 'Python', 'TypeScript', 'Docker', 'FastAPI', 'PostgreSQL']
+const filterTechs = ['All', 'C', 'Rust', 'Python', 'TypeScript', 'Docker', 'FastAPI', 'PostgreSQL']
 
 const skills = [
   'TypeScript / JS', 'React', 'Node.js', 'Python', 'FastAPI',

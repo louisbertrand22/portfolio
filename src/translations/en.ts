@@ -96,6 +96,10 @@ export const en = {
         title: '42sh',
         description: "POSIX-compliant shell reimplementation in C99 for EPITA's systems programming course, with custom builtins executed without fork/exec, an Autotools build system, and a full test suite",
       },
+      {
+        title: 'MiniShell_Rust',
+        description: 'Unix shell reimplementation in Rust, featuring pipes, I/O redirections, job control, and built-in commands, built with a focus on memory safety and idiomatic error handling',
+      },
     ],
   },
   siglProjects: {
