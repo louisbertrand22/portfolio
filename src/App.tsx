@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Guitar, Footprints, Dumbbell } from 'lucide-react'
+import { Guitar, Footprints, Dumbbell, Lock } from 'lucide-react'
 
 const hobbyIcons = [Guitar, Footprints, Dumbbell]
 import { toast } from 'sonner'
@@ -177,7 +177,8 @@ function App() {
 
   const openProjectModal = (index: number) => {
     setSelectedProject(index)
-    fetchReadme(projects[index].link)
+    const link = projects[index].link
+    if (link) fetchReadme(link)
   }
 
   const closeProjectModal = () => {
@@ -541,11 +542,17 @@ function App() {
                         <Badge key={idx}>{tech}</Badge>
                       ))}
                     </div>
-                    <a href={projects[originalIndex].link} className="project-link" onClick={e => e.stopPropagation()} target="_blank" rel="noopener noreferrer">
-                      {t.projects.viewProject}
-                    </a>
+                    {projects[originalIndex].link ? (
+                      <a href={projects[originalIndex].link} className="project-link" onClick={e => e.stopPropagation()} target="_blank" rel="noopener noreferrer">
+                        {t.projects.viewProject}
+                      </a>
+                    ) : (
+                      <span className="project-link project-link-private">
+                        <Lock size={12} strokeWidth={2.25} />{t.projects.privateRepo}
+                      </span>
+                    )}
                     <div className="project-card-readme-hint" aria-hidden="true">
-                      {t.projects.viewReadme}
+                      {projects[originalIndex].link ? t.projects.viewReadme : t.projects.viewDetails}
                     </div>
                   </motion.div>
                 ))}
@@ -703,7 +710,14 @@ function App() {
               ))}
             </div>
           )}
-          {isLoadingReadme ? (
+          {!projects[selectedProject ?? -1]?.link ? (
+            <div className="modal-readme">
+              <p>{t.projects.items[selectedProject ?? 0]?.description}</p>
+              <p className="modal-private-note">
+                <Lock size={13} strokeWidth={2.25} />{t.projects.privateNote}
+              </p>
+            </div>
+          ) : isLoadingReadme ? (
             <div className="modal-loading"><div className="loading-spinner" />Loading README...</div>
           ) : (
             <div className="modal-readme"><Markdown>{readmeContent}</Markdown></div>

@@ -1051,6 +1051,28 @@ main {
   transform: translate(2px, -2px);
 }
 
+.project-link-private {
+  cursor: default;
+}
+
+.project-link-private::after {
+  content: none;
+}
+
+.project-card:hover .project-link-private {
+  color: var(--text-muted);
+}
+
+.modal-private-note {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
 /* ============================================================
    SIGL PROJECTS SECTION
    ============================================================ */

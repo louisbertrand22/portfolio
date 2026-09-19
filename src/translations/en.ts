@@ -72,6 +72,9 @@ export const en = {
     title: 'Featured Projects',
     viewProject: 'View Project →',
     viewReadme: 'View README →',
+    viewDetails: 'View details →',
+    privateRepo: 'Private repository',
+    privateNote: 'Source code is private — happy to share on request or walk you through it.',
     items: [
       {
         title: 'FootySim',
