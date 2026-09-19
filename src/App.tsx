@@ -235,7 +235,7 @@ function App() {
           <nav className="nav">
             <div className="logo">{t.nav.logo}</div>
             <div className="nav-controls">
-              <button className="language-toggle" onClick={() => setLanguage(p => p === 'en' ? 'fr' : 'en')} aria-label="Toggle language">
+              <button className="language-toggle" onClick={() => setLanguage(p => p === 'en' ? 'fr' : 'en')}>
                 {language === 'en' ? 'FR' : 'EN'}
               </button>
               <button className="theme-toggle" onClick={() => setIsDarkMode(p => !p)} aria-label="Toggle theme">
