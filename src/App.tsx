@@ -53,7 +53,7 @@ const projects = [
   { featured: false, technologies: ['Python', 'SQLAlchemy', 'Alembic', 'CLI'],                  link: 'https://github.com/louisbertrand22/FootySim' },
   { featured: false, technologies: ['FastAPI', 'SQLAlchemy', 'Python', 'REST API'],              link: 'https://github.com/louisbertrand22/FootySim-backend' },
   { featured: false, technologies: ['Flask', 'Docker', 'Kubernetes', 'CI/CD'],                  link: 'https://github.com/louisbertrand22/DevOpsTest' },
-  { featured: true,  technologies: ['TypeScript', 'Node.js', 'PostgreSQL', 'OAuth2', 'Prisma'], link: 'https://github.com/louisbertrand22/MySSO' },
+  { featured: true,  technologies: ['TypeScript', 'Node.js', 'PostgreSQL', 'OAuth2', 'Prisma'], link: 'https://github.com/louisbertrand22/MySSO', preview: '/mysso_landingpage.png' },
 ]
 
 const filterTechs = ['All', 'Python', 'TypeScript', 'Docker', 'FastAPI', 'PostgreSQL']
@@ -502,7 +502,7 @@ function App() {
             {/* Grid */}
             <motion.div className="projects-grid" layout>
               <AnimatePresence mode="popLayout">
-                {filteredProjects.map(({ originalIndex, featured, technologies }) => (
+                {filteredProjects.map(({ originalIndex, featured, technologies, preview }) => (
                   <motion.div
                     key={originalIndex}
                     layout
@@ -516,8 +516,14 @@ function App() {
                   >
                     {featured && (
                       <div className="project-preview" aria-hidden="true">
-                        <div className="project-preview-dots" />
-                        <span className="project-preview-name">{t.projects.items[originalIndex]?.title}</span>
+                        {preview ? (
+                          <img src={preview} alt="" className="project-preview-img" loading="lazy" />
+                        ) : (
+                          <>
+                            <div className="project-preview-dots" />
+                            <span className="project-preview-name">{t.projects.items[originalIndex]?.title}</span>
+                          </>
+                        )}
                         <span className="project-featured-badge">{featuredLabel}</span>
                       </div>
                     )}

@@ -876,7 +876,7 @@ main {
 /* Featured card preview area */
 .project-preview {
   position: relative;
-  height: 120px;
+  height: 168px;
   overflow: hidden;
   background: linear-gradient(135deg, rgba(28, 63, 102, 0.1) 0%, rgba(61, 108, 150, 0.07) 100%);
   border-bottom: 1px solid rgba(28, 63, 102, 0.2);
@@ -884,6 +884,18 @@ main {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.project-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.4s ease;
+}
+
+.project-card:hover .project-preview-img {
+  transform: scale(1.045);
 }
 
 [data-theme="dark"] .project-preview {
