@@ -60,9 +60,10 @@ const projects = [
     preview: '/mysso_landingpage.png',
     gallery: ['/mysso_landingpage.png', '/consent.png', '/sso_1.png', '/sso_2.png'],
   },
+  { featured: false, technologies: ['C', 'Autotools', 'POSIX'], private: true },
 ]
 
-const filterTechs = ['All', 'Python', 'TypeScript', 'Docker', 'FastAPI', 'PostgreSQL']
+const filterTechs = ['All', 'C', 'Python', 'TypeScript', 'Docker', 'FastAPI', 'PostgreSQL']
 
 const skills = [
   'TypeScript / JS', 'React', 'Node.js', 'Python', 'FastAPI',

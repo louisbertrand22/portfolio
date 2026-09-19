@@ -92,6 +92,10 @@ export const fr = {
         title: 'MySSO',
         description: 'Implémentation SSO personnalisée avec support OpenID Connect et OAuth2, PKCE, gestion du consentement utilisateur et signature JWT RSA',
       },
+      {
+        title: '42sh',
+        description: 'Réimplémentation d\'un shell conforme POSIX en C99 dans le cadre du cursus systèmes d\'EPITA, avec builtins personnalisés exécutés sans fork/exec, build Autotools et suite de tests complète',
+      },
     ],
   },
   siglProjects: {
