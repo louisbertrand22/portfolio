@@ -4,9 +4,12 @@
 
 :root {
   --primary: #1c3f66;
+  --primary-rgb: 28, 63, 102;
   --primary-glow: rgba(28, 63, 102, 0.10);
   --secondary: #3d6c96;
+  --secondary-rgb: 61, 108, 150;
   --accent: #c99a4a;
+  --accent-rgb: 201, 154, 74;
   --text: #10192a;
   --text-muted: #52606d;
   --bg: #f6f3ec;
@@ -25,9 +28,12 @@
 
 [data-theme="dark"] {
   --primary: #6fa0cc;
+  --primary-rgb: 111, 160, 204;
   --primary-glow: rgba(111, 160, 204, 0.14);
   --secondary: #4d7fa8;
+  --secondary-rgb: 77, 127, 168;
   --accent: #e0b563;
+  --accent-rgb: 224, 181, 99;
   --text: #e9edf1;
   --text-muted: #8fa0b0;
   --bg: #0a1420;

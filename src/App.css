@@ -281,7 +281,7 @@
   align-items: center;
   gap: 0.5rem;
   background: var(--primary-glow);
-  border: 1px solid rgba(28, 63, 102, 0.2);
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
   color: var(--primary);
   padding: 0.35rem 0.875rem 0.35rem 0.5rem;
   border-radius: var(--radius-full);
@@ -375,7 +375,7 @@
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(28, 63, 102, 0.4);
+  box-shadow: 0 8px 24px rgba(var(--primary-rgb), 0.4);
   filter: brightness(1.08);
 }
 
@@ -758,9 +758,10 @@ main {
 }
 
 .timeline-item:hover .timeline-dot {
-  background: var(--primary);
+  background: var(--accent);
+  border-color: var(--accent);
   transform: scale(1.4);
-  box-shadow: 0 0 0 4px var(--primary-glow);
+  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.25);
 }
 
 .timeline-card {
@@ -778,7 +779,7 @@ main {
 
 .timeline-item:hover .timeline-card {
   border-color: var(--primary);
-  box-shadow: 0 4px 24px rgba(28, 63, 102, 0.1);
+  box-shadow: 0 4px 24px rgba(var(--primary-rgb), 0.1);
   transform: translateY(-2px);
 }
 
@@ -891,7 +892,7 @@ main {
 
 .filter-btn:hover {
   color: var(--text);
-  border-color: rgba(28, 63, 102, 0.4);
+  border-color: rgba(var(--primary-rgb), 0.4);
 }
 
 .filter-btn.active {
@@ -924,8 +925,8 @@ main {
   position: relative;
   height: 168px;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(28, 63, 102, 0.1) 0%, rgba(61, 108, 150, 0.07) 100%);
-  border-bottom: 1px solid rgba(28, 63, 102, 0.2);
+  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.1) 0%, rgba(var(--secondary-rgb), 0.07) 100%);
+  border-bottom: 1px solid rgba(var(--primary-rgb), 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -952,7 +953,7 @@ main {
 .project-preview-dots {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, rgba(28, 63, 102, 0.25) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(var(--primary-rgb), 0.25) 1px, transparent 1px);
   background-size: 22px 22px;
 }
 
@@ -985,8 +986,8 @@ main {
   position: absolute;
   top: 0.625rem;
   right: 0.625rem;
-  background: var(--primary);
-  color: white;
+  background: var(--accent);
+  color: rgba(0, 0, 0, 0.82);
   padding: 0.175rem 0.6rem;
   border-radius: var(--radius-full);
   font-size: 0.65rem;
@@ -1009,19 +1010,19 @@ main {
 }
 
 .project-card.featured {
-  border-color: rgba(28, 63, 102, 0.25);
-  box-shadow: 0 4px 20px rgba(28, 63, 102, 0.06);
+  border-color: rgba(var(--primary-rgb), 0.25);
+  box-shadow: 0 4px 20px rgba(var(--primary-rgb), 0.06);
 }
 
 .project-card.featured:hover {
   border-color: var(--primary);
-  box-shadow: 0 16px 48px rgba(28, 63, 102, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 48px rgba(var(--primary-rgb), 0.15), 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .project-card:hover {
   border-color: var(--primary);
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(28, 63, 102, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 12px 40px rgba(var(--primary-rgb), 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 .project-card-accent {
@@ -1066,7 +1067,7 @@ main {
   border-radius: var(--radius-full);
   font-size: 0.72rem;
   font-weight: 600;
-  border: 1px solid rgba(28, 63, 102, 0.18);
+  border: 1px solid rgba(var(--primary-rgb), 0.18);
   letter-spacing: 0.01em;
 }
 
@@ -1167,7 +1168,7 @@ main {
 
 .sigl-card:hover {
   border-color: var(--primary);
-  box-shadow: 0 8px 32px rgba(28, 63, 102, 0.1);
+  box-shadow: 0 8px 32px rgba(var(--primary-rgb), 0.1);
   transform: translateY(-3px);
 }
 
@@ -1259,7 +1260,7 @@ main {
   border-color: var(--primary);
   background: var(--primary-glow);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(28, 63, 102, 0.12);
+  box-shadow: 0 4px 16px rgba(var(--primary-rgb), 0.12);
 }
 
 .skill-name {
@@ -1494,7 +1495,7 @@ main {
 
 .hobby-card:hover {
   border-color: var(--primary);
-  box-shadow: 0 8px 32px rgba(28, 63, 102, 0.1);
+  box-shadow: 0 8px 32px rgba(var(--primary-rgb), 0.1);
 }
 
 .hobby-icon {
@@ -1596,7 +1597,7 @@ main {
   color: white;
   border-color: var(--primary);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(28, 63, 102, 0.3);
+  box-shadow: 0 8px 24px rgba(var(--primary-rgb), 0.3);
 }
 
 .contact-link-icon {
@@ -1880,13 +1881,13 @@ main {
   align-items: center;
   justify-content: center;
   z-index: 90;
-  box-shadow: 0 4px 20px rgba(28, 63, 102, 0.4);
+  box-shadow: 0 4px 20px rgba(var(--primary-rgb), 0.4);
   transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .back-to-top:hover {
   background: var(--secondary);
-  box-shadow: 0 8px 28px rgba(28, 63, 102, 0.5);
+  box-shadow: 0 8px 28px rgba(var(--primary-rgb), 0.5);
   transform: translateY(-3px);
 }
 
