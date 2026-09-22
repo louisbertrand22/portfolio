@@ -23,7 +23,7 @@ export const en = {
   },
   about: {
     title: 'About Me',
-    paragraph1: "I'm a software engineering student at EPITA, majoring in Information Systems & Software Engineering (SIGL). I'm passionate about building robust, scalable applications - from solid backend architecture to polished frontend interfaces. During my internship at Quanteam, I designed and built Leonard-AI end-to-end, an internal chatbot deployed to over 200 employees; at the French Ministry of National Education, I now help secure the software supply chain of several critical applications.",
+    paragraph1: "I'm a software engineering student at EPITA, majoring in Information Systems & Software Engineering (SIGL). I'm passionate about building robust, scalable applications - from solid backend architecture to polished frontend interfaces. During my internship at Quanteam, I designed and built Leonard-AI end-to-end, an internal chatbot deployed to over 200 employees, standing up a Kubernetes environment from scratch to industrialize it; at the French Ministry of National Education, I'm now designing a Zero Trust network architecture with Cilium and securing the deployment cycle of several critical applications.",
     paragraph2: "Curious and self-driven, I enjoy exploring new technologies through side projects - from DevOps to AI - and turning ideas into real products, from backend to frontend.",
   },
   education: {
@@ -49,19 +49,19 @@ export const en = {
     title: 'Professional Experience',
     items: [
       {
-        position: 'DevOps',
+        position: 'Infrastructure Security Lead',
         company: 'French Ministry of National Education',
         type: 'Part-time',
         period: 'Feb. 2026 - Jan. 2027',
         location: 'Paris, Île-de-France, France',
-        description: 'Securing the software supply chain of the application portfolio, part-time alongside my studies. Set up Renovate in the continuous integration pipeline to continuously detect outdated or vulnerable dependencies across 4 repositories, with automatic merge requests for updates: teams moved from one-off manual audits to continuous monitoring of security debt on every dependency change.',
+        description: 'Securing the network and deployment cycle of the application portfolio, part-time alongside my studies. Built a Zero Trust architecture with Cilium using a hybrid strategy: "Default Deny" rules rolled out globally from templates, with authorizations decentralized directly into application charts. Secured the deployment cycle with a GitOps approach (ArgoCD) and integrated the Renovate scanner across 4 major repositories, with automatic merge requests for updates: teams moved from one-off manual audits to continuous monitoring of security debt.',
         logo: 'education-nationale-logo.svg',
       },
       {
-        position: 'Python Developer',
+        position: 'Full-Stack Developer',
         company: 'QUANTEAM (Groupe RAINBOW PARTNERS)',
         type: 'Internship',
-        period: 'Sept. 2025 - Feb. 2026',
+        period: 'Sept. 2025 - Jan. 2026',
         location: 'Neuilly-sur-Seine, Île-de-France, France',
         description: 'End-to-end design and development of Leonard-AI, an internal chatbot serving 200+ employees, automating repetitive tasks for support functions: payroll, human resources and business managers. Built the full application architecture — asynchronous APIs with FastAPI and Django — and industrialized deployment on a new Kubernetes environment set up for the project. The tool offloads recurring low-value requests from support teams and gives them time back for their core work.',
         logo: 'QuanteamLogo169.jpeg',
@@ -111,12 +111,16 @@ export const en = {
         description: 'Complete rebuild of an airline\'s information system, carried out by around 50 students organized into application teams — After-Sales, Check-in, Booking, E-commerce, Loyalty, Flight Tracking and Planning — supported by a Core Infrastructure team and a DevOps team, which I was part of. Within the DevOps team, I contributed to the tooling, CI/CD pipelines and deployment environments serving all the application teams.',
       },
       {
-        title: 'Cloud Architecture',
-        description: 'Creation of a hybrid cloud infrastructure leveraging OpenStack technologies alongside PaaS services from AWS and Microsoft Azure. The project covers multi-cloud networking, compute provisioning, storage management, and high-availability configurations.',
+        title: 'Resilient Hybrid Cloud Architecture',
+        description: 'Deployment of a resilient private cloud infrastructure on OpenStack, dynamically extended with public AWS PaaS services to combine data sovereignty with flexibility. Fully automated provisioning of compute resources and distributed storage management (Patroni) through multi-provider Terraform scripts.',
       },
       {
         title: 'HRIS Transformation — Business Analysis Consulting',
-        description: 'Led a team of 6 students as project manager on a business analysis (MOA) consulting engagement for BeBlood, a medical biology group with 12,000 employees across 5 European countries: a 3-year HRIS transformation strategy built around Oracle HCM. This project strengthened my skills in project team leadership, complex business needs analysis, stakeholder management, and communication with a CIO-level decision-maker in a real-world context.',
+        description: 'Led a team of 6 students as project manager on a business analysis (MOA) consulting engagement for BeBlood, a medical biology group with 12,000 employees across 5 European countries: a 3-year HRIS transformation strategy built around Oracle HCM, including needs analysis and financial modeling (ROI). This project strengthened my skills in project team leadership, stakeholder management, and communication with a CIO-level decision-maker in a real-world context.',
+      },
+      {
+        title: 'IT Master Plan & Merger-Acquisition',
+        description: 'Developed the information system master plan for a logistics group as part of a merger: mapping the existing landscape, defining the target architecture, and estimating budgets. The project also covered risk management, with business continuity planning and compliance with cybersecurity and data protection standards (NIS2).',
       },
     ],
   },
@@ -144,8 +148,12 @@ export const en = {
         description: 'I run regularly: a great way to stay on pace and clear my mind.',
       },
       {
-        title: 'Weight training',
-        description: 'Frequent gym sessions, driven by discipline and consistency.',
+        title: 'Football',
+        description: 'I play regularly with friends — the same team spirit on the pitch as at work.',
+      },
+      {
+        title: 'Formula 1',
+        description: 'A die-hard Red Bull Racing fan — I never miss a Grand Prix, drawn in by race strategy as much as speed.',
       },
     ],
   },

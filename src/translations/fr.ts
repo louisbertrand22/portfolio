@@ -23,7 +23,7 @@ export const fr = {
   },
   about: {
     title: 'À Propos de Moi',
-    paragraph1: "Étudiant ingénieur à l'EPITA en majeure SIGL (Systèmes d'Information et Génie Logiciel), je conçois des applications robustes et scalables, d'une architecture backend solide à des interfaces frontend soignées. En stage chez Quanteam, j'ai conçu et développé de bout en bout Leonard-AI, un chatbot interne déployé pour plus de 200 collaborateurs ; au Ministère de l'Éducation nationale, je sécurise aujourd'hui la chaîne d'approvisionnement logicielle de plusieurs applications critiques.",
+    paragraph1: "Étudiant ingénieur à l'EPITA en majeure SIGL (Systèmes d'Information et Génie Logiciel), je conçois des applications robustes et scalables, d'une architecture backend solide à des interfaces frontend soignées. En stage chez Quanteam, j'ai conçu et développé de bout en bout Leonard-AI, un chatbot interne déployé pour plus de 200 collaborateurs, avec un environnement Kubernetes créé de zéro pour l'industrialiser ; au Ministère de l'Éducation nationale, je conçois aujourd'hui une architecture réseau Zero Trust avec Cilium et sécurise le cycle de déploiement de plusieurs applications critiques.",
     paragraph2: "Curieux et autonome, j'aime explorer de nouvelles technologies à travers des projets personnels - du DevOps à l'intelligence artificielle - et transformer des idées en produits concrets, du backend au frontend.",
   },
   education: {
@@ -49,19 +49,19 @@ export const fr = {
     title: 'Expérience Professionnelle',
     items: [
       {
-        position: 'DevOps',
+        position: 'Responsable Sécurité Infrastructure',
         company: 'Ministère de l\'Éducation nationale',
         type: 'Temps partiel',
         period: 'Fév. 2026 - Jan. 2027',
         location: 'Paris, Île-de-France, France',
-        description: 'Sécurisation de la chaîne d\'approvisionnement logicielle du parc applicatif, en temps partiel en parallèle des cours. Mise en place de Renovate dans la chaîne d\'intégration continue pour détecter en permanence les dépendances obsolètes ou vulnérables sur 4 dépôts, avec ouverture automatique des merge requests de mise à jour : les équipes passent d\'audits manuels ponctuels à un contrôle continu de la dette de sécurité, à chaque évolution des dépendances.',
+        description: 'Sécurisation du réseau et du cycle de déploiement du parc applicatif, en temps partiel en parallèle des cours. Mise en place d\'une architecture Zero Trust avec Cilium via une stratégie hybride : règles "Default Deny" déployées globalement depuis les templates, et autorisations décentralisées directement dans les charts applicatifs. Sécurisation du cycle de déploiement en approche GitOps (ArgoCD) et intégration du scanner Renovate sur 4 dépôts majeurs, avec ouverture automatique des merge requests de mise à jour : les équipes passent d\'audits manuels ponctuels à un contrôle continu de la dette de sécurité.',
         logo: 'education-nationale-logo.svg',
       },
       {
-        position: 'Développeur Python',
+        position: 'Développeur FullStack',
         company: 'QUANTEAM (Groupe RAINBOW PARTNERS)',
         type: 'Stage',
-        period: 'Sept. 2025 - Fév. 2026',
+        period: 'Sept. 2025 - Jan. 2026',
         location: 'Neuilly-sur-Seine, Île-de-France, France',
         description: 'Conception et développement de bout en bout de Leonard-AI, un chatbot interne au service de plus de 200 collaborateurs, qui automatise les tâches répétitives des fonctions support : paie, ressources humaines et business managers. Réalisation de l\'architecture applicative complète — APIs asynchrones en FastAPI et Django — et industrialisation du déploiement sur un nouvel environnement Kubernetes mis en place à cette occasion. L\'outil décharge les équipes support des sollicitations récurrentes à faible valeur ajoutée et leur rend du temps pour leurs missions de fond.',
         logo: 'QuanteamLogo169.jpeg',
@@ -111,12 +111,16 @@ export const fr = {
         description: 'Refonte complète du système d\'information d\'une compagnie aérienne, menée à environ 50 étudiants organisés en équipes applicatives — SAV, Enregistrement, Booking, E-commerce, Fidélité, Suivi de vol et Planification — appuyées par une équipe Socle (infrastructure) et une équipe DevOps, dont je faisais partie. Au sein de l\'équipe DevOps, j\'ai contribué à l\'outillage, aux chaînes CI/CD et aux environnements de déploiement au service de l\'ensemble des équipes applicatives.',
       },
       {
-        title: 'Architecture Cloud',
-        description: 'Création d\'une infrastructure cloud hybride s\'appuyant sur les technologies OpenStack, complétée par des services PaaS d\'AWS et Microsoft Azure. Le projet couvre la mise en réseau multi-cloud, le provisionnement de ressources de calcul, la gestion du stockage et les configurations haute disponibilité.',
+        title: 'Architecture Cloud Hybride Résiliente',
+        description: 'Déploiement d\'une infrastructure cloud privée résiliente sous OpenStack, étendue dynamiquement par des services PaaS publics AWS pour allier souveraineté et flexibilité. Automatisation complète du provisionnement des ressources de calcul et de la gestion du stockage distribué (Patroni) via des scripts Terraform en approche multi-provider.',
       },
       {
         title: 'Transformation SIRH — Maîtrise d\'Ouvrage',
-        description: 'Chef de projet d\'une équipe de 6 étudiants sur une mission de conseil MOA pour BeBlood, groupe de biologie médicale de 12 000 collaborateurs dans 5 pays européens : élaboration d\'une stratégie de transformation du SIRH sur 3 ans, articulée autour d\'Oracle HCM. Ce projet m\'a permis de développer mes compétences en pilotage d\'équipe projet, en analyse de besoins métier complexes, en gestion des parties prenantes et en communication avec un décideur DSI en contexte réel.',
+        description: 'Chef de projet d\'une équipe de 6 étudiants sur une mission de conseil MOA pour BeBlood, groupe de biologie médicale de 12 000 collaborateurs dans 5 pays européens : élaboration d\'une stratégie de transformation du SIRH sur 3 ans, articulée autour d\'Oracle HCM, incluant l\'analyse des besoins et la modélisation financière (ROI). Ce projet m\'a permis de développer mes compétences en pilotage d\'équipe projet, en gestion des parties prenantes et en communication avec un décideur DSI en contexte réel.',
+      },
+      {
+        title: 'Schéma Directeur SI & Fusion-Acquisition',
+        description: 'Élaboration du schéma directeur du système d\'information d\'un groupe logistique dans le cadre d\'une fusion : cartographie de l\'existant, définition de la cible et estimation des budgets. Le projet a aussi couvert la gestion des risques, avec l\'élaboration de plans de continuité d\'activité et la mise en conformité avec les standards de cybersécurité et de protection des données (NIS2).',
       },
     ],
   },
@@ -144,8 +148,12 @@ export const fr = {
         description: 'Je cours régulièrement : un bon moyen de garder le rythme et de me vider la tête.',
       },
       {
-        title: 'Musculation',
-        description: 'Des entraînements fréquents en salle, portés par la discipline et la régularité.',
+        title: 'Football',
+        description: 'Je joue régulièrement entre amis — le même esprit d\'équipe sur le terrain qu\'au travail.',
+      },
+      {
+        title: 'Formule 1',
+        description: 'Grand fan de Red Bull Racing : je ne rate aucun Grand Prix, entre stratégie de course et passion pour la vitesse.',
       },
     ],
   },

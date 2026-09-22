@@ -618,27 +618,77 @@ main {
 }
 
 /* ============================================================
-   ABOUT SECTION
+   ABOUT + EXPERIENCE (shared sticky photo)
    ============================================================ */
-.about {
+.about-experience {
   background: var(--bg-subtle);
 }
 
-.about-photo {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2rem;
+.about-experience-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: 3.5rem;
+  align-items: start;
 }
 
-.about-photo img {
+.sticky-photo {
+  position: sticky;
+  top: 6.5rem;
+}
+
+.sticky-photo-frame {
+  aspect-ratio: 3 / 4;
   box-sizing: border-box;
-  width: 148px;
-  height: 148px;
-  border-radius: 50%;
-  object-fit: cover;
+  border-radius: var(--radius);
+  overflow: hidden;
   padding: 4px;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
-  box-shadow: 0 8px 30px -10px var(--primary-glow);
+  box-shadow: 0 20px 50px -20px var(--primary-glow);
+}
+
+.sticky-photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: calc(var(--radius) - 4px);
+  display: block;
+}
+
+.sticky-photo-caption {
+  margin-top: 1.1rem;
+  text-align: center;
+}
+
+.sticky-photo-name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+.sticky-photo-role {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+  line-height: 1.5;
+}
+
+.about-experience-content {
+  min-width: 0;
+}
+
+@media (max-width: 960px) {
+  .about-experience-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sticky-photo {
+    position: static;
+    max-width: 200px;
+    margin: 0 auto;
+  }
 }
 
 .about-content {
@@ -659,10 +709,6 @@ main {
    ============================================================ */
 .education {
   background: var(--bg-subtle);
-}
-
-.experience {
-  background: var(--bg);
 }
 
 .timeline {
@@ -1420,9 +1466,9 @@ main {
 
 .hobbies-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   gap: 1.25rem;
-  max-width: 840px;
+  max-width: 900px;
   margin: 0 auto;
 }
 

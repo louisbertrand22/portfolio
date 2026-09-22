@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Guitar, Footprints, Dumbbell, Lock } from 'lucide-react'
+import { Guitar, Footprints, Goal, Flag, Lock } from 'lucide-react'
 
-const hobbyIcons = [Guitar, Footprints, Dumbbell]
+const hobbyIcons = [Guitar, Footprints, Goal, Flag]
 import { toast } from 'sonner'
 import './App.css'
 import { translations, Language } from './translations'
@@ -67,9 +67,11 @@ const projects = [
 const filterTechs = ['All', 'C', 'Rust', 'Python', 'TypeScript', 'Docker', 'FastAPI', 'PostgreSQL']
 
 const skills = [
-  'TypeScript / JS', 'React', 'Node.js', 'Python', 'FastAPI',
-  'PostgreSQL', 'Docker', 'Kubernetes', 'CI/CD', 'ArgoCD', 'Terraform',
-  'Git', 'REST APIs', 'Agile / Scrum', 'Cloud'
+  'TypeScript / JS', 'React', 'Node.js', 'Python', 'C++', 'Java', 'SQL',
+  'FastAPI', 'Django', 'PostgreSQL',
+  'Docker', 'Kubernetes', 'Cilium', 'Helm', 'ArgoCD', 'CI/CD',
+  'AWS', 'OpenStack', 'Terraform', 'Cloud',
+  'Keycloak', 'Git', 'REST APIs', 'Agile / Scrum', 'IA / Prompt Engineering'
 ]
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -348,48 +350,56 @@ function App() {
           </div>
         </section>
 
-        {/* ── ABOUT ── */}
-        <section id="about" className="about">
-          <div className="container">
-            <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
-              {t.about.title}
-            </motion.h2>
-            <motion.div className="about-photo" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
-              <img src="/photo_profile.jpg" alt={t.hero.name} loading="lazy" />
+        {/* ── ABOUT + EXPERIENCE (sticky photo) ── */}
+        <div className="about-experience">
+          <div className="container about-experience-grid">
+            <motion.div className="sticky-photo" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
+              <div className="sticky-photo-frame">
+                <img src="/photo_profile.jpg" alt={t.hero.name} loading="lazy" />
+              </div>
+              <div className="sticky-photo-caption">
+                <span className="sticky-photo-name">{t.hero.name}</span>
+                <span className="sticky-photo-role">{t.hero.subtitle}</span>
+              </div>
             </motion.div>
-            <motion.div className="about-content" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
-              <p>{t.about.paragraph1}</p>
-              <p>{t.about.paragraph2}</p>
-            </motion.div>
-          </div>
-        </section>
 
-        {/* ── EXPERIENCE ── */}
-        <section id="experience" className="experience">
-          <div className="container">
-            <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
-              {t.experience.title}
-            </motion.h2>
-            <div className="timeline">
-              {t.experience.items.map((exp, index) => (
-                <motion.div key={index} className="timeline-item" initial="hidden" whileInView="visible" viewport={viewport} variants={slideLeft} custom={index * 0.1}>
-                  <div className="timeline-connector"><div className="timeline-dot" /></div>
-                  <div className="timeline-card">
-                    {exp.logo && <div className="timeline-logo"><img src={exp.logo} alt={`${exp.company} logo`} /></div>}
-                    <h3 className="timeline-title">{exp.position}</h3>
-                    <p className="timeline-subtitle">{exp.company}</p>
-                    <div className="timeline-meta">
-                      <span className="timeline-period-badge">{exp.period}</span>
-                      <Badge variant="secondary">{exp.type}</Badge>
-                      <Badge variant="secondary">{exp.location}</Badge>
-                    </div>
-                    <p className="timeline-description">{exp.description}</p>
-                  </div>
+            <div className="about-experience-content">
+              <section id="about" className="about">
+                <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
+                  {t.about.title}
+                </motion.h2>
+                <motion.div className="about-content" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
+                  <p>{t.about.paragraph1}</p>
+                  <p>{t.about.paragraph2}</p>
                 </motion.div>
-              ))}
+              </section>
+
+              <section id="experience" className="experience">
+                <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
+                  {t.experience.title}
+                </motion.h2>
+                <div className="timeline">
+                  {t.experience.items.map((exp, index) => (
+                    <motion.div key={index} className="timeline-item" initial="hidden" whileInView="visible" viewport={viewport} variants={slideLeft} custom={index * 0.1}>
+                      <div className="timeline-connector"><div className="timeline-dot" /></div>
+                      <div className="timeline-card">
+                        {exp.logo && <div className="timeline-logo"><img src={exp.logo} alt={`${exp.company} logo`} /></div>}
+                        <h3 className="timeline-title">{exp.position}</h3>
+                        <p className="timeline-subtitle">{exp.company}</p>
+                        <div className="timeline-meta">
+                          <span className="timeline-period-badge">{exp.period}</span>
+                          <Badge variant="secondary">{exp.type}</Badge>
+                          <Badge variant="secondary">{exp.location}</Badge>
+                        </div>
+                        <p className="timeline-description">{exp.description}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
             </div>
           </div>
-        </section>
+        </div>
 
         {/* ── EDUCATION ── */}
         <section id="education" className="education">
