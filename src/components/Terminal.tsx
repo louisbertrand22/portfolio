@@ -197,6 +197,10 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
         return err('you are not in the sudoers file. This incident will be reported. 👮')
       case 'rm':
         return err('rm: nice try. This portfolio is immutable.')
+      case 'mkdir':
+        return err(`mkdir: cannot create directory '${arg || 'new-folder'}': Read-only file system`)
+      case 'touch':
+        return err(`touch: cannot touch '${arg || 'new-file'}': Read-only file system`)
       case 'vim':
       case 'nano':
         return out(`${cmd}: sorry, this terminal only has 80 columns of ambition.`)
@@ -213,11 +217,31 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
     setInput('')
   }
 
+  const argCompletions: Record<string, string[]> = {
+    cd: sections,
+    man: commandNames,
+    cat: ['stack.json'],
+  }
+
   const complete = () => {
-    if (input.includes(' ') || !input) return
-    const matches = commandNames.filter(c => c.startsWith(input))
-    if (matches.length === 1) setInput(matches[0] + ' ')
-    else if (matches.length > 1) push([{ type: 'cmd', text: input }, { type: 'out', text: matches.join('  ') }])
+    if (!input) return
+    const parts = input.split(' ')
+
+    if (parts.length === 1) {
+      const matches = commandNames.filter(c => c.startsWith(input))
+      if (matches.length === 1) setInput(matches[0] + ' ')
+      else if (matches.length > 1) push([{ type: 'cmd', text: input }, { type: 'out', text: matches.join('  ') }])
+      return
+    }
+
+    if (parts.length === 2) {
+      const [cmd, argPrefix] = parts
+      const pool = argCompletions[cmd]
+      if (!pool) return
+      const matches = pool.filter(c => c.startsWith(argPrefix))
+      if (matches.length === 1) setInput(`${cmd} ${matches[0]}`)
+      else if (matches.length > 1) push([{ type: 'cmd', text: input }, { type: 'out', text: matches.join('  ') }])
+    }
   }
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
