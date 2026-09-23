@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Guitar, Footprints, Goal, Flag, Lock } from 'lucide-react'
+import { Lock, Briefcase, MapPin, Mail, Copy, ArrowUpRight, Download, ExternalLink, FileText } from 'lucide-react'
 
-const hobbyIcons = [Guitar, Footprints, Goal, Flag]
+const hobbyKinds: HobbyKind[] = ['guitar', 'running', 'football', 'f1']
 import { toast } from 'sonner'
 import './App.css'
 import { translations, Language } from './translations'
@@ -12,6 +12,9 @@ import { Badge } from '@/components/ui/badge'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import Terminal from '@/components/Terminal'
 import GithubStats from '@/components/GithubStats'
+import ProjectCover, { type CoverKind } from '@/components/ProjectCover'
+import SkillIcon from '@/components/SkillIcon'
+import HobbyArt, { type HobbyKind } from '@/components/HobbyArt'
 import CustomCursor from '@/components/CustomCursor'
 import IntroScreen from '@/components/IntroScreen'
 import { useLenis } from '@/hooks/useLenis'
@@ -48,30 +51,62 @@ const slideLeft = {
 
 const viewport = { once: true, margin: '-60px 0px' } as const
 
+const heroLogos = [
+  { src: '/education-nationale-logo-trim.svg', alt: "Ministère de l'Éducation nationale" },
+  { src: '/quanteam-logo-trim.png', alt: 'Quanteam' },
+  { src: '/Epitalogo.png', alt: 'EPITA' },
+]
+
+const navGroup: Record<string, 'home' | 'about' | 'projects' | 'contact'> = {
+  home: 'home',
+  about: 'about', experience: 'about', education: 'about',
+  sigl: 'projects', projects: 'projects',
+  contact: 'contact',
+}
+
+// index-aligned with t.siglProjects.items
+const siglMeta = [
+  { code: 'UBSI', category: 'tech' },
+  { code: 'ARCL', category: 'tech' },
+  { code: 'MOAE', category: 'strategy' },
+  { code: 'SDSI', category: 'strategy' },
+  { code: 'CNP', category: 'tech' },
+] as const
+const spotlightIndex = 4
+
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const projects = [
-  { featured: false, technologies: ['Python', 'SQLAlchemy', 'Alembic', 'CLI'],                  link: 'https://github.com/louisbertrand22/FootySim' },
-  { featured: false, technologies: ['FastAPI', 'SQLAlchemy', 'Python', 'REST API'],              link: 'https://github.com/louisbertrand22/FootySim-backend' },
-  { featured: false, technologies: ['Flask', 'Docker', 'Kubernetes', 'CI/CD'],                  link: 'https://github.com/louisbertrand22/DevOpsTest' },
+  {
+    featured: true,
+    technologies: ['Next.js', 'TypeScript', 'Firebase', 'Stripe', 'Gemini', 'Expo'],
+    private: true,
+    site: 'https://magic-cards.fr',
+    preview: '/magiccards_home.jpg',
+    gallery: ['/magiccards_home.jpg', '/magiccards_explore.jpg', '/magiccards_leitner.jpg', '/magiccards_download.jpg'],
+  },
+  { featured: false, technologies: ['Python', 'SQLAlchemy', 'Alembic', 'CLI'],                  link: 'https://github.com/louisbertrand22/FootySim', cover: 'footysim' as CoverKind },
+  { featured: false, technologies: ['FastAPI', 'SQLAlchemy', 'Python', 'REST API'],              link: 'https://github.com/louisbertrand22/FootySim-backend', cover: 'footysim-api' as CoverKind },
+  { featured: false, technologies: ['Flask', 'Docker', 'Kubernetes', 'CI/CD'],                  link: 'https://github.com/louisbertrand22/DevOpsTest', cover: 'devops' as CoverKind },
   {
     featured: true,
     technologies: ['TypeScript', 'Node.js', 'PostgreSQL', 'OAuth2', 'Prisma'],
     link: 'https://github.com/louisbertrand22/MySSO',
+    site: 'https://my-sso.louis-bertrand.fr',
     preview: '/mysso_landingpage.png',
     gallery: ['/mysso_landingpage.png', '/consent.png', '/sso_1.png', '/sso_2.png'],
   },
-  { featured: false, technologies: ['C', 'Autotools', 'POSIX'], private: true },
-  { featured: false, technologies: ['Rust', 'POSIX'], link: 'https://github.com/louisbertrand22/MiniShell_Rust' },
+  { featured: false, technologies: ['C', 'Autotools', 'POSIX'], private: true, cover: 'shell42' as CoverKind },
+  { featured: false, technologies: ['Rust', 'POSIX'], link: 'https://github.com/louisbertrand22/MiniShell_Rust', cover: 'minishell' as CoverKind },
+  { featured: false, technologies: ['C++', 'Flex', 'Bison', 'AST', 'IR', 'Autotools'], private: true, cover: 'tiger' as CoverKind },
 ]
 
-const filterTechs = ['All', 'C', 'Rust', 'Python', 'TypeScript', 'Docker', 'FastAPI', 'PostgreSQL']
+const filterTechs = ['All', 'C', 'C++', 'Rust', 'Python', 'TypeScript', 'Docker', 'FastAPI', 'PostgreSQL']
 
-const skills = [
-  'TypeScript / JS', 'React', 'Node.js', 'Python', 'C++', 'Java', 'SQL',
-  'FastAPI', 'Django', 'PostgreSQL',
-  'Docker', 'Kubernetes', 'Cilium', 'Helm', 'ArgoCD', 'CI/CD',
-  'AWS', 'OpenStack', 'Terraform', 'Cloud',
-  'Keycloak', 'Git', 'REST APIs', 'Agile / Scrum', 'IA / Prompt Engineering'
+const skillGroups = [
+  ['TypeScript / JS', 'Python', 'C++', 'Java', 'SQL'],
+  ['React', 'Node.js', 'FastAPI', 'Django', 'PostgreSQL', 'REST APIs'],
+  ['Docker', 'Kubernetes', 'Helm', 'ArgoCD', 'CI/CD', 'Terraform', 'AWS', 'OpenStack', 'Cilium'],
+  ['Keycloak', 'Git', 'Agile / Scrum', 'IA / Prompt Engineering'],
 ]
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -109,10 +144,12 @@ function App() {
   const cvButtonRef = useMagnetic<HTMLAnchorElement>()
   const backToTopRef = useMagnetic<HTMLButtonElement>(0.4)
   const contactEmailRef = useMagnetic<HTMLAnchorElement>()
-  const contactGithubRef = useMagnetic<HTMLAnchorElement>()
-  const contactLinkedinRef = useMagnetic<HTMLAnchorElement>()
 
   const t = translations[language]
+  const spotlight = t.siglProjects.items[spotlightIndex]
+  const arch = t.siglProjects.cnpArchitecture
+  const categoryLabel = (c: 'tech' | 'strategy') =>
+    c === 'tech' ? t.siglProjects.categoryTech : t.siglProjects.categoryStrategy
 
   // Lock scroll while the intro curtain is up
   useEffect(() => {
@@ -224,6 +261,7 @@ function App() {
   const filteredProjects = projects
     .map((p, i) => ({ ...p, originalIndex: i }))
     .filter(p => selectedTech === 'All' || p.technologies.includes(selectedTech))
+    .sort((a, b) => Number(b.featured) - Number(a.featured))
 
   const badgeText = language === 'en' ? 'Final-year internship - Feb/Mar 2027' : 'Stage de fin d\'études - Fév./Mars 2027'
   const featuredLabel = language === 'en' ? 'Featured' : 'À la une'
@@ -244,7 +282,7 @@ function App() {
       <header className={`header${hasScrolled ? ' scrolled' : ''}`}>
         <div className="container">
           <nav className="nav">
-            <div className="logo">{t.nav.logo}</div>
+            <div className="logo">LB<span className="logo-role"> - {t.nav.logo}</span></div>
             <div className="nav-controls">
               <button className="language-toggle" onClick={() => setLanguage(p => p === 'en' ? 'fr' : 'en')}>
                 {language === 'en' ? 'FR' : 'EN'}
@@ -266,15 +304,15 @@ function App() {
               </button>
             </div>
             <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-              {(['home', 'about', 'experience', 'education', 'sigl', 'projects', 'skills', 'github', 'hobbies', 'cv', 'contact'] as const).map(key => (
+              {(['home', 'about', 'projects', 'contact'] as const).map(key => (
                 <li key={key}>
                   <a
                     href={`#${key}`}
                     onClick={() => setIsMenuOpen(false)}
-                    className={activeSection === key ? 'active' : undefined}
+                    className={navGroup[activeSection] === key ? 'active' : undefined}
                   >
                     {t.nav[key]}
-                    {activeSection === key && (
+                    {navGroup[activeSection] === key && (
                       <motion.span className="nav-indicator" layoutId="nav-indicator" />
                     )}
                   </a>
@@ -339,6 +377,17 @@ function App() {
                   <Button asChild variant="secondary" size="default">
                     <a href="#contact" ref={getInTouchRef}>{t.hero.getInTouch}</a>
                   </Button>
+                  <a className="hero-cv-link" href="/cv-louis-bertrand.pdf" download>
+                    <Download size={15} strokeWidth={2} aria-hidden="true" />{t.hero.downloadCv}
+                  </a>
+                </motion.div>
+                <motion.div className="hero-proof" variants={fadeUp} custom={0.28}>
+                  <span className="hero-proof-label">{t.hero.background}</span>
+                  <ul className="hero-proof-logos">
+                    {heroLogos.map(logo => (
+                      <li key={logo.src}><img src={logo.src} alt={logo.alt} loading="eager" /></li>
+                    ))}
+                  </ul>
                 </motion.div>
               </motion.div>
               <Terminal
@@ -350,7 +399,7 @@ function App() {
           </div>
         </section>
 
-        {/* ── ABOUT + EXPERIENCE (sticky photo) ── */}
+        {/* ── ABOUT + EXPERIENCE + EDUCATION (sticky photo) ── */}
         <div className="about-experience">
           <div className="container about-experience-grid">
             <motion.div className="sticky-photo" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
@@ -383,15 +432,43 @@ function App() {
                     <motion.div key={index} className="timeline-item" initial="hidden" whileInView="visible" viewport={viewport} variants={slideLeft} custom={index * 0.1}>
                       <div className="timeline-connector"><div className="timeline-dot" /></div>
                       <div className="timeline-card">
-                        {exp.logo && <div className="timeline-logo"><img src={exp.logo} alt={`${exp.company} logo`} /></div>}
-                        <h3 className="timeline-title">{exp.position}</h3>
-                        <p className="timeline-subtitle">{exp.company}</p>
+                        <div className="timeline-head">
+                          {exp.logo && <div className="timeline-logo"><img src={exp.logo} alt={`${exp.company} logo`} /></div>}
+                          <div className="timeline-heading">
+                            <h3 className="timeline-title">{exp.position}</h3>
+                            <p className="timeline-subtitle">{exp.company}</p>
+                          </div>
+                          <span className="timeline-period">{exp.period}</span>
+                        </div>
                         <div className="timeline-meta">
-                          <span className="timeline-period-badge">{exp.period}</span>
-                          <Badge variant="secondary">{exp.type}</Badge>
-                          <Badge variant="secondary">{exp.location}</Badge>
+                          <span><Briefcase size={13} strokeWidth={2} aria-hidden="true" />{exp.type}</span>
+                          <span><MapPin size={13} strokeWidth={2} aria-hidden="true" />{exp.location}</span>
                         </div>
                         <p className="timeline-description">{exp.description}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </section>
+
+              <section id="education" className="education">
+                <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
+                  {t.education.title}
+                </motion.h2>
+                <div className="timeline">
+                  {t.education.items.map((edu, index) => (
+                    <motion.div key={index} className="timeline-item" initial="hidden" whileInView="visible" viewport={viewport} variants={slideLeft} custom={index * 0.1}>
+                      <div className="timeline-connector"><div className="timeline-dot" /></div>
+                      <div className="timeline-card">
+                        <div className="timeline-head">
+                          {edu.logo && <div className="timeline-logo"><img src={edu.logo} alt={`${edu.school} logo`} /></div>}
+                          <div className="timeline-heading">
+                            <h3 className="timeline-title">{edu.school}</h3>
+                            <p className="timeline-subtitle">{edu.degree}</p>
+                          </div>
+                          <span className="timeline-period">{edu.period}</span>
+                        </div>
+                        <p className="timeline-description">{edu.description}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -400,29 +477,6 @@ function App() {
             </div>
           </div>
         </div>
-
-        {/* ── EDUCATION ── */}
-        <section id="education" className="education">
-          <div className="container">
-            <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
-              {t.education.title}
-            </motion.h2>
-            <div className="timeline">
-              {t.education.items.map((edu, index) => (
-                <motion.div key={index} className="timeline-item" initial="hidden" whileInView="visible" viewport={viewport} variants={slideLeft} custom={index * 0.1}>
-                  <div className="timeline-connector"><div className="timeline-dot" /></div>
-                  <div className="timeline-card">
-                    {edu.logo && <div className="timeline-logo"><img src={edu.logo} alt={`${edu.school} logo`} /></div>}
-                    <h3 className="timeline-title">{edu.school}</h3>
-                    <p className="timeline-subtitle">{edu.degree}</p>
-                    <span className="timeline-period-badge">{edu.period}</span>
-                    <p className="timeline-description">{edu.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ── SIGL ── */}
         <section id="sigl" className="sigl-projects">
@@ -433,64 +487,99 @@ function App() {
             <motion.p className="sigl-subtitle" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.05}>
               {t.siglProjects.subtitle}
             </motion.p>
+            <motion.article
+              className="sigl-spotlight"
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewport}
+              variants={fadeUp}
+              custom={0.1}
+            >
+              <div className="sigl-spotlight-main">
+                <div className="sigl-card-meta">
+                  <span className={`sigl-category sigl-category-${siglMeta[spotlightIndex].category}`}>
+                    <span className="sigl-category-dot" />
+                    {categoryLabel(siglMeta[spotlightIndex].category)}
+                  </span>
+                  <span className="sigl-card-code">{siglMeta[spotlightIndex].code}</span>
+                </div>
+                <h3 className="sigl-spotlight-title">{spotlight.title}</h3>
+                <p className="sigl-spotlight-description">{spotlight.description}</p>
+                <div className="sigl-card-technologies">
+                  {spotlight.tags.map(tech => <Badge key={tech}>{tech}</Badge>)}
+                </div>
+              </div>
+              <aside className="sigl-spotlight-panel">
+                <h4 className="arch-title">{arch.title}</h4>
+                <figure className="arch">
+                  <div className="arch-users">{arch.users}</div>
+                  <div className="arch-flow" aria-hidden="true" />
+                  <div className="arch-core">
+                    <div className="arch-main">
+                      <div className="arch-layer">
+                        <span className="arch-layer-name">{arch.portal}</span>
+                        <div className="arch-chips">
+                          {arch.portalItems.map(item => <span key={item} className="arch-chip">{item}</span>)}
+                        </div>
+                      </div>
+                      <div className="arch-flow" aria-hidden="true" />
+                      <div className="arch-layer">
+                        <span className="arch-layer-name">{arch.services}</span>
+                        <div className="arch-services">
+                          {arch.serviceItems.map(svc => (
+                            <div key={svc.name} className="arch-service">
+                              <strong>{svc.name}</strong>
+                              <span>{svc.detail}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="arch-rail">
+                      <strong>{arch.identity}</strong>
+                      <span>{arch.identityDetail}</span>
+                    </div>
+                  </div>
+                  <div className="arch-flow" aria-hidden="true" />
+                  <div className="arch-runtime">{arch.runtime}</div>
+                  <div className="arch-clouds">
+                    {arch.clouds.map((cloud, i) => (
+                      <span key={cloud} className={`arch-cloud${i === 0 ? ' is-live' : ''}`}>{cloud}</span>
+                    ))}
+                  </div>
+                  <figcaption className="arch-caption">{arch.caption}</figcaption>
+                </figure>
+              </aside>
+            </motion.article>
+
             <motion.div className="sigl-grid" initial="hidden" whileInView="visible" viewport={viewport} variants={stagger}>
-              <motion.div className="sigl-card" variants={cardItem} whileHover={{ y: -4, transition: { duration: 0.2 } }}>
-                <div className="sigl-card-icon">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="1"/>
-                    <path d="M3 9h18M9 21V9m6 12V9"/>
-                    <rect x="6" y="12" width="1.5" height="1.5"/><rect x="11" y="12" width="1.5" height="1.5"/><rect x="16" y="12" width="1.5" height="1.5"/>
-                    <rect x="6" y="16" width="1.5" height="1.5"/><rect x="11" y="16" width="1.5" height="1.5"/><rect x="16" y="16" width="1.5" height="1.5"/>
-                  </svg>
-                  <span className="sigl-card-code">UBSI</span>
-                </div>
-                <div className="sigl-card-content">
-                  <h3 className="sigl-card-title">{t.siglProjects.items[0].title}</h3>
-                  <p className="sigl-card-description">{t.siglProjects.items[0].description}</p>
-                  <div className="sigl-card-technologies">
-                    {['DevOps', 'CI/CD', 'UML', 'Template', 'Deployment'].map(tech => (
-                      <Badge key={tech}>{tech}</Badge>
-                    ))}
+              {t.siglProjects.items.map((item, i) => i === spotlightIndex ? null : (
+                <motion.article
+                  key={siglMeta[i].code}
+                  className="sigl-card"
+                  data-category={siglMeta[i].category}
+                  variants={cardItem}
+                >
+                  <div className="sigl-card-meta">
+                    <span className={`sigl-category sigl-category-${siglMeta[i].category}`}>
+                      <span className="sigl-category-dot" />
+                      {categoryLabel(siglMeta[i].category)}
+                    </span>
+                    <span className="sigl-card-code">{siglMeta[i].code}</span>
                   </div>
-                </div>
-              </motion.div>
-              <motion.div className="sigl-card" variants={cardItem} whileHover={{ y: -4, transition: { duration: 0.2 } }}>
-                <div className="sigl-card-icon">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
-                  </svg>
-                  <span className="sigl-card-code">ARCL</span>
-                </div>
-                <div className="sigl-card-content">
-                  <h3 className="sigl-card-title">{t.siglProjects.items[1].title}</h3>
-                  <p className="sigl-card-description">{t.siglProjects.items[1].description}</p>
+                  <h3 className="sigl-card-title">{item.title}</h3>
+                  <p className="sigl-card-description">{item.description}</p>
+                  {item.stat && (
+                    <div className="sigl-card-stat">
+                      <span className="sigl-card-stat-value">{item.stat.value}</span>
+                      <span className="sigl-card-stat-label">{item.stat.label}</span>
+                    </div>
+                  )}
                   <div className="sigl-card-technologies">
-                    {['OpenStack', 'AWS', 'Azure', 'Terraform', 'Linux'].map(tech => (
-                      <Badge key={tech}>{tech}</Badge>
-                    ))}
+                    {item.tags.map(tech => <Badge key={tech}>{tech}</Badge>)}
                   </div>
-                </div>
-              </motion.div>
-              <motion.div className="sigl-card" variants={cardItem} whileHover={{ y: -4, transition: { duration: 0.2 } }}>
-                <div className="sigl-card-icon">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                  </svg>
-                  <span className="sigl-card-code">MOAE</span>
-                </div>
-                <div className="sigl-card-content">
-                  <h3 className="sigl-card-title">{t.siglProjects.items[2].title}</h3>
-                  <p className="sigl-card-description">{t.siglProjects.items[2].description}</p>
-                  <div className="sigl-card-technologies">
-                    {['MOA', 'Oracle HCM', 'Benchmark', 'Business Case', 'Roadmap', 'Conduite du changement'].map(tech => (
-                      <Badge key={tech}>{tech}</Badge>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
+                </motion.article>
+              ))}
             </motion.div>
           </div>
         </section>
@@ -521,7 +610,7 @@ function App() {
             {/* Grid */}
             <motion.div className="projects-grid" layout>
               <AnimatePresence mode="popLayout">
-                {filteredProjects.map(({ originalIndex, featured, technologies, preview }) => (
+                {filteredProjects.map(({ originalIndex, featured, technologies, preview, cover, gallery }) => (
                   <motion.div
                     key={originalIndex}
                     layout
@@ -530,41 +619,52 @@ function App() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.22 }}
-                    whileHover={{ y: -5, transition: { duration: 0.2 } }}
                     onClick={() => openProjectModal(originalIndex)}
                   >
-                    {featured && (
-                      <div className="project-preview" aria-hidden="true">
-                        {preview ? (
-                          <img src={preview} alt="" className="project-preview-img" loading="lazy" />
-                        ) : (
-                          <>
-                            <div className="project-preview-dots" />
-                            <span className="project-preview-name">{t.projects.items[originalIndex]?.title}</span>
-                          </>
-                        )}
-                        <span className="project-featured-badge">{featuredLabel}</span>
-                      </div>
-                    )}
-                    <div className="project-card-accent" />
-                    <h3 className="project-title">{t.projects.items[originalIndex]?.title}</h3>
-                    <p className="project-description">{t.projects.items[originalIndex]?.description}</p>
-                    <div className="project-technologies">
-                      {technologies.map((tech, idx) => (
-                        <Badge key={idx}>{tech}</Badge>
-                      ))}
+                    <div className="project-cover" aria-hidden="true">
+                      {preview ? (
+                        <img src={preview} alt="" className="project-cover-img" loading="lazy" />
+                      ) : cover ? (
+                        <ProjectCover kind={cover} />
+                      ) : null}
+                      {featured && <span className="project-featured-badge">{featuredLabel}</span>}
                     </div>
-                    {projects[originalIndex].link ? (
-                      <a href={projects[originalIndex].link} className="project-link" onClick={e => e.stopPropagation()} target="_blank" rel="noopener noreferrer">
-                        {t.projects.viewProject}
-                      </a>
-                    ) : (
-                      <span className="project-link project-link-private">
-                        <Lock size={12} strokeWidth={2.25} />{t.projects.privateRepo}
-                      </span>
-                    )}
-                    <div className="project-card-readme-hint" aria-hidden="true">
-                      {projects[originalIndex].link ? t.projects.viewReadme : t.projects.viewDetails}
+                    <div className="project-body">
+                      <h3 className="project-title">{t.projects.items[originalIndex]?.title}</h3>
+                      <p className="project-description">{t.projects.items[originalIndex]?.description}</p>
+                      <div className="project-technologies">
+                        {technologies.map((tech, idx) => (
+                          <Badge key={idx}>{tech}</Badge>
+                        ))}
+                      </div>
+                      {featured && gallery && gallery.length > 1 && (
+                        <div className="project-thumbs" aria-hidden="true">
+                          {gallery.slice(1).map(src => (
+                            <img key={src} src={src} alt="" loading="lazy" />
+                          ))}
+                        </div>
+                      )}
+                      <div className="project-footer">
+                        <div className="project-links">
+                          {projects[originalIndex].site && (
+                            <a href={projects[originalIndex].site} className="project-link" onClick={e => e.stopPropagation()} target="_blank" rel="noopener noreferrer">
+                              {t.projects.visitSite}
+                            </a>
+                          )}
+                          {projects[originalIndex].link ? (
+                            <a href={projects[originalIndex].link} className="project-link" onClick={e => e.stopPropagation()} target="_blank" rel="noopener noreferrer">
+                              {t.projects.viewProject}
+                            </a>
+                          ) : !projects[originalIndex].site && (
+                            <span className="project-link project-link-private">
+                              <Lock size={12} strokeWidth={2.25} />{t.projects.privateRepo}
+                            </span>
+                          )}
+                        </div>
+                        <span className="project-details-hint">
+                          {projects[originalIndex].link ? t.projects.viewReadme : t.projects.viewDetails}
+                        </span>
+                      </div>
                     </div>
                   </motion.div>
                 ))}
@@ -579,11 +679,14 @@ function App() {
             <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
               {t.skills.title}
             </motion.h2>
-            <motion.div className="skills-grid" initial="hidden" whileInView="visible" viewport={viewport} variants={stagger}>
-              {skills.map((skill, index) => (
-                <motion.div key={index} className="skill-card" variants={cardItem} whileHover={{ y: -2, scale: 1.04, transition: { duration: 0.15 } }}>
-                  <span className="skill-name">{skill}</span>
-                </motion.div>
+            <motion.div className="skills-groups" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.05}>
+              {skillGroups.map((group, i) => (
+                <div key={i} className="skills-group">
+                  <h3 className="skills-group-title">{t.skills.groups[i]}</h3>
+                  <ul className="skills-list">
+                    {group.map(skill => <li key={skill}><SkillIcon name={skill} />{skill}</li>)}
+                  </ul>
+                </div>
               ))}
             </motion.div>
           </div>
@@ -610,17 +713,16 @@ function App() {
             <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
               {t.hobbies.title}
             </motion.h2>
-            <motion.div className="hobbies-grid" initial="hidden" whileInView="visible" viewport={viewport} variants={stagger}>
-              {t.hobbies.items.map((hobby, index) => {
-                const HobbyIcon = hobbyIcons[index]
-                return (
-                  <motion.div key={index} className="hobby-card" variants={cardItem} whileHover={{ y: -3, transition: { duration: 0.15 } }}>
-                    <div className="hobby-icon"><HobbyIcon size={26} strokeWidth={1.75} /></div>
+            <motion.div className="hobbies-bento" initial="hidden" whileInView="visible" viewport={viewport} variants={stagger}>
+              {t.hobbies.items.map((hobby, index) => (
+                <motion.article key={hobbyKinds[index]} className={`hobby-tile hobby-tile--${hobbyKinds[index]}`} variants={cardItem}>
+                  <div className="hobby-art"><HobbyArt kind={hobbyKinds[index]} /></div>
+                  <div className="hobby-text">
                     <h3 className="hobby-title">{hobby.title}</h3>
                     <p className="hobby-description">{hobby.description}</p>
-                  </motion.div>
-                )
-              })}
+                  </div>
+                </motion.article>
+              ))}
             </motion.div>
           </div>
         </section>
@@ -631,18 +733,35 @@ function App() {
             <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
               {t.cv.title}
             </motion.h2>
-            <motion.div className="cv-content" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
-              <p>{t.cv.description}</p>
-              <Button asChild size="default">
-                <a href="/cv-louis-bertrand.pdf" download ref={cvButtonRef}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="7 10 12 15 17 10"/>
-                    <line x1="12" y1="15" x2="12" y2="3"/>
-                  </svg>
-                  {t.cv.download}
-                </a>
-              </Button>
+            <motion.div className="cv-panel" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
+              <a className="cv-preview" href="/cv-louis-bertrand.pdf" target="_blank" rel="noopener noreferrer" aria-label={t.cv.open}>
+                <span className="cv-sheet cv-sheet--back" aria-hidden="true" />
+                <img src="/cv-preview.jpg" alt={t.cv.previewAlt} loading="lazy" width={760} height={1075} />
+              </a>
+              <div className="cv-body">
+                <p className="cv-lead">{t.cv.description}</p>
+                <dl className="cv-facts">
+                  {t.cv.facts.map(f => (
+                    <div key={f.label} className="cv-fact">
+                      <dt>{f.value}</dt>
+                      <dd>{f.label}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <div className="cv-actions">
+                  <Button asChild size="default">
+                    <a href="/cv-louis-bertrand.pdf" download ref={cvButtonRef}>
+                      <Download size={16} strokeWidth={2} aria-hidden="true" />
+                      {t.cv.download}
+                    </a>
+                  </Button>
+                  <a className="cv-open" href="/cv-louis-bertrand.pdf" target="_blank" rel="noopener noreferrer">
+                    <ExternalLink size={15} strokeWidth={2} aria-hidden="true" />
+                    {t.cv.open}
+                  </a>
+                </div>
+                <p className="cv-meta"><FileText size={14} strokeWidth={2} aria-hidden="true" />{t.cv.meta}</p>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -653,32 +772,51 @@ function App() {
             <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
               {t.contact.title}
             </motion.h2>
-            <motion.div className="contact-content" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
-              <p>{t.contact.description}</p>
-              <div className="contact-links">
-                <a href="mailto:louisbert91@gmail.com" ref={contactEmailRef} className="contact-link" onClick={copyEmail}>
-                  <span className="contact-link-icon">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="2" y="4" width="20" height="16" rx="2"/>
-                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-                    </svg>
-                  </span>Email
-                </a>
-                <a href="https://github.com/louisbertrand22/" ref={contactGithubRef} target="_blank" rel="noopener noreferrer" className="contact-link">
-                  <span className="contact-link-icon">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.5 11.5 0 0 1 12 6.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                  </span>GitHub
-                </a>
-                <a href="https://www.linkedin.com/in/louis-bertrand222" ref={contactLinkedinRef} target="_blank" rel="noopener noreferrer" className="contact-link">
-                  <span className="contact-link-icon">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                  </span>{t.contact.linkedin}
+            <motion.div className="contact-panel" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
+              <div className="contact-intro">
+                <span className="contact-availability"><span className="hero-badge-dot" />{badgeText}</span>
+                <p className="contact-lead">{t.contact.description}</p>
+                <a href="mailto:louisbert91@gmail.com" ref={contactEmailRef} className="contact-cta" onClick={copyEmail}>
+                  <Mail size={18} strokeWidth={2} aria-hidden="true" />
+                  <span className="contact-cta-address">louisbert91@gmail.com</span>
+                  <span className="contact-cta-hint"><Copy size={13} strokeWidth={2} aria-hidden="true" />{t.contact.copy}</span>
                 </a>
               </div>
+              <ul className="contact-channels">
+                <li>
+                  <a href="https://www.linkedin.com/in/louis-bertrand222" target="_blank" rel="noopener noreferrer" className="contact-channel">
+                    <span className="contact-channel-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </span>
+                    <span className="contact-channel-text">
+                      <span className="contact-channel-label">{t.contact.linkedin}</span>
+                      <span className="contact-channel-value">/in/louis-bertrand222</span>
+                    </span>
+                    <ArrowUpRight className="contact-channel-arrow" size={18} strokeWidth={2} aria-hidden="true" />
+                  </a>
+                </li>
+                <li>
+                  <a href="https://github.com/louisbertrand22/" target="_blank" rel="noopener noreferrer" className="contact-channel">
+                    <span className="contact-channel-icon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.5 11.5 0 0 1 12 6.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                    </span>
+                    <span className="contact-channel-text">
+                      <span className="contact-channel-label">GitHub</span>
+                      <span className="contact-channel-value">@louisbertrand22</span>
+                    </span>
+                    <ArrowUpRight className="contact-channel-arrow" size={18} strokeWidth={2} aria-hidden="true" />
+                  </a>
+                </li>
+                <li>
+                  <div className="contact-channel contact-channel--static">
+                    <span className="contact-channel-icon"><MapPin size={18} strokeWidth={2} aria-hidden="true" /></span>
+                    <span className="contact-channel-text">
+                      <span className="contact-channel-label">{t.contact.locationLabel}</span>
+                      <span className="contact-channel-value">{t.contact.location}</span>
+                    </span>
+                  </div>
+                </li>
+              </ul>
             </motion.div>
           </div>
         </section>
@@ -733,6 +871,11 @@ function App() {
             <div className="modal-loading"><div className="loading-spinner" />Loading README...</div>
           ) : (
             <div className="modal-readme"><Markdown>{readmeContent}</Markdown></div>
+          )}
+          {projects[selectedProject ?? -1]?.site && (
+            <a className="modal-site-link" href={projects[selectedProject ?? -1].site} target="_blank" rel="noopener noreferrer">
+              {t.projects.visitSite}
+            </a>
           )}
         </DialogContent>
       </Dialog>

@@ -27,7 +27,7 @@ const helpText = `Available commands:
   about             short bio
   ls                list sections
   cd <section>      jump to a section
-  cat <file>        read a file (try stack.json)
+  cat <file>        read a file (try focus.json)
   projects          list my projects
   education         my degrees
   experience        my work history
@@ -54,6 +54,12 @@ const manPages: Record<string, string> = {
   neofetch: 'NEOFETCH(1)\n\nNAME\n  neofetch — display system info\n\nDESCRIPTION\n  Prints a summary of this machine (me), portfolio edition.',
   cv: 'CV(1)\n\nNAME\n  cv — download résumé\n\nSYNOPSIS\n  cv | resume\n\nDESCRIPTION\n  Downloads cv-louis-bertrand.pdf. No sign-up required.',
 }
+
+const focusJson = `{
+  "role": "IT Project Manager & IS Architect",
+  "focus": ["IT project management", "IS architecture", "Cloud", "DevOps"],
+  "available": "Feb 2027"
+}`
 
 const stackJson = `{
   "frontend": ["React", "TypeScript"],
@@ -109,11 +115,11 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
       case 'help':
         return out(helpText)
       case 'whoami':
-        return out('Louis BERTRAND — Software Engineer')
+        return out('Louis BERTRAND — IT Project Manager & IS Architect')
       case 'about':
-        return out('Software engineering student at EPITA (SIGL major).\nI build full-stack products that are engineered to last.')
+        return out('Engineering student at EPITA (SIGL major).\nHeading toward IT project management and information systems architecture.')
       case 'ls':
-        return out([...sections, 'stack.json'].join('  '))
+        return out([...sections, 'focus.json', 'stack.json'].join('  '))
       case 'cd': {
         const target = arg.replace(/^#/, '') || 'home'
         if (!sections.includes(target)) return err(`cd: no such section: ${target}`)
@@ -121,6 +127,7 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
         return out(`→ #${target}`)
       }
       case 'cat':
+        if (arg === 'focus.json') return out(focusJson)
         if (arg === 'stack.json') return out(stackJson)
         return err(`cat: ${arg || 'stdin'}: No such file or directory`)
       case 'projects':
@@ -220,7 +227,7 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
   const argCompletions: Record<string, string[]> = {
     cd: sections,
     man: commandNames,
-    cat: ['stack.json'],
+    cat: ['focus.json', 'stack.json'],
   }
 
   const complete = () => {
@@ -296,9 +303,9 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
         initial="hidden" animate="visible" variants={bodyVariants}
       >
         <motion.p variants={lineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">whoami</span></motion.p>
-        <motion.p className="terminal-output" variants={lineVariants}>Louis BERTRAND — Software Engineer</motion.p>
-        <motion.p variants={lineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">cat stack.json</span></motion.p>
-        <motion.p className="terminal-output" variants={lineVariants}>{'{ React, FastAPI, Docker, K8s }'}</motion.p>
+        <motion.p className="terminal-output" variants={lineVariants}>Louis BERTRAND — IT Project Manager &amp; IS Architect</motion.p>
+        <motion.p variants={lineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">cat focus.json</span></motion.p>
+        <motion.p className="terminal-output" variants={lineVariants}>{'{ IT project management, IS architecture, Cloud & DevOps }'}</motion.p>
         <motion.p variants={lineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">./interactive.sh</span></motion.p>
         <motion.p className="terminal-output" variants={lineVariants}>{hint} ✨</motion.p>
         {lines.map(line => (
