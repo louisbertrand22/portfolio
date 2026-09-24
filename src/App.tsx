@@ -98,6 +98,13 @@ const projects = [
   { featured: false, technologies: ['C', 'Autotools', 'POSIX'], private: true, cover: 'shell42' as CoverKind },
   { featured: false, technologies: ['Rust', 'POSIX'], link: 'https://github.com/louisbertrand22/MiniShell_Rust', cover: 'minishell' as CoverKind },
   { featured: false, technologies: ['C++', 'Flex', 'Bison', 'AST', 'IR', 'Autotools'], private: true, cover: 'tiger' as CoverKind },
+  {
+    featured: false,
+    technologies: ['Python', 'OpenCV', 'TensorFlow', 'Streamlit', 'pytest'],
+    link: 'https://github.com/louisbertrand22/sudoku-ocr',
+    site: 'https://sudoku-ocr.streamlit.app/',
+    cover: 'sudoku' as CoverKind,
+  },
 ]
 
 const filterTechs = ['All', 'C', 'C++', 'Rust', 'Python', 'TypeScript', 'Docker', 'FastAPI', 'PostgreSQL']

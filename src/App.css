@@ -1203,6 +1203,50 @@ main {
   50% { opacity: 0; }
 }
 
+/* Sudoku grid used in the sudoku-ocr cover */
+.cover-sudoku-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.cover-sudoku-layout > div:last-child {
+  min-width: 0;
+}
+
+.cover-sudoku-layout .c-ok {
+  margin-left: 0;
+}
+
+.cover-sudoku {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: repeat(9, 12px);
+  grid-auto-rows: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  font-size: 0.55rem;
+  line-height: 12px;
+  text-align: center;
+}
+
+.cover-sudoku span {
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cover-sudoku span:nth-child(3n):not(:nth-child(9n)) {
+  border-right-color: rgba(255, 255, 255, 0.45);
+}
+
+.cover-sudoku span:nth-child(n+19):nth-child(-n+27),
+.cover-sudoku span:nth-child(n+46):nth-child(-n+54) {
+  border-bottom-color: rgba(255, 255, 255, 0.45);
+}
+
+.cover-sudoku span.is-solved {
+  color: #e0b563;
+}
+
 /* Stage pipelines used in covers */
 .cover-pipeline {
   height: 100%;

@@ -111,6 +111,10 @@ export const fr = {
         title: 'Tiger Compiler',
         description: 'Chaîne de compilation modulaire pour le langage Tiger, réalisée en C++ : lexer (Flex), parser (Bison) avec suivi des positions, construction d\'un AST typé et désucrage des constructions de haut niveau en formes noyau. L\'AST désucré sert de représentation intermédiaire pour les passes suivantes, avec des utilitaires d\'affichage de debug et de dumps structurés',
       },
+      {
+        title: 'Sudoku OCR',
+        description: 'Application de vision par ordinateur qui détecte une grille de sudoku dans une photo, la redresse avec OpenCV, lit les chiffres avec un CNN Keras entraîné sur mon propre jeu de données (repli sur Tesseract), résout la grille par backtracking et réincruste la solution sur l\'image. Interface Streamlit déployée pour vérifier et corriger la lecture case par case, signaler les conflits et télécharger le résultat, avec tests de bout en bout sur des grilles réelles',
+      },
     ],
   },
   siglProjects: {

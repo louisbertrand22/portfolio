@@ -111,6 +111,10 @@ export const en = {
         title: 'Tiger Compiler',
         description: 'Modular compiler pipeline for the Tiger language, built in C++: lexer (Flex), parser (Bison) with tracked locations, typed AST construction, and desugaring of high-level constructs into core forms. The desugared AST doubles as an intermediate representation for further passes, with utilities for debug printing and structured dumps',
       },
+      {
+        title: 'Sudoku OCR',
+        description: 'Computer vision app that finds a sudoku grid in a photo, straightens it with OpenCV, reads the digits with a Keras CNN trained on my own dataset (Tesseract as fallback), solves the grid by backtracking and draws the solution back onto the image. Deployed Streamlit interface to review and fix the reading cell by cell, flag conflicts and download the result, with end-to-end tests on real grids',
+      },
     ],
   },
   siglProjects: {

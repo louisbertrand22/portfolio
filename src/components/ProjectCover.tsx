@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-export type CoverKind = 'footysim' | 'footysim-api' | 'devops' | 'shell42' | 'minishell' | 'tiger'
+export type CoverKind = 'footysim' | 'footysim-api' | 'devops' | 'shell42' | 'minishell' | 'tiger' | 'sudoku'
 
 function Window({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -21,6 +21,20 @@ function Stages({ steps, live }: { steps: string[]; live?: number }) {
         <li key={s} className={i === live ? 'is-live' : undefined}>{s}</li>
       ))}
     </ol>
+  )
+}
+
+// Wikipedia's classic puzzle: givens are read by OCR, the rest filled in by the solver
+const sudokuSolution = '534678912672195348198342567859761423426853791713924856961537284287419635345286179'
+const sudokuGivens = '53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79'
+
+function SudokuGrid() {
+  return (
+    <div className="cover-sudoku">
+      {[...sudokuSolution].map((d, i) => (
+        <span key={i} className={sudokuGivens[i] === '.' ? 'is-solved' : undefined}>{d}</span>
+      ))}
+    </div>
   )
 }
 
@@ -75,6 +89,21 @@ export default function ProjectCover({ kind }: { kind: CoverKind }) {
           <p>&nbsp;&nbsp;<span className="c-verb">if</span> n = <span className="c-num">0</span> <span className="c-verb">then</span> <span className="c-num">1</span> <span className="c-verb">else</span> n * fact(n - <span className="c-num">1</span>)</p>
           <p><span className="c-verb">in</span> print_int(fact(<span className="c-num">10</span>)) <span className="c-verb">end</span></p>
           <Stages steps={['Flex', 'Bison', 'AST', 'desugar']} />
+        </Window>
+      )
+    case 'sudoku':
+      return (
+        <Window title="sudoku-ocr — photo.jpg">
+          <div className="cover-sudoku-layout">
+            <SudokuGrid />
+            <div>
+              <p><span className="c-verb">detect</span> grille 9×9</p>
+              <p><span className="c-verb">warp</span> <span className="c-num">450</span>×<span className="c-num">450</span></p>
+              <p><span className="c-verb">ocr</span> CNN <span className="c-str">Keras</span></p>
+              <p><span className="c-verb">solve</span> backtracking</p>
+              <p className="c-ok">✓ 81/81</p>
+            </div>
+          </div>
         </Window>
       )
   }
