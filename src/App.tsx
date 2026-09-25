@@ -136,7 +136,8 @@ function App() {
   const [readmeContent,    setReadmeContent]    = useState('')
   const [isLoadingReadme,  setIsLoadingReadme]  = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    const saved = localStorage.getItem('theme')
+    let saved: string | null = null
+    try { saved = localStorage.getItem('theme') } catch { /* unavailable */ }
     return saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)
   })
   const [scrollProgress, setScrollProgress] = useState(0)
@@ -191,7 +192,7 @@ function App() {
   // Dark mode
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light')
-    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light')
+    try { localStorage.setItem('theme', isDarkMode ? 'dark' : 'light') } catch { /* unavailable */ }
   }, [isDarkMode])
 
   // Scroll → glassmorphism nav + progress + back-to-top
@@ -298,6 +299,13 @@ function App() {
     .map((p, i) => ({ ...p, originalIndex: i }))
     .filter(p => selectedTech === 'All' || p.technologies.includes(selectedTech))
     .sort((a, b) => Number(b.featured) - Number(a.featured))
+
+  // A card left alone on the last grid row is widened to fill it (3 columns on desktop, 2 on tablet)
+  const regularCount = filteredProjects.filter(p => !p.featured).length
+  const lastProject = filteredProjects[filteredProjects.length - 1]
+  const lastRegularIndex = lastProject && !lastProject.featured ? lastProject.originalIndex : -1
+  const orphanClass = [regularCount % 3 === 1 && ' is-orphan-3', regularCount % 2 === 1 && ' is-orphan-2']
+    .filter(Boolean).join('')
 
 
   return (
@@ -648,7 +656,7 @@ function App() {
                   <motion.div
                     key={originalIndex}
                     layout
-                    className={`project-card${featured ? ' featured' : ''}`}
+                    className={`project-card${featured ? ' featured' : ''}${regularCount > 1 && originalIndex === lastRegularIndex ? orphanClass : ''}`}
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}

@@ -30,7 +30,8 @@ export function useLenis() {
     // the sticky header height instead of landing flush under it.
     const handleClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest?.('a[href^="#"]') as HTMLAnchorElement | null
-      if (!anchor) return
+      // Links inside a scroll area Lenis leaves alone (e.g. the project modal) handle themselves
+      if (!anchor || anchor.closest('[data-lenis-prevent]')) return
       const id = anchor.getAttribute('href')?.slice(1)
       if (!id) return
       const target = document.getElementById(id)

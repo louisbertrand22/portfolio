@@ -1399,6 +1399,19 @@ main {
   }
 }
 
+/* ── Card alone on the last row: widened, cover beside the text ── */
+@media (min-width: 1025px) {
+  .project-card.is-orphan-3 { grid-column: 1 / -1; flex-direction: row; }
+  .project-card.is-orphan-3 .project-cover { flex: 1; height: auto; min-height: 190px; border-bottom: none; border-right: 1px solid var(--border); }
+  .project-card.is-orphan-3 .project-body { flex: 2; }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .project-card.is-orphan-2 { grid-column: 1 / -1; flex-direction: row; }
+  .project-card.is-orphan-2 .project-cover { flex: 1; height: auto; min-height: 190px; border-bottom: none; border-right: 1px solid var(--border); }
+  .project-card.is-orphan-2 .project-body { flex: 1.2; }
+}
+
 /* ── Featured card: wide, screenshot beside the text ── */
 .project-card.featured {
   grid-column: 1 / -1;
