@@ -33,6 +33,8 @@ const DialogContent = React.forwardRef<
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
+      // Let the modal scroll natively instead of Lenis driving the page behind it
+      data-lenis-prevent
       className={cn(
         'fixed left-1/2 top-1/2 z-50 w-full max-w-[900px] -translate-x-1/2 -translate-y-1/2',
         'max-h-[85vh] overflow-auto',

@@ -146,6 +146,14 @@ function App() {
   })
 
   const lenisRef = useLenis()
+
+  // Freeze the page's smooth scroll while the project modal is open
+  useEffect(() => {
+    const lenis = lenisRef.current
+    if (!lenis || selectedProject === null) return
+    lenis.stop()
+    return () => lenis.start()
+  }, [selectedProject, lenisRef])
   const viewWorkRef = useMagnetic<HTMLAnchorElement>()
   const getInTouchRef = useMagnetic<HTMLAnchorElement>()
   const cvButtonRef = useMagnetic<HTMLAnchorElement>()
