@@ -6,6 +6,8 @@
   --primary: #1c3f66;
   --primary-rgb: 28, 63, 102;
   --primary-glow: rgba(28, 63, 102, 0.10);
+  /* Text on a --primary fill: the dark theme's primary is too light for white text */
+  --on-primary: #ffffff;
   --secondary: #3d6c96;
   --secondary-rgb: 61, 108, 150;
   --accent: #c99a4a;
@@ -24,12 +26,22 @@
   --radius: 0.875rem;
   --radius-sm: 0.5rem;
   --radius-full: 100px;
+  /* Alternating section bands melt into their neighbours instead of meeting on a hard edge */
+  --band-fade-size: 140px;
+  --band-fade: linear-gradient(
+    to bottom,
+    var(--bg),
+    var(--bg-subtle) var(--band-fade-size),
+    var(--bg-subtle) calc(100% - var(--band-fade-size)),
+    var(--bg)
+  );
 }
 
 [data-theme="dark"] {
   --primary: #6fa0cc;
   --primary-rgb: 111, 160, 204;
   --primary-glow: rgba(111, 160, 204, 0.14);
+  --on-primary: #0a1420;
   --secondary: #4d7fa8;
   --secondary-rgb: 77, 127, 168;
   --accent: #e0b563;
@@ -112,6 +124,35 @@ h1, h2, h3, h4, h5, h6 {
 
 section {
   padding: 6rem 0;
+}
+
+/* Pressed feedback. `scale` composes with any transform already applied (hover lifts,
+   magnetic buttons), so it never fights them. */
+:is(button, .btn, [data-slot="button"]):active:not(:disabled) {
+  scale: 0.97;
+}
+
+/* sonner renders its toast region as a <section>: keep the page padding off it */
+section[aria-live] {
+  padding: 0;
+}
+
+/* Film grain over the whole page, to break the flat fills. Fixed and non-interactive,
+   so it costs one composited layer and never catches clicks. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  /* above the header and modals, below the custom cursor (9999+) */
+  z-index: 9990;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.4 -0.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+[data-theme="dark"] body::after {
+  opacity: 0.07;
+  filter: invert(1);
 }
 
 @media (max-width: 768px) {

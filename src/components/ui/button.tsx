@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-[var(--primary)] text-white hover:brightness-110 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(var(--primary-rgb),0.4)] active:translate-y-0',
+          'bg-[var(--primary)] text-[var(--on-primary)] hover:brightness-110 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(var(--primary-rgb),0.4)] active:translate-y-0',
         secondary:
           'border border-[var(--border)] bg-transparent text-[var(--text)] hover:border-[var(--primary)] hover:text-[var(--primary)] hover:bg-[var(--primary-glow)] hover:-translate-y-0.5',
         outline:
@@ -19,7 +19,7 @@ const buttonVariants = cva(
         filter:
           'border border-[var(--border)] bg-transparent text-[var(--text-muted)] font-semibold text-[0.8rem] hover:text-[var(--text)] hover:border-[rgba(var(--primary-rgb),0.4)]',
         'filter-active':
-          'border border-[var(--primary)] bg-[var(--primary)] text-white font-semibold text-[0.8rem]',
+          'border border-[var(--primary)] bg-[var(--primary)] text-[var(--on-primary)] font-semibold text-[0.8rem]',
       },
       size: {
         default: 'px-6 py-3',

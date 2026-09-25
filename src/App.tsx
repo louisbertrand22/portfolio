@@ -16,6 +16,8 @@ import SkillIcon from '@/components/SkillIcon'
 import HobbyArt, { type HobbyKind } from '@/components/HobbyArt'
 import CustomCursor from '@/components/CustomCursor'
 import IntroScreen from '@/components/IntroScreen'
+import CountUp from '@/components/CountUp'
+import TimelineProgress from '@/components/TimelineProgress'
 import { useLenis } from '@/hooks/useLenis'
 import { useMagnetic } from '@/hooks/useMagnetic'
 
@@ -49,6 +51,11 @@ const slideLeft = {
     opacity: 1, x: 0,
     transition: { duration: 0.5, ease, delay },
   }),
+}
+
+const cvSwing = {
+  hidden: { rotate: -9, y: 36 },
+  visible: { rotate: 0, y: 0, transition: { duration: 0.9, ease, delay: 0.15 } },
 }
 
 const viewport = { once: true, margin: '-60px 0px' } as const
@@ -284,6 +291,20 @@ function App() {
     setTimeout(() => setHeroRipples(prev => prev.filter(r => r.id !== id)), 900)
   }
 
+  // Cursor-following highlight on card borders (see .spotlight-card in App.css):
+  // one delegated listener instead of a handler per card
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      const card = (e.target as Element | null)?.closest?.<HTMLElement>('.project-card, .sigl-card, .sigl-spotlight')
+      if (!card) return
+      const r = card.getBoundingClientRect()
+      card.style.setProperty('--spot-x', `${e.clientX - r.left}px`)
+      card.style.setProperty('--spot-y', `${e.clientY - r.top}px`)
+    }
+    document.addEventListener('pointermove', onMove, { passive: true })
+    return () => document.removeEventListener('pointermove', onMove)
+  }, [])
+
   // Stable references so the memoized Terminal skips App's scroll-driven re-renders
   const toggleTheme = useCallback(() => setIsDarkMode(p => !p), [])
   const toggleLanguage = useCallback(() => setLanguage(p => p === 'en' ? 'fr' : 'en'), [])
@@ -470,6 +491,7 @@ function App() {
                   {t.experience.title}
                 </motion.h2>
                 <div className="timeline">
+                  <TimelineProgress />
                   {t.experience.items.map((exp, index) => (
                     <motion.div key={index} className="timeline-item" initial="hidden" whileInView="visible" viewport={viewport} variants={slideLeft} custom={index * 0.1}>
                       <div className="timeline-connector"><div className="timeline-dot" /></div>
@@ -498,6 +520,7 @@ function App() {
                   {t.education.title}
                 </motion.h2>
                 <div className="timeline">
+                  <TimelineProgress />
                   {t.education.items.map((edu, index) => (
                     <motion.div key={index} className="timeline-item" initial="hidden" whileInView="visible" viewport={viewport} variants={slideLeft} custom={index * 0.1}>
                       <div className="timeline-connector"><div className="timeline-dot" /></div>
@@ -613,7 +636,7 @@ function App() {
                   <p className="sigl-card-description">{item.description}</p>
                   {item.stat && (
                     <div className="sigl-card-stat">
-                      <span className="sigl-card-stat-value">{item.stat.value}</span>
+                      <span className="sigl-card-stat-value"><CountUp value={item.stat.value} /></span>
                       <span className="sigl-card-stat-label">{item.stat.label}</span>
                     </div>
                   )}
@@ -652,15 +675,17 @@ function App() {
             {/* Grid */}
             <motion.div className="projects-grid" layout>
               <AnimatePresence mode="popLayout">
-                {filteredProjects.map(({ originalIndex, featured, technologies, preview, cover, gallery }) => (
+                {filteredProjects.map(({ originalIndex, featured, technologies, preview, cover, gallery }, position) => (
                   <motion.div
                     key={originalIndex}
                     layout
                     className={`project-card${featured ? ' featured' : ''}${regularCount > 1 && originalIndex === lastRegularIndex ? orphanClass : ''}`}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.22 }}
+                    initial={{ opacity: 0, y: 28 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '0px 0px -60px 0px' }}
+                    exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
+                    // cards of a row cascade in; filtering reflows them without that delay
+                    transition={{ default: { duration: 0.5, ease, delay: (position % 3) * 0.09 }, layout: { duration: 0.3, ease } }}
                     onClick={() => openProjectModal(originalIndex)}
                   >
                     <div className="project-cover" aria-hidden="true">
@@ -779,16 +804,19 @@ function App() {
               {t.cv.title}
             </motion.h2>
             <motion.div className="cv-panel" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
-              <a className="cv-preview" href="/cv-louis-bertrand.pdf" target="_blank" rel="noopener noreferrer" aria-label={t.cv.open}>
-                <span className="cv-sheet cv-sheet--back" aria-hidden="true" />
-                <img src="/cv-preview.jpg" alt={t.cv.previewAlt} loading="lazy" width={760} height={1075} />
-              </a>
+              {/* Swings upright as the panel reveals; composes with the sheet's own resting tilt */}
+              <motion.div className="cv-preview-wrap" variants={cvSwing}>
+                <a className="cv-preview" href="/cv-louis-bertrand.pdf" target="_blank" rel="noopener noreferrer" aria-label={t.cv.open}>
+                  <span className="cv-sheet cv-sheet--back" aria-hidden="true" />
+                  <img src="/cv-preview.jpg" alt={t.cv.previewAlt} loading="lazy" width={760} height={1075} />
+                </a>
+              </motion.div>
               <div className="cv-body">
                 <p className="cv-lead">{t.cv.description}</p>
                 <dl className="cv-facts">
                   {t.cv.facts.map(f => (
                     <div key={f.label} className="cv-fact">
-                      <dt>{f.value}</dt>
+                      <dt><CountUp value={f.value} /></dt>
                       <dd>{f.label}</dd>
                     </div>
                   ))}

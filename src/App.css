@@ -206,6 +206,9 @@
   background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
   background-size: 28px 28px;
   opacity: 0.7;
+  /* fade the dots and glows out so the hero melts into the next section */
+  -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent);
+  mask-image: linear-gradient(to bottom, #000 65%, transparent);
 }
 
 [data-theme="dark"] .hero-bg {
@@ -458,7 +461,7 @@
 
 .btn-primary {
   background: var(--primary);
-  color: white;
+  color: var(--on-primary);
 }
 
 .btn-primary:hover {
@@ -693,7 +696,7 @@ main {
 }
 
 .section-title::before {
-  content: "0" counter(section-counter) " ——";
+  content: counter(section-counter, decimal-leading-zero) " ——";
   display: block;
   font-family: var(--font-sans);
   font-size: 0.7rem;
@@ -719,7 +722,7 @@ main {
    ABOUT + EXPERIENCE (shared sticky photo)
    ============================================================ */
 .about-experience {
-  background: var(--bg-subtle);
+  background: var(--band-fade);
 }
 
 .about-experience-grid {
@@ -807,7 +810,8 @@ main {
    TIMELINE (Education & Experience)
    ============================================================ */
 .education {
-  background: var(--bg-subtle);
+  /* sits inside .about-experience, which paints the band */
+  background: transparent;
 }
 
 .timeline {
@@ -824,7 +828,24 @@ main {
   bottom: 3.5rem;
   width: 2px;
   border-radius: 2px;
-  background: linear-gradient(to bottom, var(--primary), rgba(var(--primary-rgb), 0.15));
+  background: rgba(var(--primary-rgb), 0.14);
+}
+
+/* Drawn over the faint rail as the timeline scrolls into view */
+.timeline-progress {
+  position: absolute;
+  left: 20px;
+  top: 3.5rem;
+  bottom: 3.5rem;
+  width: 2px;
+  pointer-events: none;
+}
+
+.timeline-progress-bar {
+  height: 100%;
+  border-radius: 2px;
+  transform-origin: top;
+  background: linear-gradient(to bottom, var(--primary), var(--accent));
 }
 
 .timeline-item {
@@ -996,7 +1017,8 @@ main {
 }
 
 @media (max-width: 600px) {
-  .timeline::before   { display: none; }
+  .timeline::before,
+  .timeline-progress  { display: none; }
   .timeline-connector { display: none; }
   .timeline-item      { display: block; }
   .timeline-card      { margin-left: 0; }
@@ -1006,7 +1028,7 @@ main {
    PROJECTS SECTION
    ============================================================ */
 .projects {
-  background: var(--bg-subtle);
+  background: var(--band-fade);
 }
 
 /* Filter bar */
@@ -1081,6 +1103,48 @@ main {
   overflow: hidden;
   cursor: pointer;
   transition: border-color 0.25s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Border lit from the cursor position (--spot-x/--spot-y set by App's pointermove listener) */
+.project-card::after,
+.sigl-card::after,
+.sigl-spotlight::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: radial-gradient(
+    300px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(var(--accent-rgb), 1),
+    rgba(var(--primary-rgb), 0.35) 40%,
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.project-card:hover::after,
+.sigl-card:hover::after,
+.sigl-spotlight:hover::after {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .project-card::after,
+  .sigl-card::after,
+  .sigl-spotlight::after {
+    display: none;
+  }
+}
+
+.project-card:active {
+  scale: 0.99;
 }
 
 .project-card:hover {
@@ -2250,7 +2314,7 @@ main {
    HOBBIES SECTION
    ============================================================ */
 .hobbies {
-  background: var(--bg-subtle);
+  background: var(--band-fade);
 }
 
 .hobbies-bento {
@@ -2453,11 +2517,15 @@ main {
   margin: 0 auto;
 }
 
+.cv-preview-wrap {
+  justify-self: center;
+  width: min(100%, 320px);
+}
+
 .cv-preview {
   position: relative;
   display: block;
-  justify-self: center;
-  width: min(100%, 320px);
+  width: 100%;
   transform: rotate(-2.5deg);
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -2581,7 +2649,7 @@ main {
     grid-template-columns: 1fr;
     gap: 2.75rem;
   }
-  .cv-preview {
+  .cv-preview-wrap {
     width: min(70%, 260px);
   }
   .cv-body {
@@ -2627,7 +2695,8 @@ main {
    CONTACT SECTION
    ============================================================ */
 .contact {
-  background: var(--bg-subtle);
+  /* fades in from the section above, then runs into the footer */
+  background: linear-gradient(to bottom, var(--bg), var(--bg-subtle) var(--band-fade-size));
 }
 
 .contact-panel {
@@ -2893,7 +2962,7 @@ a.contact-channel:hover .contact-channel-arrow {
 .modal-close:hover {
   background: var(--primary);
   border-color: var(--primary);
-  color: white;
+  color: var(--on-primary);
   transform: rotate(90deg);
 }
 
@@ -3086,7 +3155,7 @@ a.contact-channel:hover .contact-channel-arrow {
   width: 2.75rem;
   height: 2.75rem;
   background: var(--primary);
-  color: white;
+  color: var(--on-primary);
   border: none;
   border-radius: var(--radius-full);
   cursor: pointer;

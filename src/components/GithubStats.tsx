@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { Language } from '@/translations'
+import CountUp from '@/components/CountUp'
 
 const GITHUB_USERNAME = 'louisbertrand22'
 const CACHE_KEY = 'gh-stats-cache-v1'
@@ -139,7 +140,7 @@ export default function GithubStats({ language, labels }: GithubStatsProps) {
     <div className="github-stats">
       <div className="github-summary">
         <span className="github-summary-count">
-          {data.totalContributions.toLocaleString(language === 'fr' ? 'fr-FR' : 'en-US')}
+          <CountUp value={data.totalContributions.toLocaleString(language === 'fr' ? 'fr-FR' : 'en-US')} />
         </span>
         <span className="github-summary-label">{labels.contributionsLabel}</span>
       </div>
