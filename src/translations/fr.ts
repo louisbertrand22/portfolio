@@ -17,6 +17,7 @@ export const fr = {
     greeting: 'Bonjour, je suis',
     name: 'Louis BERTRAND',
     subtitle: 'Pilotage de projets IT · Architecture SI · Cloud & DevOps',
+    availability: 'Stage de fin d\'études - Fév./Mars 2027',
     description: "Étudiant ingénieur à l'EPITA en majeure SIGL, je me destine au pilotage de projets IT et à l'architecture des systèmes d'information. Mon parcours technique, du développement full-stack au cloud et au DevOps, me permet de faire le lien entre les besoins métier, les choix d'architecture et les équipes qui les mettent en œuvre.",
     viewWork: 'Voir Mes Projets',
     getInTouch: 'Me Contacter',
@@ -72,6 +73,8 @@ export const fr = {
   },
   projects: {
     title: 'Projets en Vedette',
+    featured: 'À la une',
+    coldStartNote: 'Hébergée sur Streamlit Community Cloud : si l\'app était en veille, elle peut mettre jusqu\'à une minute à démarrer.',
     viewProject: 'Voir le Projet →',
     viewReadme: 'Voir le README →',
     viewDetails: 'Voir les détails →',

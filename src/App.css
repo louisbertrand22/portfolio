@@ -1333,6 +1333,16 @@ main {
   margin-bottom: 1rem;
 }
 
+.project-note {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: -0.25rem 0 1rem;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
 .project-footer {
   display: flex;
   align-items: center;

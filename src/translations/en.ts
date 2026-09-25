@@ -17,6 +17,7 @@ export const en = {
     greeting: "Hi, I'm",
     name: 'Louis BERTRAND',
     subtitle: 'IT Project Management · IS Architecture · Cloud & DevOps',
+    availability: 'Final-year internship - Feb/Mar 2027',
     description: "Engineering student at EPITA majoring in Information Systems (SIGL), I'm heading toward IT project management and information systems architecture. My hands-on background, from full-stack development to cloud and DevOps, lets me bridge business needs, architecture decisions and the teams who deliver them.",
     viewWork: 'View My Work',
     getInTouch: 'Get In Touch',
@@ -72,6 +73,8 @@ export const en = {
   },
   projects: {
     title: 'Featured Projects',
+    featured: 'Featured',
+    coldStartNote: 'Hosted on Streamlit Community Cloud: if the app was asleep, it can take up to a minute to start.',
     viewProject: 'View Project →',
     viewReadme: 'View README →',
     viewDetails: 'View details →',

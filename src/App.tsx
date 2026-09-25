@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Lock, Briefcase, MapPin, Mail, Copy, ArrowUpRight, Download, ExternalLink, FileText } from 'lucide-react'
+import { Lock, Clock, Briefcase, MapPin, Mail, Copy, ArrowUpRight, Download, ExternalLink, FileText } from 'lucide-react'
 
 const hobbyKinds: HobbyKind[] = ['guitar', 'running', 'football', 'f1']
 import { toast } from 'sonner'
@@ -105,6 +105,8 @@ const projects = [
     technologies: ['Python', 'OpenCV', 'TensorFlow', 'Streamlit', 'pytest'],
     link: 'https://github.com/louisbertrand22/sudoku-ocr',
     site: 'https://sudoku-ocr.streamlit.app/',
+    // Streamlit Community Cloud puts idle apps to sleep
+    coldStart: true,
     preview: '/sudokuocr_read.jpg',
     gallery: ['/sudokuocr_read.jpg', '/sudokuocr_conflict.jpg', '/sudokuocr_solution.jpg', '/sudokuocr_detect.jpg'],
   },
@@ -183,6 +185,7 @@ function App() {
   // Persist language
   useEffect(() => {
     try { localStorage.setItem('language', language) } catch { /* unavailable */ }
+    document.documentElement.lang = language
   }, [language])
 
   // Dark mode
@@ -296,8 +299,6 @@ function App() {
     .filter(p => selectedTech === 'All' || p.technologies.includes(selectedTech))
     .sort((a, b) => Number(b.featured) - Number(a.featured))
 
-  const badgeText = language === 'en' ? 'Final-year internship - Feb/Mar 2027' : 'Stage de fin d\'études - Fév./Mars 2027'
-  const featuredLabel = language === 'en' ? 'Featured' : 'À la une'
 
   return (
     <div className="app">
@@ -396,7 +397,7 @@ function App() {
             <div className="hero-layout">
               <motion.div className="hero-content" initial="hidden" animate="visible" variants={stagger}>
                 <motion.div className="hero-badge" variants={cardItem}>
-                  <span className="hero-badge-dot" />{badgeText}
+                  <span className="hero-badge-dot" />{t.hero.availability}
                 </motion.div>
                 <motion.h1 className="hero-title" variants={fadeUp} custom={0.05}>
                   {t.hero.greeting} <span className="highlight">{t.hero.name}</span>
@@ -660,7 +661,7 @@ function App() {
                       ) : cover ? (
                         <ProjectCover kind={cover} />
                       ) : null}
-                      {featured && <span className="project-featured-badge">{featuredLabel}</span>}
+                      {featured && <span className="project-featured-badge">{t.projects.featured}</span>}
                     </div>
                     <div className="project-body">
                       <h3 className="project-title">{t.projects.items[originalIndex]?.title}</h3>
@@ -670,6 +671,9 @@ function App() {
                           <Badge key={idx}>{tech}</Badge>
                         ))}
                       </div>
+                      {projects[originalIndex].coldStart && (
+                        <p className="project-note"><Clock size={12} strokeWidth={2.25} />{t.projects.coldStartNote}</p>
+                      )}
                       {featured && gallery && gallery.length > 1 && (
                         <div className="project-thumbs" aria-hidden="true">
                           {gallery.slice(1).map(src => (
@@ -807,7 +811,7 @@ function App() {
             </motion.h2>
             <motion.div className="contact-panel" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
               <div className="contact-intro">
-                <span className="contact-availability"><span className="hero-badge-dot" />{badgeText}</span>
+                <span className="contact-availability"><span className="hero-badge-dot" />{t.hero.availability}</span>
                 <p className="contact-lead">{t.contact.description}</p>
                 <a href="mailto:louisbert91@gmail.com" ref={contactEmailRef} className="contact-cta" onClick={copyEmail}>
                   <Mail size={18} strokeWidth={2} aria-hidden="true" />
@@ -913,6 +917,9 @@ function App() {
             <a className="modal-site-link" href={projects[selectedProject ?? -1].site} target="_blank" rel="noopener noreferrer">
               {t.projects.visitSite}
             </a>
+          )}
+          {projects[selectedProject ?? -1]?.coldStart && (
+            <p className="modal-private-note"><Clock size={13} strokeWidth={2.25} />{t.projects.coldStartNote}</p>
           )}
         </DialogContent>
       </Dialog>

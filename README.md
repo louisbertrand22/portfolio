@@ -38,7 +38,6 @@ A modern, responsive portfolio website built with React, TypeScript, and Vite.
 ### Prerequisites
 
 - Node.js 18+ and npm
-- OR Docker and Docker Compose (for containerized deployment)
 
 ### Installation
 
@@ -85,118 +84,11 @@ Run ESLint to check code quality:
 npm run lint
 ```
 
-### Docker
-
-#### Using Docker Compose (Recommended)
-
-The easiest way to run the application with Docker:
-
-```bash
-docker compose up -d
-```
-
-The site will be available at `http://localhost:3000/`
-
-To stop the application:
-```bash
-docker compose down
-```
-
-#### Using Docker Directly
-
-Build the Docker image:
-```bash
-docker build -t portfolio .
-```
-
-Run the container:
-```bash
-docker run -d -p 3000:80 --name portfolio-app portfolio
-```
-
-The site will be available at `http://localhost:3000/`
-
-To stop and remove the container:
-```bash
-docker stop portfolio-app
-docker rm portfolio-app
-```
-
 ## Deployment
 
-This portfolio can be deployed to various platforms.
+The site is deployed to GitHub Pages at **https://louis-bertrand.fr/**.
 
-📖 **[Quick Deploy Guide](./.github/QUICK_DEPLOY.md)** | **[Platform Comparison](./.github/DEPLOYMENT_OPTIONS.md)** | **[Full Documentation](./DEPLOYMENT.md)**
-
-### Quick Deploy
-
-Choose your preferred platform:
-
-### GitHub Pages (Automated)
-
-The repository includes a GitHub Actions workflow that automatically deploys to GitHub Pages on every push to the `main` branch. The site is configured to use the custom domain **lucho-dev.xyz**.
-
-**Setup:**
-1. Enable GitHub Pages in repository settings (one-time setup):
-   - Go to Settings → Pages
-   - Under "Build and deployment", select "GitHub Actions" as the source
-2. Configure custom domain in repository settings:
-   - In Settings → Pages, under "Custom domain", the domain `lucho-dev.xyz` is configured
-   - The CNAME file is included in the repository and will be automatically deployed
-3. Configure DNS for your domain (one-time setup):
-   - Add an A record pointing to GitHub Pages IP addresses:
-     - 185.199.108.153
-     - 185.199.109.153
-     - 185.199.110.153
-     - 185.199.111.153
-   - Or add a CNAME record pointing to `louisbertrand22.github.io`
-4. Push to the `main` branch
-5. Check the "Actions" tab to monitor the deployment
-
-> **Note:** If you push before configuring GitHub Pages, the deployment will fail with a "Not Found" error. Simply enable "GitHub Actions" as the source in Settings → Pages, then push again or re-run the workflow.
-
-**The site will be available at:** `https://lucho-dev.xyz/`
-
-### Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/louisbertrand22/portfolio)
-
-**Manual deployment:**
-1. Install Vercel CLI: `npm i -g vercel`
-2. Run `vercel` in the project directory
-3. Follow the prompts to deploy
-
-The `vercel.json` configuration file is already included.
-
-### Netlify
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/louisbertrand22/portfolio)
-
-**Manual deployment:**
-1. Install Netlify CLI: `npm i -g netlify-cli`
-2. Run `netlify deploy --prod` in the project directory
-3. Follow the prompts to deploy
-
-The `netlify.toml` configuration file is already included.
-
-### Docker Deployment
-
-For production deployment using Docker on any cloud provider (AWS, GCP, Azure, DigitalOcean, etc.):
-
-```bash
-# Build the image
-docker build -t portfolio .
-
-# Run the container
-docker run -d -p 80:80 --name portfolio portfolio
-```
-
-Or use Docker Compose:
-```bash
-docker compose up -d
-```
-
-> **📖 For detailed deployment instructions, troubleshooting, and more platforms (Render, Cloudflare Pages, Firebase, etc.), see [DEPLOYMENT.md](./DEPLOYMENT.md)**
+The `Deploy to GitHub Pages` workflow (`.github/workflows/deploy.yml`) builds the site and publishes `dist/` on every push to `main`. In Settings → Pages, the source must be **GitHub Actions** (not "Deploy from a branch", which would serve the unbuilt sources) and the custom domain `louis-bertrand.fr`, which `public/CNAME` also sets.
 
 ## Customization
 
