@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Lock, Briefcase, MapPin, Mail, Copy, ArrowUpRight, Download, ExternalLink, FileText } from 'lucide-react'
 
@@ -6,7 +6,6 @@ const hobbyKinds: HobbyKind[] = ['guitar', 'running', 'football', 'f1']
 import { toast } from 'sonner'
 import './App.css'
 import { translations, Language } from './translations'
-import Markdown from 'react-markdown'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -19,6 +18,9 @@ import CustomCursor from '@/components/CustomCursor'
 import IntroScreen from '@/components/IntroScreen'
 import { useLenis } from '@/hooks/useLenis'
 import { useMagnetic } from '@/hooks/useMagnetic'
+
+// Markdown rendering is only needed once a project modal opens
+const ReadmeMarkdown = lazy(() => import('@/components/ReadmeMarkdown'))
 
 // ─── Animation variants ───────────────────────────────────────────────────────
 const ease = [0.22, 1, 0.36, 1] as const
@@ -212,32 +214,47 @@ function App() {
     return () => observer.disconnect()
   }, [])
 
-  const fetchReadme = async (repoUrl: string) => {
+  // READMEs are cached per repo (the GitHub API allows 60 unauthenticated calls/h),
+  // and only the latest request may update the modal
+  const readmeCache = useRef(new Map<string, string>())
+  const readmeRequest = useRef('')
+
+  const repoSlug = (url?: string) => url?.match(/github\.com\/([^/]+\/[^/]+)/)?.[1]
+
+  const fetchReadme = async (repo: string) => {
+    readmeRequest.current = repo
+    const cached = readmeCache.current.get(repo)
+    if (cached !== undefined) {
+      setReadmeContent(cached)
+      return
+    }
+    setReadmeContent('')
     setIsLoadingReadme(true)
     try {
-      const match = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)/)
-      if (!match) throw new Error('Invalid GitHub URL')
-      const [, owner, repo] = match
       const response = await fetch(
-        `https://api.github.com/repos/${owner}/${repo}/readme`,
+        `https://api.github.com/repos/${repo}/readme`,
         { headers: { Accept: 'application/vnd.github.v3.raw' } }
       )
       if (!response.ok) throw new Error('Failed to fetch README')
-      setReadmeContent(await response.text())
+      const content = await response.text()
+      readmeCache.current.set(repo, content)
+      if (readmeRequest.current === repo) setReadmeContent(content)
     } catch {
-      setReadmeContent('# README not available\n\nSorry, the README for this project could not be loaded.')
+      if (readmeRequest.current === repo) setReadmeContent(t.projects.readmeError)
     } finally {
-      setIsLoadingReadme(false)
+      if (readmeRequest.current === repo) setIsLoadingReadme(false)
     }
   }
 
   const openProjectModal = (index: number) => {
     setSelectedProject(index)
-    const link = projects[index].link
-    if (link) fetchReadme(link)
+    const repo = repoSlug(projects[index].link)
+    if (repo) fetchReadme(repo)
   }
 
   const closeProjectModal = () => {
+    readmeRequest.current = ''
+    setIsLoadingReadme(false)
     setSelectedProject(null)
     setReadmeContent('')
   }
@@ -638,7 +655,7 @@ function App() {
                   >
                     <div className="project-cover" aria-hidden="true">
                       {preview ? (
-                        <img src={preview} alt="" className="project-cover-img" loading="lazy" />
+                        <img src={preview} alt={t.projects.items[originalIndex]?.galleryAlts?.[0] ?? ''} className="project-cover-img" loading="lazy" />
                       ) : cover ? (
                         <ProjectCover kind={cover} />
                       ) : null}
@@ -870,8 +887,8 @@ function App() {
           </DialogHeader>
           {projects[selectedProject ?? -1]?.gallery && (
             <div className="modal-gallery">
-              {projects[selectedProject ?? -1].gallery!.map(src => (
-                <img key={src} src={src} alt="" loading="lazy" />
+              {projects[selectedProject ?? -1].gallery!.map((src, i) => (
+                <img key={src} src={src} alt={t.projects.items[selectedProject ?? 0]?.galleryAlts?.[i] ?? ''} loading="lazy" />
               ))}
             </div>
           )}
@@ -883,9 +900,13 @@ function App() {
               </p>
             </div>
           ) : isLoadingReadme ? (
-            <div className="modal-loading"><div className="loading-spinner" />Loading README...</div>
+            <div className="modal-loading"><div className="loading-spinner" />{t.projects.readmeLoading}</div>
           ) : (
-            <div className="modal-readme"><Markdown>{readmeContent}</Markdown></div>
+            <div className="modal-readme">
+              <Suspense fallback={<div className="modal-loading"><div className="loading-spinner" />{t.projects.readmeLoading}</div>}>
+                <ReadmeMarkdown content={readmeContent} repo={repoSlug(projects[selectedProject ?? -1]?.link) ?? ''} />
+              </Suspense>
+            </div>
           )}
           {projects[selectedProject ?? -1]?.site && (
             <a className="modal-site-link" href={projects[selectedProject ?? -1].site} target="_blank" rel="noopener noreferrer">

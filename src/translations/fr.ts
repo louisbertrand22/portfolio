@@ -76,12 +76,20 @@ export const fr = {
     viewReadme: 'Voir le README →',
     viewDetails: 'Voir les détails →',
     privateRepo: 'Dépôt privé',
+    readmeLoading: 'Chargement du README…',
+    readmeError: '# README indisponible\n\nLe README de ce projet n\'a pas pu être chargé.',
     privateNote: 'Le code source est privé — je peux le partager ou vous en faire une démo sur demande.',
     visitSite: 'Voir le site →',
     items: [
       {
         title: 'MagicCards',
         description: 'Application de flashcards en production sur magic-cards.fr, fondée sur la répétition espacée (système Leitner à 7 boîtes) : révisions avec cartes 3D, duels en temps réel, quiz chronométrés, séries entre amis, classement, génération de decks par IA (Gemini) et import Anki. Abonnement Pro via Stripe, connexion via mon propre SSO (MySSO, OIDC/PKCE), notifications push et application mobile Expo qui partage les mêmes routes API',
+        galleryAlts: [
+          "Page d'accueil de MagicCards : « Apprenez plus vite, oubliez moins »",
+          'Catalogue « Explorer les decks » de MagicCards avec filtres par langue et catégorie',
+          'Page de MagicCards expliquant le système Leitner à 7 boîtes',
+          "Page d'installation de l'application mobile MagicCards",
+        ],
       },
       {
         title: 'FootySim',
@@ -98,6 +106,12 @@ export const fr = {
       {
         title: 'MySSO',
         description: 'Implémentation SSO personnalisée avec support OpenID Connect et OAuth2, PKCE, gestion du consentement utilisateur et signature JWT RSA',
+        galleryAlts: [
+          "Page d'accueil de MySSO, le système d'authentification unique",
+          'Écran de consentement OAuth2 de MySSO listant les permissions demandées',
+          'Tableau de bord MySSO : informations utilisateur et sessions actives',
+          'Tableau de bord MySSO : applications autorisées et révocation des accès',
+        ],
       },
       {
         title: '42sh',

@@ -76,12 +76,20 @@ export const en = {
     viewReadme: 'View README →',
     viewDetails: 'View details →',
     privateRepo: 'Private repository',
+    readmeLoading: 'Loading README…',
+    readmeError: '# README not available\n\nSorry, the README for this project could not be loaded.',
     privateNote: 'Source code is private — happy to share on request or walk you through it.',
     visitSite: 'Visit site →',
     items: [
       {
         title: 'MagicCards',
         description: 'Flashcard app live at magic-cards.fr, built on spaced repetition (7-box Leitner system): 3D card reviews, real-time duels, timed quizzes, friend streaks, a leaderboard, AI deck generation (Gemini) and Anki import. Pro subscription through Stripe, sign-in through my own SSO (MySSO, OIDC/PKCE), push notifications, and an Expo mobile app sharing the same API routes',
+        galleryAlts: [
+          'MagicCards home page: "Learn faster, forget less"',
+          'MagicCards "Explore decks" catalog with language and category filters',
+          'MagicCards page explaining the 7-box Leitner system',
+          'MagicCards mobile app install page',
+        ],
       },
       {
         title: 'FootySim',
@@ -98,6 +106,12 @@ export const en = {
       {
         title: 'MySSO',
         description: 'Custom Single Sign-On implementation with OpenID Connect and OAuth2 support, PKCE, user consent management, and RSA JWT signing',
+        galleryAlts: [
+          'MySSO single sign-on landing page',
+          'MySSO OAuth2 consent screen listing the requested permissions',
+          'MySSO dashboard: user details and active sessions',
+          'MySSO dashboard: authorized applications and access revocation',
+        ],
       },
       {
         title: '42sh',
