@@ -1,0 +1,56 @@
+<!doctype html>
+<!-- Source of linkedin-banner.png (1584x396). Regenerate with:
+     chromium --headless --hide-scrollbars --window-size=1584,396 --force-device-scale-factor=2 \
+       --virtual-time-budget=5000 --screenshot=branding/linkedin-banner@2x.png branding/linkedin-banner.html -->
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;box-sizing:border-box}
+body{width:1584px;height:396px;overflow:hidden;position:relative;color:#e6edf3;font-family:Inter,sans-serif;
+ background:
+  radial-gradient(circle, rgba(111,160,204,.14) 1.2px, transparent 1.4px) 0 0/26px 26px,
+  radial-gradient(ellipse at 92% 0%, rgba(224,181,99,.18), transparent 50%),
+  radial-gradient(ellipse at 30% 120%, rgba(111,160,204,.16), transparent 55%),
+  linear-gradient(160deg,#0f1f33,#0a1420 65%)}
+/* Architecture sketch, kept above the profile photo area (bottom-left) */
+svg{position:absolute;left:390px;top:40px}
+.content{position:absolute;right:88px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;text-align:right}
+.tag{font-family:'JetBrains Mono',monospace;font-size:19px;color:#e0b563;letter-spacing:.04em}
+h1{font-family:'Space Grotesk',sans-serif;font-size:66px;font-weight:700;letter-spacing:-.035em;line-height:1;margin-top:14px}
+h1 span{color:#6fa0cc}
+.role{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:500;margin-top:14px;color:#d7e1ea}
+.role b{color:#e0b563;font-weight:500}
+.chips{display:flex;gap:10px;margin-top:22px}
+.chips span{font-family:'JetBrains Mono',monospace;font-size:16px;padding:7px 14px;border:1px solid rgba(111,160,204,.35);border-radius:999px;color:#c4d3e0;background:rgba(111,160,204,.08)}
+.foot{margin-top:22px;font-size:18px;color:#8fa3b8}
+.foot b{color:#e0b563;font-weight:500}
+.foot .url{font-family:'JetBrains Mono',monospace;color:#e6edf3;margin-left:14px}
+.bar{position:absolute;right:88px;top:0;width:110px;height:6px;background:#e0b563}
+</style></head><body>
+<div class="bar"></div>
+<svg width="520" height="200" viewBox="0 0 520 200" fill="none" font-family="JetBrains Mono, monospace" font-size="13">
+  <g stroke="rgba(111,160,204,.35)" stroke-width="1.5">
+    <path d="M110 50 H200"/><path d="M290 50 H380"/>
+    <path d="M245 72 V128"/><path d="M290 150 H380"/>
+    <path d="M425 72 V128" stroke-dasharray="4 5"/>
+  </g>
+  <g stroke="rgba(111,160,204,.55)" stroke-width="1.5" fill="rgba(15,31,51,.85)">
+    <rect x="20" y="30" width="90" height="42" rx="8"/>
+    <rect x="200" y="30" width="90" height="42" rx="8"/>
+    <rect x="380" y="30" width="90" height="42" rx="8" stroke="rgba(224,181,99,.8)"/>
+    <rect x="200" y="128" width="90" height="42" rx="8"/>
+    <rect x="380" y="128" width="90" height="42" rx="8"/>
+  </g>
+  <g fill="#8fa3b8" text-anchor="middle">
+    <text x="65" y="56">users</text><text x="245" y="56">SSO</text>
+    <text x="425" y="56" fill="#e0b563">API</text><text x="245" y="154">k8s</text><text x="425" y="154">data</text>
+  </g>
+</svg>
+<div class="content">
+  <p class="tag">// louis-bertrand.fr</p>
+  <h1>Louis <span>BERTRAND</span></h1>
+  <p class="role">Chef de projet IT <b>&amp;</b> Architecte SI</p>
+  <div class="chips"><span>Cloud</span><span>DevOps</span><span>Kubernetes</span><span>Terraform</span><span>AWS</span><span>Zero Trust</span></div>
+  <p class="foot">Élève ingénieur EPITA (SIGL) · <b>Stage de fin d'études — fév./mars 2027</b></p>
+</div>
+</body></html>
