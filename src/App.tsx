@@ -258,7 +258,20 @@ function App() {
     }
   }
 
-  const openProjectModal = (index: number) => {
+  // Where the modal grows from: the clicked card's offset from the viewport centre and its
+  // width relative to the modal's, consumed by .modal-from-card in App.css
+  const [modalOrigin, setModalOrigin] = useState<React.CSSProperties | undefined>()
+
+  const openProjectModal = (index: number, card?: HTMLElement) => {
+    if (card) {
+      const r = card.getBoundingClientRect()
+      const modalWidth = Math.min(900, window.innerWidth)
+      setModalOrigin({
+        '--from-x': `${r.left + r.width / 2 - window.innerWidth / 2}px`,
+        '--from-y': `${r.top + r.height / 2 - window.innerHeight / 2}px`,
+        '--from-s': Math.min(1, Math.max(0.3, r.width / modalWidth)).toFixed(3),
+      } as React.CSSProperties)
+    }
     setSelectedProject(index)
     const repo = repoSlug(projects[index].link)
     if (repo) fetchReadme(repo)
@@ -281,6 +294,14 @@ function App() {
     const rect = e.currentTarget.getBoundingClientRect()
     e.currentTarget.style.setProperty('--mx', `${e.clientX - rect.left}px`)
     e.currentTarget.style.setProperty('--my', `${e.clientY - rect.top}px`)
+    // normalised -1…1 offsets from the centre, for the terminal tilt and halo drift
+    e.currentTarget.style.setProperty('--tx', (((e.clientX - rect.left) / rect.width) * 2 - 1).toFixed(3))
+    e.currentTarget.style.setProperty('--ty', (((e.clientY - rect.top) / rect.height) * 2 - 1).toFixed(3))
+  }
+
+  const handleHeroMouseLeave = (e: React.MouseEvent<HTMLElement>) => {
+    e.currentTarget.style.setProperty('--tx', '0')
+    e.currentTarget.style.setProperty('--ty', '0')
   }
 
   // Hero section: click ripple burst
@@ -393,6 +414,7 @@ function App() {
           id="home"
           className="hero"
           onMouseMove={handleHeroMouseMove}
+          onMouseLeave={handleHeroMouseLeave}
           onClick={handleHeroClick}
         >
           <div className="hero-bg" aria-hidden="true">
@@ -453,11 +475,16 @@ function App() {
                   </ul>
                 </motion.div>
               </motion.div>
-              <Terminal
-                language={language}
-                onToggleTheme={toggleTheme}
-                onToggleLanguage={toggleLanguage}
-              />
+              <div className="hero-visual">
+                <div className="hero-halo" aria-hidden="true" />
+                <div className="hero-visual-tilt">
+                  <Terminal
+                    language={language}
+                    onToggleTheme={toggleTheme}
+                    onToggleLanguage={toggleLanguage}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -686,7 +713,7 @@ function App() {
                     exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
                     // cards of a row cascade in; filtering reflows them without that delay
                     transition={{ default: { duration: 0.5, ease, delay: (position % 3) * 0.09 }, layout: { duration: 0.3, ease } }}
-                    onClick={() => openProjectModal(originalIndex)}
+                    onClick={e => openProjectModal(originalIndex, e.currentTarget)}
                   >
                     <div className="project-cover" aria-hidden="true">
                       {preview ? (
@@ -897,7 +924,25 @@ function App() {
       </main>
 
       <footer className="footer">
-        <div className="container"><p>{t.footer.copyright}</p></div>
+        <div className="container footer-inner">
+          <a href="#home" className="footer-brand">
+            <span className="footer-mono" aria-hidden="true">LB</span>
+            <span className="footer-brand-text">
+              <strong>{t.hero.name}</strong>
+              <span>{t.nav.logo}</span>
+            </span>
+          </a>
+          <nav className="footer-links" aria-label={t.footer.linksLabel}>
+            <a href="https://www.linkedin.com/in/louis-bertrand222" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://github.com/louisbertrand22" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="/cv-louis-bertrand.pdf" target="_blank" rel="noopener noreferrer">{t.footer.cv}</a>
+            <a href="mailto:louisbert91@gmail.com">Email</a>
+          </nav>
+          <a href="#home" className="footer-top">
+            {t.footer.backToTop}<ArrowUpRight size={14} strokeWidth={2.25} aria-hidden="true" />
+          </a>
+        </div>
+        <div className="container footer-bottom"><p>{t.footer.copyright}</p></div>
       </footer>
 
       {/* ── BACK TO TOP ── */}
@@ -922,7 +967,7 @@ function App() {
 
       {/* ── MODAL ── */}
       <Dialog open={selectedProject !== null} onOpenChange={open => { if (!open) closeProjectModal() }}>
-        <DialogContent>
+        <DialogContent className={modalOrigin ? 'modal-from-card' : undefined} style={modalOrigin}>
           <DialogHeader>
             <DialogTitle>{t.projects.items[selectedProject ?? 0]?.title}</DialogTitle>
           </DialogHeader>

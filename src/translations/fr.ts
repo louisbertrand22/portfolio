@@ -256,5 +256,8 @@ export const fr = {
   },
   footer: {
     copyright: '© 2026 Louis BERTRAND.',
+    linksLabel: 'Liens',
+    cv: 'CV (PDF)',
+    backToTop: 'Retour en haut',
   },
 }

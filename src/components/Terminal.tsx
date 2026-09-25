@@ -300,6 +300,8 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
       </div>
       <motion.div
         className="terminal-body" ref={bodyRef} onClick={focusInput}
+        // let the wheel scroll the terminal's history natively instead of Lenis moving the page
+        data-lenis-prevent
         initial="hidden" animate="visible" variants={bodyVariants}
       >
         <motion.p variants={lineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">whoami</span></motion.p>
