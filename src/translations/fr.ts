@@ -128,6 +128,12 @@ export const fr = {
       {
         title: 'Sudoku OCR',
         description: 'Application de vision par ordinateur qui détecte une grille de sudoku dans une photo, la redresse avec OpenCV, lit les chiffres avec un CNN Keras entraîné sur mon propre jeu de données (repli sur Tesseract), résout la grille par backtracking et réincruste la solution sur l\'image. Interface Streamlit déployée pour vérifier et corriger la lecture case par case, signaler les conflits et télécharger le résultat, avec tests de bout en bout sur des grilles réelles',
+        galleryAlts: [
+          'Interface Streamlit de Sudoku OCR : grille lue par le CNN, modifiable case par case, à côté de la grille redressée annotée',
+          'Sudoku OCR signalant un conflit après une correction manuelle, cases en conflit surlignées en rouge',
+          "Solution de Sudoku OCR réincrustée sur l'image d'origine, chiffres trouvés en contour",
+          "Vue « Détection » de Sudoku OCR : contour de la grille détecté dans l'image d'origine",
+        ],
       },
     ],
   },

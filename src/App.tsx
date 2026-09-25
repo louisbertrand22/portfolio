@@ -90,7 +90,7 @@ const projects = [
   { featured: false, technologies: ['FastAPI', 'SQLAlchemy', 'Python', 'REST API'],              link: 'https://github.com/louisbertrand22/FootySim-backend', cover: 'footysim-api' as CoverKind },
   { featured: false, technologies: ['Flask', 'Docker', 'Kubernetes', 'CI/CD'],                  link: 'https://github.com/louisbertrand22/DevOpsTest', cover: 'devops' as CoverKind },
   {
-    featured: true,
+    featured: false,
     technologies: ['TypeScript', 'Node.js', 'PostgreSQL', 'OAuth2', 'Prisma'],
     link: 'https://github.com/louisbertrand22/MySSO',
     site: 'https://my-sso.louis-bertrand.fr',
@@ -101,11 +101,12 @@ const projects = [
   { featured: false, technologies: ['Rust', 'POSIX'], link: 'https://github.com/louisbertrand22/MiniShell_Rust', cover: 'minishell' as CoverKind },
   { featured: false, technologies: ['C++', 'Flex', 'Bison', 'AST', 'IR', 'Autotools'], private: true, cover: 'tiger' as CoverKind },
   {
-    featured: false,
+    featured: true,
     technologies: ['Python', 'OpenCV', 'TensorFlow', 'Streamlit', 'pytest'],
     link: 'https://github.com/louisbertrand22/sudoku-ocr',
     site: 'https://sudoku-ocr.streamlit.app/',
-    cover: 'sudoku' as CoverKind,
+    preview: '/sudokuocr_read.jpg',
+    gallery: ['/sudokuocr_read.jpg', '/sudokuocr_conflict.jpg', '/sudokuocr_solution.jpg', '/sudokuocr_detect.jpg'],
   },
 ]
 

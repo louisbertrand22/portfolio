@@ -128,6 +128,12 @@ export const en = {
       {
         title: 'Sudoku OCR',
         description: 'Computer vision app that finds a sudoku grid in a photo, straightens it with OpenCV, reads the digits with a Keras CNN trained on my own dataset (Tesseract as fallback), solves the grid by backtracking and draws the solution back onto the image. Deployed Streamlit interface to review and fix the reading cell by cell, flag conflicts and download the result, with end-to-end tests on real grids',
+        galleryAlts: [
+          'Sudoku OCR Streamlit interface: grid read by the CNN, editable cell by cell, next to the annotated straightened grid',
+          'Sudoku OCR flagging a conflict after a manual fix, conflicting cells highlighted in red',
+          'Sudoku OCR solution drawn back onto the original image, found digits in outline',
+          'Sudoku OCR "Detection" view: grid outline found in the original image',
+        ],
       },
     ],
   },
