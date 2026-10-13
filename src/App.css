@@ -3329,15 +3329,15 @@ a.contact-channel:hover .contact-channel-arrow {
 }
 
 .showcase-expand .scroll-expand__scrim {
-  /* dense on the caption side so the product's own headline stays a backdrop, not a competitor */
+  /* dense on the caption side (right, over the demo card) so the product's own headline on the left stays legible */
   background:
-    linear-gradient(to right, rgba(8, 18, 32, 0.96), rgba(8, 18, 32, 0.88) 38%, rgba(8, 18, 32, 0.35) 75%, rgba(8, 18, 32, 0.2)),
+    linear-gradient(to left, rgba(8, 18, 32, 0.96), rgba(8, 18, 32, 0.88) 38%, rgba(8, 18, 32, 0.3) 70%, rgba(8, 18, 32, 0.1)),
     linear-gradient(to top, rgba(8, 18, 32, 0.6), transparent 50%);
 }
 
-/* settle the pitch bottom-left, aligned with the page container */
+/* settle the pitch on the right, aligned with the page container */
 .showcase-expand .scroll-expand__overlay {
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: center;
   text-align: left;
   padding: 0 max(2rem, calc((100% - 1200px) / 2 + 2rem));

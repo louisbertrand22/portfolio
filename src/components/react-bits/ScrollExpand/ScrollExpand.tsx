@@ -18,6 +18,7 @@ type ConfigKey =
   | 'startRadius'
   | 'endRadius'
   | 'mediaZoom'
+  | 'mediaShiftX'
   | 'scrollDistance'
   | 'holdDistance'
   | 'smoothing'
@@ -37,6 +38,8 @@ export interface ScrollExpandProps {
   startRadius?: number;
   endRadius?: number;
   mediaZoom?: number;
+  /** Portfolio adaptation: horizontal offset (% of the frame) applied at the start and eased to 0, to frame an off-centre subject */
+  mediaShiftX?: number;
   scrollDistance?: number;
   holdDistance?: number;
   smoothing?: number;
@@ -61,6 +64,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
   startRadius = 24,
   endRadius = 0,
   mediaZoom = 1.35,
+  mediaShiftX = 0,
   scrollDistance = 1.2,
   holdDistance = 0.35,
   smoothing = 0.1,
@@ -91,6 +95,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     startRadius,
     endRadius,
     mediaZoom,
+    mediaShiftX,
     scrollDistance,
     holdDistance,
     smoothing,
@@ -114,7 +119,7 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
     const r = c.startRadius + (c.endRadius - c.startRadius) * e;
     frame.style.clipPath = `inset(${iy}% ${ix}% ${iy}% ${ix}% round ${r}px)`;
 
-    media.style.transform = `scale(${c.mediaZoom + (1 - c.mediaZoom) * e})`;
+    media.style.transform = `translate3d(${c.mediaShiftX * (1 - e)}%, 0, 0) scale(${c.mediaZoom + (1 - c.mediaZoom) * e})`;
 
     // Portfolio adaptation: the scrim waits for the frame to near full bleed instead of greying it mid-scroll
     if (scrimRef.current) scrimRef.current.style.opacity = `${c.overlayScrim * smoothstep(0.55, 1, p)}`;

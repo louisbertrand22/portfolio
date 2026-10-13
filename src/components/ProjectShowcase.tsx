@@ -59,6 +59,8 @@ export default function ProjectShowcase({ src, alt, title, label, pitch, cta, si
       startRadius={18}
       endRadius={0}
       mediaZoom={1.12}
+      // the product's headline sits on the left of the capture: keep it inside the starting frame
+      mediaShiftX={15}
       scrollDistance={0.9}
       holdDistance={0.3}
       overlayScrim={1}
