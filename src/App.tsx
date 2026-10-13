@@ -792,37 +792,30 @@ function App() {
           </div>
         </section>
 
-        {/* ── SKILLS ── */}
+        {/* ── SKILLS + GITHUB ── */}
         <section id="skills" className="skills">
           <div className="container">
             <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
               {t.skills.title}
             </motion.h2>
-            <motion.div className="skills-groups" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.05}>
-              {skillGroups.map((group, i) => (
-                <div key={i} className="skills-group">
-                  <h3 className="skills-group-title">{t.skills.groups[i]}</h3>
-                  <ul className="skills-list">
-                    {group.map(skill => <li key={skill}><SkillIcon name={skill} />{skill}</li>)}
-                  </ul>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ── GITHUB ── */}
-        <section id="github" className="github">
-          <div className="container">
-            <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
-              {t.github.title}
-            </motion.h2>
-            <motion.p className="github-subtitle" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.05}>
-              {t.github.subtitle}
-            </motion.p>
-            <motion.div initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
-              <GithubStats language={language} labels={t.github} />
-            </motion.div>
+            {/* The stack, and the live record of using it, side by side */}
+            <div className="skills-layout">
+              <motion.div className="skills-groups" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.05}>
+                {skillGroups.map((group, i) => (
+                  <div key={i} className="skills-group">
+                    <h3 className="skills-group-title">{t.skills.groups[i]}</h3>
+                    <ul className="skills-list">
+                      {group.map(skill => <li key={skill}><SkillIcon name={skill} />{skill}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </motion.div>
+              <motion.aside id="github" className="skills-github" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
+                <h3 className="skills-github-title">{t.github.title}</h3>
+                <p className="skills-github-subtitle">{t.github.subtitle}</p>
+                <GithubStats language={language} labels={t.github} />
+              </motion.aside>
+            </div>
           </div>
         </section>
 

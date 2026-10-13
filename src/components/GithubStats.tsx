@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import type { Language } from '@/translations'
 import CountUp from '@/components/CountUp'
 
@@ -122,6 +122,11 @@ export default function GithubStats({ language, labels }: GithubStatsProps) {
     loadGithubStats().then(d => { setData(d); writeCache(d) }).catch(() => setError(true))
   }, [data])
 
+  // Where the year doesn't fit (phones, the half-width panel), open on the most recent weeks
+  const scrollToLatest = useCallback((el: HTMLDivElement | null) => {
+    if (el) el.scrollLeft = el.scrollWidth
+  }, [])
+
   if (error) return null
 
   if (!data) {
@@ -146,7 +151,7 @@ export default function GithubStats({ language, labels }: GithubStatsProps) {
       </div>
 
       <div className="github-heatmap-wrap">
-        <div className="github-heatmap-scroll">
+        <div className="github-heatmap-scroll" ref={scrollToLatest}>
           <div className="github-heatmap-months" aria-hidden="true">
             {weeks.map((week, wi) => {
               const firstDay = week.find(d => d !== null)
