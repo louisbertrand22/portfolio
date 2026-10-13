@@ -34,10 +34,6 @@
   letter-spacing: -0.025em;
 }
 
-@media (max-width: 1024px) {
-  .logo-role { display: none; }
-}
-
 .nav-controls {
   display: flex;
   align-items: center;
@@ -226,63 +222,6 @@
 
 .hero:hover .hero-spotlight {
   opacity: 1;
-}
-
-/* Click ripple burst */
-.hero-ripple {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  margin-left: -8px;
-  margin-top: -8px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.hero-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.15;
-}
-
-[data-theme="dark"] .hero-orb {
-  opacity: 0.1;
-}
-
-.hero-orb-1 {
-  width: 700px;
-  height: 700px;
-  background: var(--primary);
-  top: -200px;
-  right: -150px;
-  animation: orbFloat 10s ease-in-out infinite;
-}
-
-.hero-orb-2 {
-  width: 500px;
-  height: 500px;
-  background: var(--secondary);
-  bottom: -150px;
-  left: -150px;
-  animation: orbFloat 13s ease-in-out infinite reverse;
-}
-
-.hero-orb-3 {
-  width: 300px;
-  height: 300px;
-  background: var(--accent);
-  top: 40%;
-  left: 40%;
-  animation: orbFloat 16s ease-in-out infinite 2s;
-  opacity: 0.07;
-}
-
-@keyframes orbFloat {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-40px) scale(1.04); }
 }
 
 .hero-layout {
@@ -522,49 +461,6 @@
   transform: translateY(-2px);
 }
 
-/* Hero scroll indicator */
-.hero-scroll {
-  position: absolute;
-  bottom: 2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.hero-scroll-text {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.hero-scroll-line {
-  width: 1.5px;
-  height: 44px;
-  background: var(--border);
-  border-radius: 2px;
-  overflow: hidden;
-  position: relative;
-}
-
-.hero-scroll-thumb {
-  position: absolute;
-  top: -50%;
-  width: 100%;
-  height: 50%;
-  background: linear-gradient(to bottom, transparent, var(--primary));
-  border-radius: 2px;
-  animation: scrollThumb 1.8s ease-in-out infinite;
-}
-
-@keyframes scrollThumb {
-  0%   { top: -50%; }
-  100% { top: 110%; }
-}
 
 /* Terminal widget */
 .hero-terminal {
@@ -699,10 +595,6 @@
   .hero-title {
     font-size: 3rem;
   }
-
-  .hero-scroll {
-    display: none;
-  }
 }
 
 @media (max-width: 520px) {
@@ -718,16 +610,9 @@
 /* ============================================================
    SECTION TITLES
    ============================================================ */
-main {
-  counter-reset: section-counter;
-}
-
 .section-title {
-  /* Editorial header: large outlined section number, title beside it, rule underneath */
+  /* Editorial header: title with an accent rule underneath */
   display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: end;
-  column-gap: 1.1rem;
   font-size: 2.5rem;
   font-weight: 700;
   text-align: left;
@@ -736,19 +621,8 @@ main {
   letter-spacing: -0.035em;
   line-height: 1.15;
   position: relative;
-  counter-increment: section-counter;
 }
 
-.section-title::before {
-  content: counter(section-counter, decimal-leading-zero);
-  font-family: var(--font-display);
-  font-size: 4.25rem;
-  font-weight: 700;
-  line-height: 0.82;
-  letter-spacing: -0.05em;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(var(--accent-rgb), 0.75);
-}
 
 .section-title::after {
   content: '';
@@ -760,7 +634,6 @@ main {
 
 @media (max-width: 640px) {
   .section-title { font-size: 2rem; column-gap: 0.8rem; }
-  .section-title::before { font-size: 3.1rem; }
 }
 
 /* ============================================================
@@ -3362,35 +3235,6 @@ a.contact-channel:hover .contact-channel-arrow {
 }
 
 /* ============================================================
-   CUSTOM CURSOR
-   ============================================================ */
-.cursor-dot-wrap,
-.cursor-ring-wrap {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  pointer-events: none;
-  will-change: transform;
-}
-
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--primary);
-  transform: translate(-50%, -50%);
-}
-
-.cursor-ring {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1.5px solid var(--primary);
-  transform: translate(-50%, -50%);
-}
-
-/* ============================================================
    INTRO SCREEN
    ============================================================ */
 .intro-screen {
@@ -3488,3 +3332,161 @@ a.contact-channel:hover .contact-channel-arrow {
 /* ============================================================
    KEYFRAMES  (functional animations only — entrance handled by Framer Motion)
    ============================================================ */
+
+/* ============================================================
+   ABOUT: KEY FIGURES
+   ============================================================ */
+.about-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 2rem 0 0;
+}
+
+.about-fact {
+  padding: 1rem 1.1rem;
+  border-left: 2px solid rgba(var(--accent-rgb), 0.7);
+  background: var(--bg-subtle);
+  border-radius: 0 0.6rem 0.6rem 0;
+}
+
+.about-fact dt {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.about-fact dd {
+  margin: 0.3rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+@media (max-width: 520px) {
+  .about-facts { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   PROJECT SHOWCASE (react-bits ScrollExpand)
+   ============================================================ */
+.showcase-expand {
+  margin: -1rem 0 4rem;
+}
+
+.showcase-expand .scroll-expand__frame {
+  background: var(--bg-subtle);
+}
+
+.showcase-expand .scroll-expand__media {
+  object-position: top center;
+}
+
+.showcase-expand .scroll-expand__scrim {
+  /* dense on the caption side so the product's own headline stays a backdrop, not a competitor */
+  background:
+    linear-gradient(to right, rgba(8, 18, 32, 0.96), rgba(8, 18, 32, 0.88) 38%, rgba(8, 18, 32, 0.35) 75%, rgba(8, 18, 32, 0.2)),
+    linear-gradient(to top, rgba(8, 18, 32, 0.6), transparent 50%);
+}
+
+/* settle the pitch bottom-left, aligned with the page container */
+.showcase-expand .scroll-expand__overlay {
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  padding: 0 max(2rem, calc((100% - 1200px) / 2 + 2rem));
+}
+
+.showcase-caption {
+  max-width: 34rem;
+  color: #f6f3ec;
+}
+
+.showcase-label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.showcase-title {
+  margin: 0.4rem 0 0.6rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.showcase-pitch {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: rgba(246, 243, 236, 0.82);
+}
+
+.showcase-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.showcase-cta {
+  padding: 0.7rem 1.3rem;
+  border: 0;
+  border-radius: 0.6rem;
+  font: inherit;
+  font-weight: 600;
+  color: #10213a;
+  background: #f6f3ec;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.showcase-cta:hover { background: #fff; transform: translateY(-1px); }
+
+.showcase-site {
+  font-weight: 600;
+  color: #f6f3ec;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(246, 243, 236, 0.4);
+}
+
+.showcase-site:hover { border-bottom-color: #f6f3ec; }
+
+.showcase-cta:focus-visible,
+.showcase-site:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Narrow screens and reduced motion: the settled state as a static figure */
+.showcase-static {
+  position: relative;
+  margin: 0 0 3rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #0c1a2c;
+}
+
+.showcase-static img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.showcase-static .showcase-caption {
+  max-width: none;
+  padding: 1.5rem 1.25rem 1.75rem;
+}

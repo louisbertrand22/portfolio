@@ -3,16 +3,16 @@ import { motion } from 'framer-motion'
 import F1Car from './F1Car'
 
 const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!<>-_/[]{}—=+*^?#'
-const SCRAMBLE_DURATION = 900
+const SCRAMBLE_DURATION = 700
 
 // F1-style start sequence: the car drops in from above and lands while 5 lights come on one
 // by one, holds through the pause, then darts off to the right once they go out together
 // ("lights out and away we go"), and the curtain lifts.
 const LIGHTS_COUNT = 5
-const LIGHT_INTERVAL = 200
-const LIGHTS_OUT_AT = LIGHTS_COUNT * LIGHT_INTERVAL + 300
+const LIGHT_INTERVAL = 140
+const LIGHTS_OUT_AT = LIGHTS_COUNT * LIGHT_INTERVAL + 200
 const CAR_DROP_DELAY = 0.15
-const CAR_DURATION = 950
+const CAR_DURATION = 750
 const TOTAL_DURATION = LIGHTS_OUT_AT + CAR_DURATION + 150
 
 function scrambleFrame(text: string, revealCount: number) {

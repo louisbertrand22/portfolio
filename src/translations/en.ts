@@ -28,6 +28,11 @@ export const en = {
     title: 'About Me',
     paragraph1: "I'm an engineering student at EPITA, majoring in Information Systems & Software Engineering (SIGL), heading toward IT project management and information systems architecture. On a business analysis consulting engagement, I led a team of 6 students to build an HRIS transformation strategy for a 12,000-employee group, and I contributed to an IT master plan for a merger. At the French Ministry of National Education, I'm designing a Zero Trust network architecture and securing the deployment cycle of several critical applications; at Quanteam, I delivered Leonard-AI end-to-end, an internal chatbot deployed to over 200 employees. This technical grounding lets me work as easily with business stakeholders as with the teams who build.",
     paragraph2: "Curious and self-driven, I enjoy exploring new technologies through side projects - from DevOps to AI - and turning ideas into real products, from backend to frontend.",
+    facts: [
+      { value: '6', label: 'students led on an HRIS strategy' },
+      { value: '12,000', label: 'employees in the client group' },
+      { value: '200+', label: 'Leonard-AI users at Quanteam' },
+    ],
   },
   education: {
     title: 'Education',
@@ -66,7 +71,7 @@ export const en = {
         type: 'Internship',
         period: 'Sept. 2025 - Jan. 2026',
         location: 'Neuilly-sur-Seine, Île-de-France, France',
-        description: 'End-to-end design and development of Leonard-AI, an internal chatbot serving 200+ employees, automating repetitive tasks for support functions: payroll, human resources and business managers. Built the full application architecture — asynchronous APIs with FastAPI and Django — and industrialized deployment on a new Kubernetes environment set up for the project. The tool offloads recurring low-value requests from support teams and gives them time back for their core work.',
+        description: 'End-to-end design and development of Leonard-AI, an internal chatbot serving 200+ employees, automating repetitive tasks for support functions: payroll, human resources and business managers. Built the full application architecture (asynchronous APIs with FastAPI and Django) and industrialized deployment on a new Kubernetes environment set up for the project. The tool offloads recurring low-value requests from support teams and gives them time back for their core work.',
         logo: 'quanteam-logo-trim.png',
       },
     ],
@@ -81,8 +86,11 @@ export const en = {
     privateRepo: 'Private repository',
     readmeLoading: 'Loading README…',
     readmeError: '# README not available\n\nSorry, the README for this project could not be loaded.',
-    privateNote: 'Source code is private — happy to share on request or walk you through it.',
+    privateNote: 'Source code is private. Happy to share on request or walk you through it.',
     visitSite: 'Visit site →',
+    showcaseLabel: 'Live product',
+    showcasePitch: 'A spaced repetition app in production, with web, mobile and its own SSO',
+    showcaseCta: 'See the project',
     items: [
       {
         title: 'MagicCards',
@@ -166,7 +174,7 @@ export const en = {
     items: [
       {
         title: 'Information Systems Urbanisation',
-        description: 'Complete rebuild of an airline\'s information system, carried out by around 50 students organized into application teams — After-Sales, Check-in, Booking, E-commerce, Loyalty, Flight Tracking and Planning — supported by a Core Infrastructure team and a DevOps team, which I was part of. Within the DevOps team, I contributed to the tooling, CI/CD pipelines and deployment environments serving all the application teams.',
+        description: 'Complete rebuild of an airline\'s information system, carried out by around 50 students organized into application teams (After-Sales, Check-in, Booking, E-commerce, Loyalty, Flight Tracking and Planning), supported by a Core Infrastructure team and a DevOps team, which I was part of. Within the DevOps team, I contributed to the tooling, CI/CD pipelines and deployment environments serving all the application teams.',
         tags: ['DevOps', 'CI/CD', 'UML', 'Template', 'Deployment'],
         stat: { value: '50', label: 'students across 7 teams' } as { value: string; label: string } | null,
       },
@@ -177,7 +185,7 @@ export const en = {
         stat: null as { value: string; label: string } | null,
       },
       {
-        title: 'HRIS Transformation — Business Analysis Consulting',
+        title: 'HRIS Transformation: Business Analysis Consulting',
         description: 'Led a team of 6 students as project manager on a business analysis (MOA) consulting engagement for BeBlood, a medical biology group with 12,000 employees across 5 European countries: a 3-year HRIS transformation strategy built around Oracle HCM, including needs analysis and financial modeling (ROI). This project strengthened my skills in project team leadership, stakeholder management, and communication with a CIO-level decision-maker in a real-world context.',
         tags: ['Business Analysis', 'Oracle HCM', 'Benchmark', 'Business Case', 'Roadmap', 'Change management'],
         stat: { value: '12,000', label: 'employees affected, 5 countries' } as { value: string; label: string } | null,
@@ -189,7 +197,7 @@ export const en = {
         stat: null as { value: string; label: string } | null,
       },
       {
-        title: 'Cloud Native Platform (CNP) — Internal Developer Platform',
+        title: 'Cloud Native Platform (CNP): Internal Developer Platform',
         description: 'Two-semester design of an Internal Developer Platform: a self-service portal (web UI, CLI and documentation) that lets teams create an isolated project in a dedicated Kubernetes namespace, provision services (databases, queues, buckets), deploy continuously with tracking and rollback through ArgoCD, and monitor logs, alerts and costs. The foundation spans multi-cloud infrastructure (2 public clouds and 1 private IaaS cloud), identity and access (Keycloak, per-namespace RBAC), observability (Prometheus, Grafana) and AI agents integrated under a dedicated governance model. First milestone delivered on AWS EKS (Paris) provisioned with Terraform, with node right-sizing and a 3-layer FinOps chargeback model (Fixed Base / Shared Variable / Dedicated Variable) measured per namespace.',
         tags: ['Platform Engineering', 'AWS EKS', 'Terraform', 'Kubernetes', 'Keycloak', 'ArgoCD', 'Prometheus', 'Grafana', 'FinOps'],
         stat: null as { value: string; label: string } | null,
@@ -214,7 +222,7 @@ export const en = {
     items: [
       {
         title: 'Guitar',
-        description: 'Nearly 10 years of conservatory training — music is part of my daily life.',
+        description: 'Nearly 10 years of conservatory training: music is part of my daily life.',
       },
       {
         title: 'Running',
@@ -222,11 +230,11 @@ export const en = {
       },
       {
         title: 'Football',
-        description: 'I play regularly with friends — the same team spirit on the pitch as at work.',
+        description: 'I play regularly with friends, with the same team spirit on the pitch as at work.',
       },
       {
         title: 'Formula 1',
-        description: 'A die-hard Red Bull Racing fan — I never miss a Grand Prix, drawn in by race strategy as much as speed.',
+        description: 'A die-hard Red Bull Racing fan: I never miss a Grand Prix, drawn in by race strategy as much as speed.',
       },
     ],
   },

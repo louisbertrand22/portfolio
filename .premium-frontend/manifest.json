@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "installations": {
+    "react-bits:scroll-expand": {
+      "id": "react-bits:scroll-expand",
+      "variant": "TS-CSS",
+      "revision": "d86fccbd477786f94ca7eb891fbe0ec039d3cd3b",
+      "sourceFingerprint": "607037558820480268c1fa8616dc55709d569b008df552bed8b0535047f08621",
+      "files": [
+        {
+          "path": "src/components/react-bits/ScrollExpand/ScrollExpand.css",
+          "sha256": "1904e6e0c498a45b11b16521e64dafb02f9e7e2bd33305bb7134fb0081d39c1e"
+        },
+        {
+          "path": "src/components/react-bits/ScrollExpand/ScrollExpand.tsx",
+          "sha256": "e419d5d31c0d1651188aaee478bbde3a151ede49813b8145356efffedab1c491"
+        },
+        {
+          "path": ".premium-frontend/licences/react-bits-d86fccbd477786f94ca7eb891fbe0ec039d3cd3b.md",
+          "sha256": "f4c33af6739191537738662d223b68d77bc226f4b57ea883e16481d8cc5c73c9"
+        }
+      ],
+      "licence": "https://github.com/DavidHDev/react-bits/blob/d86fccbd477786f94ca7eb891fbe0ec039d3cd3b/LICENSE.md"
+    }
+  }
+}

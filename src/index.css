@@ -77,14 +77,6 @@ html.lenis.lenis-stopped {
   overflow: hidden;
 }
 
-/* Custom cursor: only ever active on fine-pointer, hover-capable devices (JS also gates this). */
-@media (hover: hover) and (pointer: fine) {
-  html.custom-cursor-active,
-  html.custom-cursor-active * {
-    cursor: none !important;
-  }
-}
-
 body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

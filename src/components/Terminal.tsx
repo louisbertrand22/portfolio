@@ -48,11 +48,11 @@ const helpText = `Available commands:
 ...and a few hidden ones 👀`
 
 const manPages: Record<string, string> = {
-  cd: 'CD(1)\n\nNAME\n  cd — jump to a section\n\nSYNOPSIS\n  cd <section>\n\nDESCRIPTION\n  Smooth-scrolls the page to <section>. Run \'ls\' for valid targets.',
-  sudo: 'SUDO(1)\n\nNAME\n  sudo — attempt a privileged action\n\nSYNOPSIS\n  sudo hire-louis\n\nDESCRIPTION\n  There is exactly one command on this system worth escalating privileges for.',
-  coffee: 'COFFEE(1)\n\nNAME\n  coffee — brew one\n\nDESCRIPTION\n  Essential build dependency. No flags, no decaf.',
-  neofetch: 'NEOFETCH(1)\n\nNAME\n  neofetch — display system info\n\nDESCRIPTION\n  Prints a summary of this machine (me), portfolio edition.',
-  cv: 'CV(1)\n\nNAME\n  cv — download résumé\n\nSYNOPSIS\n  cv | resume\n\nDESCRIPTION\n  Downloads cv-louis-bertrand.pdf. No sign-up required.',
+  cd: 'CD(1)\n\nNAME\n  cd - jump to a section\n\nSYNOPSIS\n  cd <section>\n\nDESCRIPTION\n  Smooth-scrolls the page to <section>. Run \'ls\' for valid targets.',
+  sudo: 'SUDO(1)\n\nNAME\n  sudo - attempt a privileged action\n\nSYNOPSIS\n  sudo hire-louis\n\nDESCRIPTION\n  There is exactly one command on this system worth escalating privileges for.',
+  coffee: 'COFFEE(1)\n\nNAME\n  coffee - brew one\n\nDESCRIPTION\n  Essential build dependency. No flags, no decaf.',
+  neofetch: 'NEOFETCH(1)\n\nNAME\n  neofetch - display system info\n\nDESCRIPTION\n  Prints a summary of this machine (me), portfolio edition.',
+  cv: 'CV(1)\n\nNAME\n  cv - download résumé\n\nSYNOPSIS\n  cv | resume\n\nDESCRIPTION\n  Downloads cv-louis-bertrand.pdf. No sign-up required.',
 }
 
 const focusJson = `{
@@ -115,7 +115,7 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
       case 'help':
         return out(helpText)
       case 'whoami':
-        return out('Louis BERTRAND — IT Project Manager & IS Architect')
+        return out('Louis BERTRAND · IT Project Manager & IS Architect')
       case 'about':
         return out('Engineering student at EPITA (SIGL major).\nHeading toward IT project management and information systems architecture.')
       case 'ls':
@@ -133,7 +133,7 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
       case 'projects':
         return out(translations[language].projects.items.map(p => `• ${p.title}`).join('\n'))
       case 'education':
-        return out(translations[language].education.items.map(i => `• ${i.school} — ${i.degree} (${i.period})`).join('\n'))
+        return out(translations[language].education.items.map(i => `• ${i.school} · ${i.degree} (${i.period})`).join('\n'))
       case 'experience':
         return out(translations[language].experience.items.map(i => `• ${i.position} @ ${i.company} (${i.period})`).join('\n'))
       case 'skills':
@@ -175,7 +175,7 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
       case 'man':
         if (!arg) return err('What manual page do you want?')
         if (manPages[arg]) return out(manPages[arg])
-        return err(commandNames.includes(arg) ? `No manual entry for ${arg} yet — try 'help'.` : `No manual entry for ${arg}`)
+        return err(commandNames.includes(arg) ? `No manual entry for ${arg} yet. Try 'help'.` : `No manual entry for ${arg}`)
       case 'neofetch': {
         const art = [' __    ____ ', '| |   | __ )', '| |   |  _ \\', '| |___| |_) |', '|_____|____/ ']
         const info = [
@@ -191,7 +191,7 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
         return out(Array.from({ length: rows }, (_, i) => `${(art[i] ?? '').padEnd(width)}${info[i] ?? ''}`).join('\n'))
       }
       case 'pitstop':
-        return out('🏁 Box box box — new paint job applied.\nLivery: Nuit de Circuit (bleu nuit + or podium).\nLap time unaffected. Vibes: significantly improved.')
+        return out('🏁 Box box box: new paint job applied.\nLivery: Nuit de Circuit (bleu nuit + or podium).\nLap time unaffected. Vibes: significantly improved.')
       case 'coffee':
         return out(coffeeArt)
       case 'clear':
@@ -305,7 +305,7 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
         initial="hidden" animate="visible" variants={bodyVariants}
       >
         <motion.p variants={lineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">whoami</span></motion.p>
-        <motion.p className="terminal-output" variants={lineVariants}>Louis BERTRAND — IT Project Manager &amp; IS Architect</motion.p>
+        <motion.p className="terminal-output" variants={lineVariants}>Louis BERTRAND · IT Project Manager &amp; IS Architect</motion.p>
         <motion.p variants={lineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">cat focus.json</span></motion.p>
         <motion.p className="terminal-output" variants={lineVariants}>{'{ IT project management, IS architecture, Cloud & DevOps }'}</motion.p>
         <motion.p variants={lineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">./interactive.sh</span></motion.p>
@@ -323,7 +323,7 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={onKeyDown}
-            aria-label="Interactive terminal — type help"
+            aria-label="Interactive terminal: type help"
             spellCheck={false}
             autoComplete="off"
             autoCapitalize="off"

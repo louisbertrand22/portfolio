@@ -14,10 +14,10 @@ import GithubStats from '@/components/GithubStats'
 import ProjectCover, { type CoverKind } from '@/components/ProjectCover'
 import SkillIcon from '@/components/SkillIcon'
 import HobbyArt, { type HobbyKind } from '@/components/HobbyArt'
-import CustomCursor from '@/components/CustomCursor'
 import IntroScreen from '@/components/IntroScreen'
 import CountUp from '@/components/CountUp'
 import TimelineProgress from '@/components/TimelineProgress'
+import ProjectShowcase from '@/components/ProjectShowcase'
 import { useLenis } from '@/hooks/useLenis'
 import { useMagnetic } from '@/hooks/useMagnetic'
 
@@ -149,8 +149,6 @@ function App() {
   })
   const [scrollProgress, setScrollProgress] = useState(0)
   const [showBackToTop, setShowBackToTop] = useState(false)
-  const [heroRipples, setHeroRipples] = useState<{ id: number; x: number; y: number }[]>([])
-  const heroRippleId = useRef(0)
   const [showIntro, setShowIntro] = useState(() => {
     try {
       return !sessionStorage.getItem('introShown') &&
@@ -304,14 +302,6 @@ function App() {
     e.currentTarget.style.setProperty('--ty', '0')
   }
 
-  // Hero section: click ripple burst
-  const handleHeroClick = (e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const id = ++heroRippleId.current
-    setHeroRipples(prev => [...prev, { id, x: e.clientX - rect.left, y: e.clientY - rect.top }])
-    setTimeout(() => setHeroRipples(prev => prev.filter(r => r.id !== id)), 900)
-  }
-
   // Cursor-following highlight on card borders (see .spotlight-card in App.css):
   // one delegated listener instead of a handler per card
   useEffect(() => {
@@ -353,8 +343,6 @@ function App() {
   return (
     <div className="app">
 
-      <CustomCursor />
-
       {showIntro && (
         <IntroScreen name={t.hero.name} subtitle={t.hero.subtitle} onComplete={handleIntroComplete} />
       )}
@@ -366,7 +354,7 @@ function App() {
       <header className={`header${hasScrolled ? ' scrolled' : ''}`}>
         <div className="container">
           <nav className="nav">
-            <div className="logo">LB<span className="logo-role"> - {t.nav.logo}</span></div>
+            <div className="logo">LB</div>
             <div className="nav-controls">
               <button className="language-toggle" onClick={() => setLanguage(p => p === 'en' ? 'fr' : 'en')}>
                 {language === 'en' ? 'FR' : 'EN'}
@@ -415,35 +403,10 @@ function App() {
           className="hero"
           onMouseMove={handleHeroMouseMove}
           onMouseLeave={handleHeroMouseLeave}
-          onClick={handleHeroClick}
         >
           <div className="hero-bg" aria-hidden="true">
             <div className="hero-spotlight" />
-            <div className="hero-orb hero-orb-1" />
-            <div className="hero-orb hero-orb-2" />
-            <div className="hero-orb hero-orb-3" />
           </div>
-          <AnimatePresence>
-            {heroRipples.map(ripple => (
-              <motion.span
-                key={ripple.id}
-                className="hero-ripple"
-                style={{ left: ripple.x, top: ripple.y }}
-                initial={{ scale: 0, opacity: 0.55 }}
-                animate={{ scale: 8, opacity: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.9, ease }}
-              />
-            ))}
-          </AnimatePresence>
-          <motion.div
-            className="hero-scroll" aria-hidden="true"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            transition={{ delay: 1.4, duration: 0.8 }}
-          >
-            <span className="hero-scroll-text">Scroll</span>
-            <div className="hero-scroll-line"><div className="hero-scroll-thumb" /></div>
-          </motion.div>
           <div className="container">
             <div className="hero-layout">
               <motion.div className="hero-content" initial="hidden" animate="visible" variants={stagger}>
@@ -511,6 +474,14 @@ function App() {
                   <p>{t.about.paragraph1}</p>
                   <p>{t.about.paragraph2}</p>
                 </motion.div>
+                <motion.dl className="about-facts" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.15}>
+                  {t.about.facts.map(f => (
+                    <div key={f.label} className="about-fact">
+                      <dt><CountUp value={f.value} /></dt>
+                      <dd>{f.label}</dd>
+                    </div>
+                  ))}
+                </motion.dl>
               </section>
 
               <section id="experience" className="experience">
@@ -682,6 +653,22 @@ function App() {
             <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
               {t.projects.title}
             </motion.h2>
+          </div>
+
+          {/* The live product opens up to full width before the rest of the catalogue */}
+          <ProjectShowcase
+            src={projects[0].preview!}
+            alt={t.projects.items[0].galleryAlts?.[0] ?? ''}
+            title={t.projects.items[0].title}
+            label={t.projects.showcaseLabel}
+            pitch={t.projects.showcasePitch}
+            cta={t.projects.showcaseCta}
+            site={projects[0].site!}
+            siteLabel={t.projects.visitSite}
+            onOpen={() => openProjectModal(0)}
+          />
+
+          <div className="container">
 
             {/* Filter bar */}
             <motion.div className="project-filters" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.08}>

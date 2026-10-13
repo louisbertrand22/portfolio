@@ -28,6 +28,11 @@ export const fr = {
     title: 'À Propos de Moi',
     paragraph1: "Étudiant ingénieur à l'EPITA en majeure SIGL (Systèmes d'Information et Génie Logiciel), je m'oriente vers le pilotage de projets IT et l'architecture des systèmes d'information. En projet de conseil MOA, j'ai été chef de projet d'une équipe de 6 étudiants pour construire la stratégie de transformation SIRH d'un groupe de 12 000 collaborateurs, et j'ai participé à l'élaboration d'un schéma directeur SI dans le cadre d'une fusion. Au Ministère de l'Éducation nationale, je conçois une architecture réseau Zero Trust et sécurise le cycle de déploiement de plusieurs applications critiques ; chez Quanteam, j'ai mené de bout en bout Leonard-AI, un chatbot interne déployé pour plus de 200 collaborateurs. Cette base technique me permet de dialoguer autant avec les équipes métier qu'avec les équipes qui réalisent.",
     paragraph2: "Curieux et autonome, j'aime explorer de nouvelles technologies à travers des projets personnels - du DevOps à l'intelligence artificielle - et transformer des idées en produits concrets, du backend au frontend.",
+    facts: [
+      { value: '6', label: 'étudiants pilotés sur une stratégie SIRH' },
+      { value: '12 000', label: 'collaborateurs dans le groupe client' },
+      { value: '200+', label: 'utilisateurs de Leonard-AI chez Quanteam' },
+    ],
   },
   education: {
     title: 'Formation',
@@ -66,7 +71,7 @@ export const fr = {
         type: 'Stage',
         period: 'Sept. 2025 - Jan. 2026',
         location: 'Neuilly-sur-Seine, Île-de-France, France',
-        description: 'Conception et développement de bout en bout de Leonard-AI, un chatbot interne au service de plus de 200 collaborateurs, qui automatise les tâches répétitives des fonctions support : paie, ressources humaines et business managers. Réalisation de l\'architecture applicative complète — APIs asynchrones en FastAPI et Django — et industrialisation du déploiement sur un nouvel environnement Kubernetes mis en place à cette occasion. L\'outil décharge les équipes support des sollicitations récurrentes à faible valeur ajoutée et leur rend du temps pour leurs missions de fond.',
+        description: 'Conception et développement de bout en bout de Leonard-AI, un chatbot interne au service de plus de 200 collaborateurs, qui automatise les tâches répétitives des fonctions support : paie, ressources humaines et business managers. Réalisation de l\'architecture applicative complète (APIs asynchrones en FastAPI et Django) et industrialisation du déploiement sur un nouvel environnement Kubernetes mis en place à cette occasion. L\'outil décharge les équipes support des sollicitations récurrentes à faible valeur ajoutée et leur rend du temps pour leurs missions de fond.',
         logo: 'quanteam-logo-trim.png',
       },
     ],
@@ -81,8 +86,11 @@ export const fr = {
     privateRepo: 'Dépôt privé',
     readmeLoading: 'Chargement du README…',
     readmeError: '# README indisponible\n\nLe README de ce projet n\'a pas pu être chargé.',
-    privateNote: 'Le code source est privé — je peux le partager ou vous en faire une démo sur demande.',
+    privateNote: 'Le code source est privé : je peux le partager ou vous en faire une démo sur demande.',
     visitSite: 'Voir le site →',
+    showcaseLabel: 'Produit en ligne',
+    showcasePitch: 'Une app de répétition espacée en production, avec web, mobile et son propre SSO',
+    showcaseCta: 'Voir le projet',
     items: [
       {
         title: 'MagicCards',
@@ -166,7 +174,7 @@ export const fr = {
     items: [
       {
         title: 'Urbanisation des SI',
-        description: 'Refonte complète du système d\'information d\'une compagnie aérienne, menée à environ 50 étudiants organisés en équipes applicatives — SAV, Enregistrement, Booking, E-commerce, Fidélité, Suivi de vol et Planification — appuyées par une équipe Socle (infrastructure) et une équipe DevOps, dont je faisais partie. Au sein de l\'équipe DevOps, j\'ai contribué à l\'outillage, aux chaînes CI/CD et aux environnements de déploiement au service de l\'ensemble des équipes applicatives.',
+        description: 'Refonte complète du système d\'information d\'une compagnie aérienne, menée à environ 50 étudiants organisés en équipes applicatives (SAV, Enregistrement, Booking, E-commerce, Fidélité, Suivi de vol et Planification), appuyées par une équipe Socle (infrastructure) et une équipe DevOps, dont je faisais partie. Au sein de l\'équipe DevOps, j\'ai contribué à l\'outillage, aux chaînes CI/CD et aux environnements de déploiement au service de l\'ensemble des équipes applicatives.',
         tags: ['DevOps', 'CI/CD', 'UML', 'Template', 'Deployment'],
         stat: { value: '50', label: 'étudiants mobilisés sur 7 équipes' },
       },
@@ -177,7 +185,7 @@ export const fr = {
         stat: null as { value: string; label: string } | null,
       },
       {
-        title: 'Transformation SIRH — Maîtrise d\'Ouvrage',
+        title: 'Transformation SIRH : Maîtrise d\'Ouvrage',
         description: 'Chef de projet d\'une équipe de 6 étudiants sur une mission de conseil MOA pour BeBlood, groupe de biologie médicale de 12 000 collaborateurs dans 5 pays européens : élaboration d\'une stratégie de transformation du SIRH sur 3 ans, articulée autour d\'Oracle HCM, incluant l\'analyse des besoins et la modélisation financière (ROI). Ce projet m\'a permis de développer mes compétences en pilotage d\'équipe projet, en gestion des parties prenantes et en communication avec un décideur DSI en contexte réel.',
         tags: ['MOA', 'Oracle HCM', 'Benchmark', 'Business Case', 'Roadmap', 'Conduite du changement'],
         stat: { value: '12 000', label: 'collaborateurs concernés, 5 pays' },
@@ -189,7 +197,7 @@ export const fr = {
         stat: null as { value: string; label: string } | null,
       },
       {
-        title: 'Cloud Native Platform (CNP) — Internal Developer Platform',
+        title: 'Cloud Native Platform (CNP) : Internal Developer Platform',
         description: 'Conception sur deux semestres d\'une Internal Developer Platform : un portail self-service (interface web, CLI et documentation) qui permet aux équipes de créer un projet isolé dans un namespace Kubernetes, de provisionner des services (bases de données, queues, buckets), de déployer en continu avec suivi et rollback via ArgoCD, et de surveiller logs, alertes et coûts. Le socle couvre l\'infrastructure multi-cloud (2 clouds publics et 1 cloud privé IaaS), l\'identité et les accès (Keycloak, RBAC par namespace), l\'observabilité (Prometheus, Grafana) et l\'intégration d\'agents IA encadrés par une gouvernance dédiée. Premier jalon livré sur AWS EKS (Paris) provisionné en Terraform, avec un right-sizing des nœuds et un modèle de refacturation FinOps à 3 couches (Base Fixe / Variable Partagé / Variable Dédié) mesuré par namespace.',
         tags: ['Platform Engineering', 'AWS EKS', 'Terraform', 'Kubernetes', 'Keycloak', 'ArgoCD', 'Prometheus', 'Grafana', 'FinOps'],
         stat: null as { value: string; label: string } | null,
@@ -214,7 +222,7 @@ export const fr = {
     items: [
       {
         title: 'Guitare',
-        description: 'Près de 10 ans de cours au conservatoire — la musique fait partie de mon quotidien.',
+        description: 'Près de 10 ans de cours au conservatoire : la musique fait partie de mon quotidien.',
       },
       {
         title: 'Course à pied',
@@ -222,7 +230,7 @@ export const fr = {
       },
       {
         title: 'Football',
-        description: 'Je joue régulièrement entre amis — le même esprit d\'équipe sur le terrain qu\'au travail.',
+        description: 'Je joue régulièrement entre amis, avec le même esprit d\'équipe sur le terrain qu\'au travail.',
       },
       {
         title: 'Formule 1',
