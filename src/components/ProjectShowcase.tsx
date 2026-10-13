@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import ScrollExpand from '@/components/react-bits/ScrollExpand/ScrollExpand'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 interface ProjectShowcaseProps {
   src: string
@@ -16,25 +16,13 @@ interface ProjectShowcaseProps {
 
 // the capture is landscape: only expand it where the viewport is too
 const WIDE_QUERY = '(min-width: 1024px) and (orientation: landscape)'
-
-function useIsWide() {
-  const [wide, setWide] = useState(() => window.matchMedia(WIDE_QUERY).matches)
-  useEffect(() => {
-    const mq = window.matchMedia(WIDE_QUERY)
-    const onChange = () => setWide(mq.matches)
-    mq.addEventListener('change', onChange)
-    return () => mq.removeEventListener('change', onChange)
-  }, [])
-  return wide
-}
-
 /**
  * The flagship product's real screenshot grows from a framed card to full bleed as the page
  * scrolls, then its pitch and actions settle on top. Portrait or narrow screens and reduced motion get the
  * settled composition as a static figure, since a desktop capture cropped to portrait says little.
  */
 export default function ProjectShowcase({ src, alt, title, label, pitch, cta, site, siteLabel, onOpen }: ProjectShowcaseProps) {
-  const wide = useIsWide()
+  const wide = useMediaQuery(WIDE_QUERY)
   const reduceMotion = useReducedMotion()
 
   const caption = (

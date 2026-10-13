@@ -14,11 +14,11 @@ export const en = {
     contact: 'Contact',
   },
   hero: {
-    greeting: "Hi, I'm",
+    statement: 'I connect business needs, architecture decisions and the teams who deliver them',
     name: 'Louis BERTRAND',
     subtitle: 'IT Project Management · IS Architecture · Cloud & DevOps',
     availability: 'Final-year internship - Feb/Mar 2027',
-    description: "Engineering student at EPITA majoring in Information Systems (SIGL), I'm heading toward IT project management and information systems architecture. My hands-on background, from full-stack development to cloud and DevOps, lets me bridge business needs, architecture decisions and the teams who deliver them.",
+    description: "Engineering student at EPITA, SIGL major. A hands-on background from full-stack development to cloud and DevOps.",
     viewWork: 'View My Work',
     getInTouch: 'Get In Touch',
     downloadCv: 'Resume (PDF)',

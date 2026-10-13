@@ -21,6 +21,27 @@
         }
       ],
       "licence": "https://github.com/DavidHDev/react-bits/blob/d86fccbd477786f94ca7eb891fbe0ec039d3cd3b/LICENSE.md"
+    },
+    "react-bits:scroll-stack": {
+      "id": "react-bits:scroll-stack",
+      "variant": "TS-CSS",
+      "revision": "d86fccbd477786f94ca7eb891fbe0ec039d3cd3b",
+      "sourceFingerprint": "e063efce3ca04aa494a02d2add88b7d0fb2bf9b73217c9274b7a867c7f4068f4",
+      "files": [
+        {
+          "path": "src/components/react-bits/ScrollStack/ScrollStack.css",
+          "sha256": "47e050633962a7c0b16a7103c21c45ff99551535c58962e586b4b32251f55a77"
+        },
+        {
+          "path": "src/components/react-bits/ScrollStack/ScrollStack.tsx",
+          "sha256": "5f4bb26f47dfa29bd79193d63d3129ec6d79df0ab97c75b2ce97cc930bd4eff1"
+        },
+        {
+          "path": ".premium-frontend/licences/react-bits-d86fccbd477786f94ca7eb891fbe0ec039d3cd3b.md",
+          "sha256": "f4c33af6739191537738662d223b68d77bc226f4b57ea883e16481d8cc5c73c9"
+        }
+      ],
+      "licence": "https://github.com/DavidHDev/react-bits/blob/d86fccbd477786f94ca7eb891fbe0ec039d3cd3b/LICENSE.md"
     }
   }
 }

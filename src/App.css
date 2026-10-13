@@ -327,6 +327,21 @@
   background-clip: text;
 }
 
+.hero-statement {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  max-width: 520px;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 520px) {
+  .hero-statement { font-size: 1.3rem; }
+}
+
 .hero-subtitle {
   font-size: 1.1rem;
   color: var(--primary);
@@ -399,8 +414,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 44px;
-  padding: 0.35rem 0.7rem;
+  height: 52px;
+  padding: 0.35rem 0.75rem;
   border-radius: 0.55rem;
   background: #fff;
   border: 1px solid var(--border);
@@ -410,7 +425,7 @@
   display: block;
   height: 100%;
   width: auto;
-  max-width: 92px;
+  max-width: 120px;
   object-fit: contain;
   filter: grayscale(1);
   opacity: 0.8;
@@ -509,7 +524,7 @@
   font-size: 0.875rem;
   line-height: 2.1;
   color: #e2e8f0;
-  height: 340px;
+  height: 280px;
   overflow-y: auto;
   cursor: text;
   scrollbar-width: thin;
@@ -566,30 +581,10 @@
     grid-template-columns: 1fr;
     gap: 3rem;
     padding: 5rem 0 4rem;
-    text-align: center;
   }
 
   .hero-badge {
-    margin: 0 auto 1.75rem;
-  }
-
-  .hero-description {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .hero-buttons {
-    justify-content: center;
-  }
-
-  .hero-proof {
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .hero-proof-logos {
-    justify-content: center;
+    margin: 0 0 1.75rem;
   }
 
   .hero-title {
@@ -955,6 +950,23 @@
   gap: 0.5rem;
   flex-wrap: wrap;
   margin-bottom: 2rem;
+}
+
+@media (max-width: 640px) {
+  .project-filters {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
+    padding: 0 1.25rem 0.25rem;
+    scroll-padding-inline: 1.25rem;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 1.25rem, #000 calc(100% - 2rem), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 1.25rem, #000 calc(100% - 2rem), transparent);
+  }
+  .project-filters::-webkit-scrollbar { display: none; }
+  .filter-btn { flex-shrink: 0; }
 }
 
 .filter-btn {
@@ -3490,3 +3502,44 @@ a.contact-channel:hover .contact-channel-arrow {
   max-width: none;
   padding: 1.5rem 1.25rem 1.75rem;
 }
+
+/* Phones: the floating button covered body text; the sticky nav and the footer link do its job */
+@media (max-width: 640px) {
+  .back-to-top { display: none; }
+}
+
+/* ============================================================
+   SIGL SCROLL STACK (react-bits ScrollStack, wide screens)
+   ============================================================ */
+.sigl-stack.scroll-stack-scroller {
+  height: auto;
+  overflow: visible;
+  transform: none;
+  will-change: auto;
+}
+
+.sigl-stack .scroll-stack-inner {
+  padding: 0 0 18vh;
+  min-height: 0;
+}
+
+.sigl-stack .scroll-stack-card.sigl-stack-item {
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border-radius: 1.25rem;
+  box-shadow: 0 24px 60px -32px rgba(var(--primary-rgb), 0.55);
+}
+
+/* opaque surfaces, since the cards pass over each other */
+.sigl-stack .sigl-card {
+  min-height: 15rem;
+  padding: 2rem 2.25rem 2rem 2.5rem;
+  border-radius: 1.25rem;
+  background: var(--bg);
+}
+
+.sigl-stack .sigl-card-title { font-size: 1.45rem; }
+.sigl-stack .sigl-card-description { max-width: 46rem; }
+
+.sigl-stack .sigl-spotlight { margin-bottom: 0; }

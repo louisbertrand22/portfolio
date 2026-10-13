@@ -14,11 +14,11 @@ export const fr = {
     contact: 'Contact',
   },
   hero: {
-    greeting: 'Bonjour, je suis',
+    statement: "Je relie besoins métier, choix d'architecture et équipes qui livrent",
     name: 'Louis BERTRAND',
     subtitle: 'Pilotage de projets IT · Architecture SI · Cloud & DevOps',
     availability: 'Stage de fin d\'études - Fév./Mars 2027',
-    description: "Étudiant ingénieur à l'EPITA en majeure SIGL, je me destine au pilotage de projets IT et à l'architecture des systèmes d'information. Mon parcours technique, du développement full-stack au cloud et au DevOps, me permet de faire le lien entre les besoins métier, les choix d'architecture et les équipes qui les mettent en œuvre.",
+    description: "Étudiant ingénieur à l'EPITA, majeure SIGL. Un parcours technique concret, du développement full-stack au cloud et au DevOps.",
     viewWork: 'Voir Mes Projets',
     getInTouch: 'Me Contacter',
     downloadCv: 'CV (PDF)',

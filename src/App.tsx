@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Lock, Clock, Briefcase, MapPin, Mail, Copy, ArrowUpRight, Download, ExternalLink, FileText } from 'lucide-react'
 
 const hobbyKinds: HobbyKind[] = ['guitar', 'running', 'football', 'f1']
@@ -18,6 +18,8 @@ import IntroScreen from '@/components/IntroScreen'
 import CountUp from '@/components/CountUp'
 import TimelineProgress from '@/components/TimelineProgress'
 import ProjectShowcase from '@/components/ProjectShowcase'
+import ScrollStack, { ScrollStackItem } from '@/components/react-bits/ScrollStack/ScrollStack'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { useLenis } from '@/hooks/useLenis'
 import { useMagnetic } from '@/hooks/useMagnetic'
 
@@ -157,6 +159,8 @@ function App() {
   })
 
   const lenisRef = useLenis()
+  const reduceMotion = useReducedMotion()
+  const stackSigl = useMediaQuery('(min-width: 1024px)') && !reduceMotion
 
   // Freeze the page's smooth scroll while the project modal is open
   useEffect(() => {
@@ -327,6 +331,95 @@ function App() {
     })
   }
 
+  // SIGL cards, shared by the scroll stack (wide screens) and the plain layout
+  const siglCardBody = (i: number) => {
+    const item = t.siglProjects.items[i]
+    return (
+      <>
+        <div className="sigl-card-meta">
+          <span className={`sigl-category sigl-category-${siglMeta[i].category}`}>
+            <span className="sigl-category-dot" />
+            {categoryLabel(siglMeta[i].category)}
+          </span>
+          <span className="sigl-card-code">{siglMeta[i].code}</span>
+        </div>
+        <h3 className="sigl-card-title">{item.title}</h3>
+        <p className="sigl-card-description">{item.description}</p>
+        {item.stat && (
+          <div className="sigl-card-stat">
+            <span className="sigl-card-stat-value"><CountUp value={item.stat.value} /></span>
+            <span className="sigl-card-stat-label">{item.stat.label}</span>
+          </div>
+        )}
+        <div className="sigl-card-technologies">
+          {item.tags.map(tech => <Badge key={tech}>{tech}</Badge>)}
+        </div>
+      </>
+    )
+  }
+
+  const siglSpotlightBody = (
+    <>
+      <div className="sigl-spotlight-main">
+        <div className="sigl-card-meta">
+          <span className={`sigl-category sigl-category-${siglMeta[spotlightIndex].category}`}>
+            <span className="sigl-category-dot" />
+            {categoryLabel(siglMeta[spotlightIndex].category)}
+          </span>
+          <span className="sigl-card-code">{siglMeta[spotlightIndex].code}</span>
+        </div>
+        <h3 className="sigl-spotlight-title">{spotlight.title}</h3>
+        <p className="sigl-spotlight-description">{spotlight.description}</p>
+        <div className="sigl-card-technologies">
+          {spotlight.tags.map(tech => <Badge key={tech}>{tech}</Badge>)}
+        </div>
+      </div>
+      <aside className="sigl-spotlight-panel">
+        <h4 className="arch-title">{arch.title}</h4>
+        <figure className="arch">
+          <div className="arch-users">{arch.users}</div>
+          <div className="arch-flow" aria-hidden="true" />
+          <div className="arch-core">
+            <div className="arch-main">
+              <div className="arch-layer">
+                <span className="arch-layer-name">{arch.portal}</span>
+                <div className="arch-chips">
+                  {arch.portalItems.map(item => <span key={item} className="arch-chip">{item}</span>)}
+                </div>
+              </div>
+              <div className="arch-flow" aria-hidden="true" />
+              <div className="arch-layer">
+                <span className="arch-layer-name">{arch.services}</span>
+                <div className="arch-services">
+                  {arch.serviceItems.map(svc => (
+                    <div key={svc.name} className="arch-service">
+                      <strong>{svc.name}</strong>
+                      <span>{svc.detail}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="arch-rail">
+              <strong>{arch.identity}</strong>
+              <span>{arch.identityDetail}</span>
+            </div>
+          </div>
+          <div className="arch-flow" aria-hidden="true" />
+          <div className="arch-runtime">{arch.runtime}</div>
+          <div className="arch-clouds">
+            {arch.clouds.map((cloud, i) => (
+              <span key={cloud} className={`arch-cloud${i === 0 ? ' is-live' : ''}`}>{cloud}</span>
+            ))}
+          </div>
+          <figcaption className="arch-caption">{arch.caption}</figcaption>
+        </figure>
+      </aside>
+    </>
+  )
+
+  const siglOthers = t.siglProjects.items.map((_, i) => i).filter(i => i !== spotlightIndex)
+
   const filteredProjects = projects
     .map((p, i) => ({ ...p, originalIndex: i }))
     .filter(p => selectedTech === 'All' || p.technologies.includes(selectedTech))
@@ -414,8 +507,9 @@ function App() {
                   <span className="hero-badge-dot" />{t.hero.availability}
                 </motion.div>
                 <motion.h1 className="hero-title" variants={fadeUp} custom={0.05}>
-                  {t.hero.greeting} <span className="highlight">{t.hero.name}</span>
+                  <span className="highlight">{t.hero.name}</span>
                 </motion.h1>
+                <motion.p className="hero-statement" variants={fadeUp} custom={0.08}>{t.hero.statement}</motion.p>
                 <motion.p className="hero-subtitle" variants={fadeUp} custom={0.1}>{t.hero.subtitle}</motion.p>
                 <motion.p className="hero-description" variants={fadeUp} custom={0.15}>{t.hero.description}</motion.p>
                 <motion.div className="hero-buttons" variants={fadeUp} custom={0.2}>
@@ -550,100 +644,41 @@ function App() {
             <motion.p className="sigl-subtitle" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.05}>
               {t.siglProjects.subtitle}
             </motion.p>
-            <motion.article
-              className="sigl-spotlight"
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewport}
-              variants={fadeUp}
-              custom={0.1}
-            >
-              <div className="sigl-spotlight-main">
-                <div className="sigl-card-meta">
-                  <span className={`sigl-category sigl-category-${siglMeta[spotlightIndex].category}`}>
-                    <span className="sigl-category-dot" />
-                    {categoryLabel(siglMeta[spotlightIndex].category)}
-                  </span>
-                  <span className="sigl-card-code">{siglMeta[spotlightIndex].code}</span>
-                </div>
-                <h3 className="sigl-spotlight-title">{spotlight.title}</h3>
-                <p className="sigl-spotlight-description">{spotlight.description}</p>
-                <div className="sigl-card-technologies">
-                  {spotlight.tags.map(tech => <Badge key={tech}>{tech}</Badge>)}
-                </div>
-              </div>
-              <aside className="sigl-spotlight-panel">
-                <h4 className="arch-title">{arch.title}</h4>
-                <figure className="arch">
-                  <div className="arch-users">{arch.users}</div>
-                  <div className="arch-flow" aria-hidden="true" />
-                  <div className="arch-core">
-                    <div className="arch-main">
-                      <div className="arch-layer">
-                        <span className="arch-layer-name">{arch.portal}</span>
-                        <div className="arch-chips">
-                          {arch.portalItems.map(item => <span key={item} className="arch-chip">{item}</span>)}
-                        </div>
-                      </div>
-                      <div className="arch-flow" aria-hidden="true" />
-                      <div className="arch-layer">
-                        <span className="arch-layer-name">{arch.services}</span>
-                        <div className="arch-services">
-                          {arch.serviceItems.map(svc => (
-                            <div key={svc.name} className="arch-service">
-                              <strong>{svc.name}</strong>
-                              <span>{svc.detail}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="arch-rail">
-                      <strong>{arch.identity}</strong>
-                      <span>{arch.identityDetail}</span>
-                    </div>
-                  </div>
-                  <div className="arch-flow" aria-hidden="true" />
-                  <div className="arch-runtime">{arch.runtime}</div>
-                  <div className="arch-clouds">
-                    {arch.clouds.map((cloud, i) => (
-                      <span key={cloud} className={`arch-cloud${i === 0 ? ' is-live' : ''}`}>{cloud}</span>
-                    ))}
-                  </div>
-                  <figcaption className="arch-caption">{arch.caption}</figcaption>
-                </figure>
-              </aside>
-            </motion.article>
-
-            <motion.div className="sigl-grid" initial="hidden" whileInView="visible" viewport={viewport} variants={stagger}>
-              {t.siglProjects.items.map((item, i) => i === spotlightIndex ? null : (
-                <motion.article
-                  key={siglMeta[i].code}
-                  className="sigl-card"
-                  data-category={siglMeta[i].category}
-                  variants={cardItem}
-                >
-                  <div className="sigl-card-meta">
-                    <span className={`sigl-category sigl-category-${siglMeta[i].category}`}>
-                      <span className="sigl-category-dot" />
-                      {categoryLabel(siglMeta[i].category)}
-                    </span>
-                    <span className="sigl-card-code">{siglMeta[i].code}</span>
-                  </div>
-                  <h3 className="sigl-card-title">{item.title}</h3>
-                  <p className="sigl-card-description">{item.description}</p>
-                  {item.stat && (
-                    <div className="sigl-card-stat">
-                      <span className="sigl-card-stat-value"><CountUp value={item.stat.value} /></span>
-                      <span className="sigl-card-stat-label">{item.stat.label}</span>
-                    </div>
-                  )}
-                  <div className="sigl-card-technologies">
-                    {item.tags.map(tech => <Badge key={tech}>{tech}</Badge>)}
-                  </div>
+            {stackSigl ? (
+              // The four projects pile up as the page scrolls, and the platform they lead to lands last
+              <ScrollStack
+                className="sigl-stack"
+                useWindowScroll
+                itemDistance={48}
+                itemStackDistance={22}
+                stackPosition="16%"
+                scaleEndPosition="9%"
+                baseScale={0.9}
+                itemScale={0.02}
+              >
+                {siglOthers.map(i => (
+                  <ScrollStackItem key={siglMeta[i].code} itemClassName="sigl-stack-item">
+                    <article className="sigl-card" data-category={siglMeta[i].category}>{siglCardBody(i)}</article>
+                  </ScrollStackItem>
+                ))}
+                <ScrollStackItem itemClassName="sigl-stack-item">
+                  <article className="sigl-spotlight">{siglSpotlightBody}</article>
+                </ScrollStackItem>
+              </ScrollStack>
+            ) : (
+              <>
+                <motion.article className="sigl-spotlight" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
+                  {siglSpotlightBody}
                 </motion.article>
-              ))}
-            </motion.div>
+                <motion.div className="sigl-grid" initial="hidden" whileInView="visible" viewport={viewport} variants={stagger}>
+                  {siglOthers.map(i => (
+                    <motion.article key={siglMeta[i].code} className="sigl-card" data-category={siglMeta[i].category} variants={cardItem}>
+                      {siglCardBody(i)}
+                    </motion.article>
+                  ))}
+                </motion.div>
+              </>
+            )}
           </div>
         </section>
 

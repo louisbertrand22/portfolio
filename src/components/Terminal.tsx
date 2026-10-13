@@ -309,7 +309,7 @@ function Terminal({ language, onToggleTheme, onToggleLanguage }: TerminalProps) 
         <motion.p variants={lineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">cat focus.json</span></motion.p>
         <motion.p className="terminal-output" variants={lineVariants}>{'{ IT project management, IS architecture, Cloud & DevOps }'}</motion.p>
         <motion.p variants={lineVariants}><span className="terminal-prompt">$</span> <span className="terminal-cmd">./interactive.sh</span></motion.p>
-        <motion.p className="terminal-output" variants={lineVariants}>{hint} ✨</motion.p>
+        <motion.p className="terminal-output" variants={lineVariants}>{hint}</motion.p>
         {lines.map(line => (
           line.type === 'cmd'
             ? <p key={line.id}><span className="terminal-prompt">$</span> <span className="terminal-cmd">{line.text}</span></p>
