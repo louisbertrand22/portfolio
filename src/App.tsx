@@ -62,8 +62,8 @@ const cvSwing = {
 
 const viewport = { once: true, margin: '-60px 0px' } as const
 
+// The ministry's mark is a block of small print that reads as noise at chip size, so it is named in text
 const heroLogos = [
-  { src: '/education-nationale-logo-trim.svg', alt: "Ministère de l'Éducation nationale" },
   { src: '/quanteam-logo-trim.png', alt: 'Quanteam' },
   { src: '/Epitalogo.png', alt: 'EPITA' },
 ]
@@ -120,6 +120,9 @@ const projects = [
     gallery: ['/sudokuocr_read.jpg', '/sudokuocr_conflict.jpg', '/sudokuocr_solution.jpg', '/sudokuocr_detect.jpg'],
   },
 ]
+
+// The project shown full width above the grid; the grid only repeats it when a filter matches it
+const showcaseIndex = 0
 
 const filterTechs = ['All', 'C', 'C++', 'Rust', 'Python', 'TypeScript', 'Docker', 'FastAPI', 'PostgreSQL']
 
@@ -428,7 +431,7 @@ function App() {
 
   const filteredProjects = projects
     .map((p, i) => ({ ...p, originalIndex: i }))
-    .filter(p => selectedTech === 'All' || p.technologies.includes(selectedTech))
+    .filter(p => selectedTech === 'All' ? p.originalIndex !== showcaseIndex : p.technologies.includes(selectedTech))
     .sort((a, b) => Number(b.featured) - Number(a.featured))
 
   // A card left alone on the last grid row is widened to fill it (3 columns on desktop, 2 on tablet)
@@ -532,6 +535,7 @@ function App() {
                 <motion.div className="hero-proof" variants={fadeUp} custom={0.28}>
                   <span className="hero-proof-label">{t.hero.background}</span>
                   <ul className="hero-proof-logos">
+                    <li className="hero-proof-name">{t.experience.items[0].company}</li>
                     {heroLogos.map(logo => (
                       <li key={logo.src}><img src={logo.src} alt={logo.alt} loading="eager" /></li>
                     ))}
@@ -698,15 +702,15 @@ function App() {
 
           {/* The live product opens up to full width before the rest of the catalogue */}
           <ProjectShowcase
-            src={projects[0].preview!}
-            alt={t.projects.items[0].galleryAlts?.[0] ?? ''}
-            title={t.projects.items[0].title}
+            src={projects[showcaseIndex].preview!}
+            alt={t.projects.items[showcaseIndex].galleryAlts?.[0] ?? ''}
+            title={t.projects.items[showcaseIndex].title}
             label={t.projects.showcaseLabel}
             pitch={t.projects.showcasePitch}
             cta={t.projects.showcaseCta}
-            site={projects[0].site!}
+            site={projects[showcaseIndex].site!}
             siteLabel={t.projects.visitSite}
-            onOpen={() => openProjectModal(0)}
+            onOpen={() => openProjectModal(showcaseIndex)}
           />
 
           <div className="container">
@@ -853,48 +857,6 @@ function App() {
           </div>
         </section>
 
-        {/* ── CV ── */}
-        <section id="cv" className="cv">
-          <div className="container">
-            <motion.h2 className="section-title" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp}>
-              {t.cv.title}
-            </motion.h2>
-            <motion.div className="cv-panel" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.1}>
-              {/* Swings upright as the panel reveals; composes with the sheet's own resting tilt */}
-              <motion.div className="cv-preview-wrap" variants={cvSwing}>
-                <a className="cv-preview" href="/cv-louis-bertrand.pdf" target="_blank" rel="noopener noreferrer" aria-label={t.cv.open}>
-                  <span className="cv-sheet cv-sheet--back" aria-hidden="true" />
-                  <img src="/cv-preview.jpg" alt={t.cv.previewAlt} loading="lazy" width={760} height={1075} />
-                </a>
-              </motion.div>
-              <div className="cv-body">
-                <p className="cv-lead">{t.cv.description}</p>
-                <dl className="cv-facts">
-                  {t.cv.facts.map(f => (
-                    <div key={f.label} className="cv-fact">
-                      <dt><CountUp value={f.value} /></dt>
-                      <dd>{f.label}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <div className="cv-actions">
-                  <Button asChild size="default">
-                    <a href="/cv-louis-bertrand.pdf" download ref={cvButtonRef}>
-                      <Download size={16} strokeWidth={2} aria-hidden="true" />
-                      {t.cv.download}
-                    </a>
-                  </Button>
-                  <a className="cv-open" href="/cv-louis-bertrand.pdf" target="_blank" rel="noopener noreferrer">
-                    <ExternalLink size={15} strokeWidth={2} aria-hidden="true" />
-                    {t.cv.open}
-                  </a>
-                </div>
-                <p className="cv-meta"><FileText size={14} strokeWidth={2} aria-hidden="true" />{t.cv.meta}</p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
         {/* ── CONTACT ── */}
         <section id="contact" className="contact">
           <div className="container">
@@ -946,6 +908,34 @@ function App() {
                   </div>
                 </li>
               </ul>
+            </motion.div>
+
+            {/* The resume closes the page next to the email: one place to act, not two sections */}
+            <motion.div id="cv" className="contact-cv" initial="hidden" whileInView="visible" viewport={viewport} variants={fadeUp} custom={0.15}>
+              {/* Swings upright as the strip reveals; composes with the sheet's own resting tilt */}
+              <motion.div className="cv-preview-wrap" variants={cvSwing}>
+                <a className="cv-preview" href="/cv-louis-bertrand.pdf" target="_blank" rel="noopener noreferrer" aria-label={t.cv.open}>
+                  <span className="cv-sheet cv-sheet--back" aria-hidden="true" />
+                  <img src="/cv-preview.jpg" alt={t.cv.previewAlt} loading="lazy" width={760} height={1075} />
+                </a>
+              </motion.div>
+              <div className="contact-cv-body">
+                <h3 className="contact-cv-title">{t.cv.title}</h3>
+                <p className="contact-cv-lead">{t.cv.description}</p>
+                <p className="cv-meta"><FileText size={14} strokeWidth={2} aria-hidden="true" />{t.cv.meta}</p>
+              </div>
+              <div className="cv-actions">
+                <Button asChild size="default">
+                  <a href="/cv-louis-bertrand.pdf" download ref={cvButtonRef}>
+                    <Download size={16} strokeWidth={2} aria-hidden="true" />
+                    {t.cv.download}
+                  </a>
+                </Button>
+                <a className="cv-open" href="/cv-louis-bertrand.pdf" target="_blank" rel="noopener noreferrer">
+                  <ExternalLink size={15} strokeWidth={2} aria-hidden="true" />
+                  {t.cv.open}
+                </a>
+              </div>
             </motion.div>
           </div>
         </section>

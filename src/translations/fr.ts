@@ -26,7 +26,7 @@ export const fr = {
   },
   about: {
     title: 'À Propos de Moi',
-    paragraph1: "Étudiant ingénieur à l'EPITA en majeure SIGL (Systèmes d'Information et Génie Logiciel), je m'oriente vers le pilotage de projets IT et l'architecture des systèmes d'information. En projet de conseil MOA, j'ai été chef de projet d'une équipe de 6 étudiants pour construire la stratégie de transformation SIRH d'un groupe de 12 000 collaborateurs, et j'ai participé à l'élaboration d'un schéma directeur SI dans le cadre d'une fusion. Au Ministère de l'Éducation nationale, je conçois une architecture réseau Zero Trust et sécurise le cycle de déploiement de plusieurs applications critiques ; chez Quanteam, j'ai mené de bout en bout Leonard-AI, un chatbot interne déployé pour plus de 200 collaborateurs. Cette base technique me permet de dialoguer autant avec les équipes métier qu'avec les équipes qui réalisent.",
+    paragraph1: "Étudiant ingénieur à l'EPITA (majeure SIGL), je m'oriente vers le pilotage de projets IT et l'architecture des systèmes d'information. J'ai piloté une équipe de 6 étudiants sur la stratégie de transformation SIRH d'un groupe de 12 000 collaborateurs, participé au schéma directeur SI d'une fusion et mené de bout en bout Leonard-AI, un chatbot IA interne. Cette base technique me permet de dialoguer autant avec les équipes métier qu'avec celles qui réalisent.",
     paragraph2: "Curieux et autonome, j'aime explorer de nouvelles technologies à travers des projets personnels - du DevOps à l'intelligence artificielle - et transformer des idées en produits concrets, du backend au frontend.",
     facts: [
       { value: '6', label: 'étudiants pilotés sur une stratégie SIRH' },
@@ -62,7 +62,7 @@ export const fr = {
         type: 'Temps partiel',
         period: 'Fév. 2026 - Jan. 2027',
         location: 'Paris, Île-de-France, France',
-        description: 'Sécurisation du réseau et du cycle de déploiement du parc applicatif, en temps partiel en parallèle des cours. Mise en place d\'une architecture Zero Trust avec Cilium via une stratégie hybride : règles "Default Deny" déployées globalement depuis les templates, et autorisations décentralisées directement dans les charts applicatifs. Sécurisation du cycle de déploiement en approche GitOps (ArgoCD) et intégration du scanner Renovate sur 4 dépôts majeurs, avec ouverture automatique des merge requests de mise à jour : les équipes passent d\'audits manuels ponctuels à un contrôle continu de la dette de sécurité.',
+        description: "En temps partiel en parallèle des cours, sécurisation du réseau et du cycle de déploiement du parc applicatif. Architecture Zero Trust avec Cilium : règles \"Default Deny\" déployées globalement depuis les templates, autorisations déléguées aux charts applicatifs. Déploiements GitOps (ArgoCD) et Renovate sur 4 dépôts majeurs : les équipes passent d'audits manuels ponctuels à un contrôle continu de la dette de sécurité.",
         logo: 'education-nationale-logo-trim.svg',
       },
       {
@@ -71,7 +71,7 @@ export const fr = {
         type: 'Stage',
         period: 'Sept. 2025 - Jan. 2026',
         location: 'Neuilly-sur-Seine, Île-de-France, France',
-        description: 'Conception et développement de bout en bout de Leonard-AI, un chatbot interne au service de plus de 200 collaborateurs, qui automatise les tâches répétitives des fonctions support : paie, ressources humaines et business managers. Réalisation de l\'architecture applicative complète (APIs asynchrones en FastAPI et Django) et industrialisation du déploiement sur un nouvel environnement Kubernetes mis en place à cette occasion. L\'outil décharge les équipes support des sollicitations récurrentes à faible valeur ajoutée et leur rend du temps pour leurs missions de fond.',
+        description: "Conception et développement de bout en bout de Leonard-AI, un chatbot interne pour plus de 200 collaborateurs qui automatise les demandes répétitives adressées à la paie, aux RH et aux business managers. Architecture applicative complète (APIs asynchrones en FastAPI et Django) et déploiement industrialisé sur un nouvel environnement Kubernetes.",
         logo: 'quanteam-logo-trim.png',
       },
     ],
@@ -245,11 +245,6 @@ export const fr = {
     open: 'Ouvrir le CV',
     meta: 'PDF · 1 page A4 · mis à jour en septembre 2026',
     previewAlt: 'Aperçu de la première page du CV de Louis BERTRAND',
-    facts: [
-      { value: '6 mois', label: 'd\'expérience professionnelle' },
-      { value: '3', label: 'projets académiques détaillés' },
-      { value: '845', label: 'au TOEIC' },
-    ],
   },
   contact: {
     title: 'Me Contacter',

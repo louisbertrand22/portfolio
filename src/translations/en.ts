@@ -26,7 +26,7 @@ export const en = {
   },
   about: {
     title: 'About Me',
-    paragraph1: "I'm an engineering student at EPITA, majoring in Information Systems & Software Engineering (SIGL), heading toward IT project management and information systems architecture. On a business analysis consulting engagement, I led a team of 6 students to build an HRIS transformation strategy for a 12,000-employee group, and I contributed to an IT master plan for a merger. At the French Ministry of National Education, I'm designing a Zero Trust network architecture and securing the deployment cycle of several critical applications; at Quanteam, I delivered Leonard-AI end-to-end, an internal chatbot deployed to over 200 employees. This technical grounding lets me work as easily with business stakeholders as with the teams who build.",
+    paragraph1: "I'm an engineering student at EPITA (SIGL major), heading toward IT project management and information systems architecture. I've led a 6-student team on an HRIS transformation strategy for a 12,000-employee group, contributed to an IT master plan for a merger, and delivered Leonard-AI, an internal AI chatbot, end-to-end. That technical grounding lets me work as easily with business stakeholders as with the teams who build.",
     paragraph2: "Curious and self-driven, I enjoy exploring new technologies through side projects - from DevOps to AI - and turning ideas into real products, from backend to frontend.",
     facts: [
       { value: '6', label: 'students led on an HRIS strategy' },
@@ -62,7 +62,7 @@ export const en = {
         type: 'Part-time',
         period: 'Feb. 2026 - Jan. 2027',
         location: 'Paris, Île-de-France, France',
-        description: 'Securing the network and deployment cycle of the application portfolio, part-time alongside my studies. Built a Zero Trust architecture with Cilium using a hybrid strategy: "Default Deny" rules rolled out globally from templates, with authorizations decentralized directly into application charts. Secured the deployment cycle with a GitOps approach (ArgoCD) and integrated the Renovate scanner across 4 major repositories, with automatic merge requests for updates: teams moved from one-off manual audits to continuous monitoring of security debt.',
+        description: "Part-time alongside my studies, securing the network and deployment cycle of the application portfolio. Zero Trust architecture with Cilium: \"Default Deny\" rules rolled out globally from templates, authorizations delegated to application charts. GitOps deployments (ArgoCD) and Renovate on 4 major repositories: teams moved from one-off manual audits to continuous monitoring of security debt.",
         logo: 'education-nationale-logo-trim.svg',
       },
       {
@@ -71,7 +71,7 @@ export const en = {
         type: 'Internship',
         period: 'Sept. 2025 - Jan. 2026',
         location: 'Neuilly-sur-Seine, Île-de-France, France',
-        description: 'End-to-end design and development of Leonard-AI, an internal chatbot serving 200+ employees, automating repetitive tasks for support functions: payroll, human resources and business managers. Built the full application architecture (asynchronous APIs with FastAPI and Django) and industrialized deployment on a new Kubernetes environment set up for the project. The tool offloads recurring low-value requests from support teams and gives them time back for their core work.',
+        description: "Designed and built Leonard-AI end-to-end, an internal chatbot for 200+ employees that automates repetitive requests to payroll, HR and business managers. Full application architecture (async APIs with FastAPI and Django) and deployment industrialized on a new Kubernetes environment.",
         logo: 'quanteam-logo-trim.png',
       },
     ],
@@ -245,11 +245,6 @@ export const en = {
     open: 'Open resume',
     meta: 'PDF · 1 A4 page · updated September 2026',
     previewAlt: 'Preview of the first page of Louis BERTRAND\'s resume',
-    facts: [
-      { value: '6 months', label: 'of professional experience' },
-      { value: '3', label: 'detailed academic projects' },
-      { value: '845', label: 'TOEIC score' },
-    ],
   },
   contact: {
     title: 'Get In Touch',
