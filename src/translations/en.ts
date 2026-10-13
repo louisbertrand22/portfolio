@@ -268,4 +268,9 @@ export const en = {
     cv: 'Resume (PDF)',
     backToTop: 'Back to top',
   },
+  a11y: {
+    toggleLanguage: 'Switch to French',
+    toggleTheme: 'Switch light/dark theme',
+    toggleMenu: 'Open or close the menu',
+  },
 }

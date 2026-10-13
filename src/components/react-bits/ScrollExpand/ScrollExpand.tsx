@@ -116,7 +116,8 @@ const ScrollExpand: React.FC<ScrollExpandProps> = ({
 
     media.style.transform = `scale(${c.mediaZoom + (1 - c.mediaZoom) * e})`;
 
-    if (scrimRef.current) scrimRef.current.style.opacity = `${c.overlayScrim * e}`;
+    // Portfolio adaptation: the scrim waits for the frame to near full bleed instead of greying it mid-scroll
+    if (scrimRef.current) scrimRef.current.style.opacity = `${c.overlayScrim * smoothstep(0.55, 1, p)}`;
 
     if (titleRef.current) {
       const out = smoothstep(0.4, 0.88, p);

@@ -268,4 +268,9 @@ export const fr = {
     cv: 'CV (PDF)',
     backToTop: 'Retour en haut',
   },
+  a11y: {
+    toggleLanguage: 'Passer en anglais',
+    toggleTheme: 'Changer de thème clair/sombre',
+    toggleMenu: 'Ouvrir ou fermer le menu',
+  },
 }

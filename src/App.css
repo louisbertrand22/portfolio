@@ -1082,6 +1082,12 @@
   box-shadow: 0 22px 44px -26px rgba(var(--primary-rgb), 0.55);
 }
 
+.project-details-hint:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 .project-card:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 3px;
@@ -1372,6 +1378,11 @@
 }
 
 .project-details-hint {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--primary);
@@ -1380,7 +1391,8 @@
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.project-card:hover .project-details-hint {
+.project-card:hover .project-details-hint,
+.project-card:focus-within .project-details-hint {
   opacity: 1;
   transform: none;
 }

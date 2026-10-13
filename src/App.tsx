@@ -264,7 +264,13 @@ function App() {
   // width relative to the modal's, consumed by .modal-from-card in App.css
   const [modalOrigin, setModalOrigin] = useState<React.CSSProperties | undefined>()
 
+  // The modal opens programmatically, so Radix has no trigger to hand focus back to on close
+  const modalReturnFocus = useRef<HTMLElement | null>(null)
+
   const openProjectModal = (index: number, card?: HTMLElement) => {
+    modalReturnFocus.current = document.activeElement instanceof HTMLElement && document.activeElement !== document.body
+      ? document.activeElement
+      : null
     if (card) {
       const r = card.getBoundingClientRect()
       const modalWidth = Math.min(900, window.innerWidth)
@@ -449,10 +455,10 @@ function App() {
           <nav className="nav">
             <div className="logo">LB</div>
             <div className="nav-controls">
-              <button className="language-toggle" onClick={() => setLanguage(p => p === 'en' ? 'fr' : 'en')}>
+              <button className="language-toggle" onClick={() => setLanguage(p => p === 'en' ? 'fr' : 'en')} aria-label={t.a11y.toggleLanguage}>
                 {language === 'en' ? 'FR' : 'EN'}
               </button>
-              <button className="theme-toggle" onClick={() => setIsDarkMode(p => !p)} aria-label="Toggle theme">
+              <button className="theme-toggle" onClick={() => setIsDarkMode(p => !p)} aria-label={t.a11y.toggleTheme}>
                 {isDarkMode ? (
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="4"/>
@@ -464,7 +470,7 @@ function App() {
                   </svg>
                 )}
               </button>
-              <button className="menu-toggle" onClick={() => setIsMenuOpen(o => !o)} aria-label="Toggle menu">
+              <button className="menu-toggle" onClick={() => setIsMenuOpen(o => !o)} aria-label={t.a11y.toggleMenu} aria-expanded={isMenuOpen}>
                 {isMenuOpen ? '✕' : '☰'}
               </button>
             </div>
@@ -780,9 +786,17 @@ function App() {
                             </span>
                           )}
                         </div>
-                        <span className="project-details-hint">
+                        {/* the whole card opens the modal on click; this is its keyboard and screen-reader entry point */}
+                        <button
+                          type="button"
+                          className="project-details-hint"
+                          onClick={e => {
+                            e.stopPropagation()
+                            openProjectModal(originalIndex, e.currentTarget.closest<HTMLElement>('.project-card') ?? undefined)
+                          }}
+                        >
                           {projects[originalIndex].link ? t.projects.viewReadme : t.projects.viewDetails}
-                        </span>
+                        </button>
                       </div>
                     </div>
                   </motion.div>
@@ -971,7 +985,7 @@ function App() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.2 }}
-            aria-label="Back to top"
+            aria-label={t.footer.backToTop}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 15l-6-6-6 6"/>
@@ -982,7 +996,16 @@ function App() {
 
       {/* ── MODAL ── */}
       <Dialog open={selectedProject !== null} onOpenChange={open => { if (!open) closeProjectModal() }}>
-        <DialogContent className={modalOrigin ? 'modal-from-card' : undefined} style={modalOrigin}>
+        <DialogContent
+          className={modalOrigin ? 'modal-from-card' : undefined}
+          style={modalOrigin}
+          aria-describedby={undefined}
+          onCloseAutoFocus={e => {
+            if (!modalReturnFocus.current) return
+            e.preventDefault()
+            modalReturnFocus.current.focus({ preventScroll: true })
+          }}
+        >
           <DialogHeader>
             <DialogTitle>{t.projects.items[selectedProject ?? 0]?.title}</DialogTitle>
           </DialogHeader>
